@@ -28,7 +28,7 @@ class SightCard extends StatelessWidget {
                     top: 16,
                     child: Text(
                       sight.type,
-                      style: textBold14.copyWith(
+                      style: textBoldSecondary14.copyWith(
                         color: Colors.white,
                       ),
                     ),
@@ -60,7 +60,7 @@ class SightCard extends StatelessWidget {
                       sight.details,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: textBold14,
+                      style: textBoldSecondary14,
                     ),
                   ],
                 ),
