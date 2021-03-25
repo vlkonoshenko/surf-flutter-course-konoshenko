@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:places/mocks.dart';
+import 'package:places/res/res.dart';
+import 'package:places/ui/screen/sight_card.dart';
 
 class SightListScreen extends StatefulWidget {
   @override
@@ -7,54 +10,28 @@ class SightListScreen extends StatefulWidget {
 }
 
 class _SightListScreenState extends State<SightListScreen> {
-  final _greenFromFigma = Color(0xff4CAF50);
-  final _yellowFromFigma = Color(0xffFCDD3D);
-
-  final TextStyle _titleStyle = TextStyle(
-    fontWeight: FontWeight.w700,
-    fontStyle: FontStyle.normal,
-    fontSize: 32,
-    color: Color(0xff3B3E5B),
-  );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        bottom: PreferredSize(
-          preferredSize: Size(double.infinity, 72),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            alignment: Alignment.centerLeft,
-            child: RichText(
-              text: TextSpan(style: _titleStyle, children: [
-                _textSpanFirstLetterColor('Список\n', _greenFromFigma),
-                _textSpanFirstLetterColor('интересных мест', _yellowFromFigma),
-              ]),
-              textAlign: TextAlign.start,
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          bottom: PreferredSize(
+            preferredSize: Size(double.infinity, 72),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Список\nинтересных мест',
+                style: textBold32,
+              ),
             ),
           ),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
         ),
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-      ),
-      body: Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.all(16),
-        child: Container(),
-      ),
-    );
-  }
-
-  ///Change the color of the capital letter in text
-  TextSpan _textSpanFirstLetterColor(String text, Color color) {
-    return TextSpan(children: [
-      TextSpan(
-        text: text.characters.take(1).toString(),
-        style: TextStyle(color: color),
-      ),
-      TextSpan(text: text.characters.skip(1).toString())
-    ]);
+        body: ListView.builder(
+          itemCount: mocks.length,
+          itemBuilder: (context, index) => SightCard(mocks[index]),
+        ));
   }
 }
