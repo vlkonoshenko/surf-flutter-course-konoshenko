@@ -54,13 +54,13 @@ class SightCard extends StatelessWidget {
                     Text(
                       sight.name,
                       maxLines: 2,
-                      style: textRegular16,
+                      style: textMedium16,
                     ),
                     Text(
                       sight.details,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: textBoldSecondary14,
+                      style: textRegularSecondary14,
                     ),
                   ],
                 ),

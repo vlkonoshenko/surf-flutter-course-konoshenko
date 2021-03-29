@@ -14,6 +14,9 @@ TextStyle textRegularSecondary14 =
 TextStyle textRegular16 = _textRegular.copyWith(fontSize: 16);
 TextStyle textRegular24 = _textRegular.copyWith(fontSize: 24);
 
+TextStyle textMedium = _text.copyWith(fontWeight: FontWeight.w500);
+TextStyle textMedium16 = textMedium.copyWith(fontSize: 16);
+
 ///BOLD
 TextStyle _textBold = _text.copyWith(fontWeight: FontWeight.w700);
 TextStyle textBoldSecondary14 =
