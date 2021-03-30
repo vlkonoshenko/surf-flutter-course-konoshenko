@@ -5,6 +5,7 @@ import 'package:places/res/res.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
 class SightListScreen extends StatefulWidget {
+  static const String routeName = '/sight_list_screen';
   @override
   _SightListScreenState createState() => _SightListScreenState();
 }
