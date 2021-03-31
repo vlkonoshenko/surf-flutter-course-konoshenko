@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/res.dart';
@@ -25,9 +26,25 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
               right: 0.0,
               child: Column(
                 children: [
-                  Container(
+                  SizedBox(
                     height: 300,
-                    color: Colors.red,
+                    width: double.infinity,
+                    child: Image.network(
+                      sight.url,
+                      fit: BoxFit.cover,
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CupertinoActivityIndicator.partiallyRevealed(
+                            progress: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
