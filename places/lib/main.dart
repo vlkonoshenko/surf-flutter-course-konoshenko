@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:places/domain/sight.dart';
+import 'package:places/ui/screen/sight_details_screen.dart';
 import 'package:places/ui/screen/sight_list_screen.dart';
-
-import 'ui/screen/sight_details_screen.dart';
 
 void main() {
   runApp(App());
@@ -15,7 +15,11 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SightDetailsScreen(),
+      routes: {
+        '/': (context) => SightListScreen(),
+        SightDetailsScreen.routeName: (context) => SightDetailsScreen(),
+      },
+      initialRoute: '/',
     );
   }
 }

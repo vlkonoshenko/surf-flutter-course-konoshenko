@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:places/domain/sight.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/components/components.dart';
 
 class SightDetailsScreen extends StatefulWidget {
+  static const String routeName = '/sight_details_screen';
+
   @override
   _SightDetailsScreenState createState() => _SightDetailsScreenState();
 }
@@ -10,6 +13,7 @@ class SightDetailsScreen extends StatefulWidget {
 class _SightDetailsScreenState extends State<SightDetailsScreen> {
   @override
   Widget build(BuildContext context) {
+    final Sight sight = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -33,13 +37,16 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Пряности и радости',
+                              sight.name,
                               style: textBold24,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
+                            SizedBox(height: 8),
                             Row(
                               children: [
                                 Text(
-                                  'ресторан',
+                                  sight.type,
                                   style: textBoldPrimary14,
                                 ),
                                 SizedBox(width: 16),
@@ -50,9 +57,12 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                               ],
                             ),
                             SizedBox(height: 24),
-                            Text(
-                              'Пряный вкус радостной жизни вместе с шеф-поваром Изо Дзандзава, благодаря которой у гостей ресторана есть возможность выбирать из двух направлений: европейского и восточного',
-                              style: textRegular14,
+                            ConstrainedBox(
+                              constraints: BoxConstraints(minHeight: 100),
+                              child: Text(
+                                sight.details,
+                                style: textRegular14,
+                              ),
                             )
                           ],
                         ),
