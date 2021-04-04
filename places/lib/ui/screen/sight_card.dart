@@ -4,93 +4,181 @@ import 'package:places/domain/sight.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 
-class SightCard extends StatelessWidget {
-  final Sight sight;
+class SightCardMeta {
+  Sight sight;
+  bool wantVisit;
+  bool visited;
 
-  SightCard(this.sight);
+  SightCardMeta(this.sight, {this.wantVisit = false, this.visited = false});
+
+  SightCardMeta copyWith({bool wantVisit, bool visited}) {
+    return SightCardMeta(
+      this.sight,
+      wantVisit: wantVisit ?? this.wantVisit,
+      visited: visited ?? this.visited,
+    );
+  }
+}
+
+class SightCard extends StatelessWidget {
+  final SightCardMeta sightMeta;
+
+  SightCard(this.sightMeta);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Navigator.pushNamed(context, SightDetailsScreen.routeName,
-          arguments: sight),
-      child: AspectRatio(
-        aspectRatio: 3 / 2,
-        child: Container(
-          margin: EdgeInsets.only(left: 16, right: 16, top: 16),
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
-              color: cardBackground, borderRadius: BorderRadius.circular(16)),
-          child: Column(
-            children: [
-              Expanded(
-                  flex: 1,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      Image.network(
-                        sight.url,
-                        fit: BoxFit.cover,
-                        loadingBuilder: (BuildContext context, Widget child,
-                            ImageChunkEvent loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return Center(
-                            child: CupertinoActivityIndicator.partiallyRevealed(
-                              progress:
-                                  loadingProgress.expectedTotalBytes != null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes
-                                      : null,
-                            ),
-                          );
-                        },
-                      ),
-                      Positioned(
-                        left: 16,
-                        top: 16,
-                        child: Text(
-                          sight.type,
-                          style: textBoldSecondary14.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        right: 16,
-                        top: 16,
-                        child: Container(
-                          height: 24,
-                          width: 24,
-                          color: Colors.blue,
-                        ),
-                      ),
-                    ],
-                  )),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+          arguments: sightMeta),
+      child: Container(
+        margin: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+            color: cardBackground, borderRadius: BorderRadius.circular(16)),
+        child: Column(
+          children: [
+            Container(
+                height: 96,
+                child: Stack(
+                  fit: StackFit.expand,
                   children: [
-                    SizedBox(height: 16),
-                    Text(
-                      sight.name,
-                      maxLines: 2,
-                      style: textMedium16,
+                    Image.network(
+                      sightMeta.sight.url,
+                      fit: BoxFit.cover,
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CupertinoActivityIndicator.partiallyRevealed(
+                            progress: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
                     ),
-                    Text(
-                      sight.details,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: textRegularSecondary14,
+                    Positioned(
+                      left: 16,
+                      top: 16,
+                      child: Text(
+                        sightMeta.sight.type,
+                        style: textBoldSecondary14.copyWith(
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                    SizedBox(height: 16),
+                    Positioned(
+                      right: 16,
+                      top: 16,
+                      child: SightCardTools(sightMeta),
+                    ),
                   ],
-                ),
+                )),
+            Container(
+              height: 102,
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(height: 16),
+                  Text(
+                    sightMeta.sight.name,
+                    maxLines: 2,
+                    style: textMedium16,
+                  ),
+                  _buildDetailInfo(sightMeta),
+                  if (sightMeta.wantVisit || sightMeta.visited)
+                    _buildSightStatus(),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  Widget _buildSightStatus() {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(
+            'закрыто до 09:00',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: textRegularSecondary14,
+          ),
+          SizedBox(height: 16)
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDetailInfo(SightCardMeta sightMeta) {
+    if (sightMeta.visited) {
+      return Text(
+        'Цель достигнута 12 окт. 2020',
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: textRegularSecondary14,
+      );
+    }
+    if (sightMeta.wantVisit) {
+      return Text(
+        'Запланировано на 12 окт. 2020',
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: textRegularSecondary14.copyWith(color: greenFromFigma),
+      );
+    }
+    return Text(
+      sightMeta.sight.details,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: textRegularSecondary14,
+    );
+  }
+}
+
+class SightCardTools extends StatelessWidget {
+  final SightCardMeta sightMeta;
+
+  const SightCardTools(this.sightMeta);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        if (sightMeta.visited)
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: Icon(
+              Icons.share_outlined,
+              color: Colors.white,
+            ),
+          ),
+        if (sightMeta.wantVisit)
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: Icon(
+              Icons.calendar_today_outlined,
+              size: 20,
+              color: Colors.white,
+            ),
+          ),
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: Icon(
+            (sightMeta.visited || sightMeta.wantVisit)
+                ? Icons.close
+                : Icons.favorite_border,
+            color: Colors.white,
+          ),
+        ),
+      ],
     );
   }
 }

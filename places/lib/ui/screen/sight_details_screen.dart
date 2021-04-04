@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:places/domain/sight.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/components/components.dart';
+import 'package:places/ui/screen/sight_card.dart';
 
 class SightDetailsScreen extends StatefulWidget {
   static const String routeName = '/sight_details_screen';
@@ -14,7 +14,7 @@ class SightDetailsScreen extends StatefulWidget {
 class _SightDetailsScreenState extends State<SightDetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    final Sight sight = ModalRoute.of(context).settings.arguments;
+    final SightCardMeta sight = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -30,7 +30,7 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                     height: 300,
                     width: double.infinity,
                     child: Image.network(
-                      sight.url,
+                      sight.sight.url,
                       fit: BoxFit.cover,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
@@ -54,7 +54,7 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              sight.name,
+                              sight.sight.name,
                               style: textBold24,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -63,7 +63,7 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                             Row(
                               children: [
                                 Text(
-                                  sight.type,
+                                  sight.sight.type,
                                   style: textBoldPrimary14,
                                 ),
                                 SizedBox(width: 16),
@@ -77,7 +77,7 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                             ConstrainedBox(
                               constraints: BoxConstraints(minHeight: 100),
                               child: Text(
-                                sight.details,
+                                sight.sight.details,
                                 style: textRegular14,
                               ),
                             )
