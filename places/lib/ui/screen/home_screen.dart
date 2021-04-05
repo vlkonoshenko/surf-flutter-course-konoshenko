@@ -14,7 +14,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(() {
       setState(() {});
     });
@@ -29,13 +29,8 @@ class _HomeScreenState extends State<HomeScreen>
         controller: _tabController,
         children: [
           SightListScreen(),
-          Container(
-            child: Center(child: Text('Tab Map')),
-          ),
           VisitingScreen(),
-          Container(
-            child: Center(child: Text('Tab Settings')),
-          ),
+
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -49,11 +44,10 @@ class _HomeScreenState extends State<HomeScreen>
         items: [
           BottomNavigationBarItem(
               icon: Icon(Icons.list_alt_outlined), label: '1'),
-          BottomNavigationBarItem(icon: Icon(Icons.map_outlined), label: '2'),
+
           BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border), label: '3'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings_outlined), label: '4'),
+              icon: Icon(Icons.favorite_border), label: '2'),
+
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:places/res/colors.dart';
 import 'package:places/res/text_style.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
@@ -15,31 +16,55 @@ class _VisitingScreenState extends State<VisitingScreen> {
     return DefaultTabController(
         length: 2,
         child: Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
-              centerTitle: true,
-              backgroundColor: Colors.white,
-              title: Text(
-                "Избранное",
-                style: textMedium18,
+            centerTitle: true,
+            elevation: 0,
+            backgroundColor: Colors.white,
+            title: Text(
+              "Избранное",
+              style: textMedium18,
+            ),
+          ),
+          body: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 16),
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Color(0xffF5F5F5),
+                  borderRadius: BorderRadius.circular(
+                    25.0,
+                  ),
+                ),
+                child: TabBar(
+                  indicator: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      25.0,
+                    ),
+                    color: Color(0xff3B3E5B),
+                  ),
+                  labelColor: Colors.white,
+                  unselectedLabelColor: secondaryTextColor,
+                  tabs: [
+                    // first tab [you can add an icon using the icon property]
+                    Tab(
+                      text: 'Хочу посетить',
+                    ),
+
+                    // second tab [you can add an icon using the icon property]
+                    Tab(
+                      text: 'Посетил',
+                    ),
+                  ],
+                ),
               ),
-              bottom: TabBar(
-                tabs: [
-                  Tab(
-                    child: Text(
-                      'Хочу посетить',
-                      style: textMedium16,
-                    ),
-                  ),
-                  Tab(
-                    child: Text(
-                      'Посетил',
-                      style: textMedium16,
-                    ),
-                  ),
-                ],
-              )),
-          body: TabBarView(
-            children: [ListWantVisit(), ListVisited()],
+              Expanded(
+                child: TabBarView(
+                  children: [ListWantVisit(), ListVisited()],
+                ),
+              ),
+            ],
           ),
         ));
   }
