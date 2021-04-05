@@ -16,6 +16,7 @@ TextStyle textRegular24 = _textRegular.copyWith(fontSize: 24);
 
 TextStyle textMedium = _text.copyWith(fontWeight: FontWeight.w500);
 TextStyle textMedium16 = textMedium.copyWith(fontSize: 16);
+TextStyle textMedium18 = textMedium.copyWith(fontSize: 18);
 
 ///BOLD
 TextStyle _textBold = _text.copyWith(fontWeight: FontWeight.w700);
