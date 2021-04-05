@@ -47,15 +47,8 @@ class _VisitingScreenState extends State<VisitingScreen> {
                   labelColor: Colors.white,
                   unselectedLabelColor: secondaryTextColor,
                   tabs: [
-                    // first tab [you can add an icon using the icon property]
-                    Tab(
-                      text: 'Хочу посетить',
-                    ),
-
-                    // second tab [you can add an icon using the icon property]
-                    Tab(
-                      text: 'Посетил',
-                    ),
+                    Tab(text: 'Хочу посетить'),
+                    Tab(text: 'Посетил'),
                   ],
                 ),
               ),
