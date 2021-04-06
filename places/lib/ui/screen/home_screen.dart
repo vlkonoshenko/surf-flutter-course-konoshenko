@@ -34,13 +34,8 @@ class _HomeScreenState extends State<HomeScreen>
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
         onTap: (value) => _tabController.animateTo(value),
         currentIndex: _tabController.index,
-        selectedItemColor: primaryTextColor,
-        unselectedItemColor: secondaryTextColor.withOpacity(0.4),
         items: [
           BottomNavigationBarItem(
               icon: Icon(Icons.list_alt_outlined), label: '1'),

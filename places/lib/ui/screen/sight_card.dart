@@ -27,14 +27,16 @@ class SightCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => Navigator.pushNamed(context, SightDetailsScreen.routeName,
-          arguments: sightMeta),
-      child: Container(
-        margin: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-            color: cardBackground, borderRadius: BorderRadius.circular(16)),
+    return Card(
+      margin: EdgeInsets.all(16),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () => Navigator.pushNamed(context, SightDetailsScreen.routeName,
+            arguments: sightMeta),
         child: Column(
           children: [
             Container(
