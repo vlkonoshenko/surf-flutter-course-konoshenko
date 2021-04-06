@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:places/res/res.dart';
 import 'package:places/ui/components/components.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
@@ -55,7 +54,8 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                           children: [
                             Text(
                               sight.sight.name,
-                              style: textBold24,
+                              style:
+                                  Theme.of(context).primaryTextTheme.headline5,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -63,13 +63,17 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                             Row(
                               children: [
                                 Text(
-                                  sight.sight.type,
-                                  style: textBoldPrimary14,
+                                  sight.sight.type.toLowerCase(),
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .subtitle2.copyWith(color: Color(0xff7C7E92)),
                                 ),
                                 SizedBox(width: 16),
                                 Text(
                                   'закрыто до 09:00',
-                                  style: textRegularSecondary14,
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .caption,
                                 )
                               ],
                             ),
@@ -78,7 +82,9 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                               constraints: BoxConstraints(minHeight: 100),
                               child: Text(
                                 sight.sight.details,
-                                style: textRegular14,
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .bodyText1,
                               ),
                             )
                           ],

@@ -7,6 +7,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Container(
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(top: 40.0, left: 16),
+
       child: BtnWhiteSquare(
         icon: Icons.arrow_back_ios_outlined,
       ),

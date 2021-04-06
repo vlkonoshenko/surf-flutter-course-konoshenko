@@ -87,8 +87,9 @@ class SightCard extends StatelessWidget {
                   Text(
                     sightMeta.sight.name,
                     maxLines: 2,
-                    style: textMedium16,
+                    style: Theme.of(context).primaryTextTheme.subtitle1,
                   ),
+                  SizedBox(height: 4),
                   _buildDetailInfo(sightMeta),
                   if (sightMeta.wantVisit || sightMeta.visited)
                     _buildSightStatus(),
@@ -113,7 +114,7 @@ class SightCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: textRegularSecondary14,
           ),
-          SizedBox(height: 16)
+          SizedBox(height: 12)
         ],
       ),
     );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:places/res/text_style.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
 import '../../mocks.dart';
@@ -18,7 +17,6 @@ class _VisitingScreenState extends State<VisitingScreen> {
           appBar: AppBar(
             title: Text(
               "Избранное",
-              style: textMedium18,
             ),
           ),
           body: Column(

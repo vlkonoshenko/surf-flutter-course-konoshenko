@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:places/res/res.dart';
 
 class BtnSecondary extends StatelessWidget {
   final String title;
@@ -17,13 +16,14 @@ class BtnSecondary extends StatelessWidget {
         Container(
           height: 24,
           width: 24,
-          color: Colors.blue,
+          child: Placeholder(),
         ),
         SizedBox(width: 8),
-        Text(
-          title,
-          style: textRegularSecondary14,
-        )
+        Text(title,
+            style: Theme.of(context)
+                .primaryTextTheme
+                .subtitle2
+                .copyWith(fontWeight: FontWeight.w400))
       ],
     );
   }

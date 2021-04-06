@@ -14,7 +14,7 @@ class BtnWhiteSquare extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
+          color: Theme.of(context).canvasColor,
         ),
         height: 32,
         width: 32,
@@ -22,7 +22,7 @@ class BtnWhiteSquare extends StatelessWidget {
           icon: Icon(
             icon,
             size: 12,
-            color: primaryTextColor,
+            color: Theme.of(context).primaryTextTheme.subtitle2.color,
           ),
           onPressed: () => Navigator.of(context).pop(),
         ));
