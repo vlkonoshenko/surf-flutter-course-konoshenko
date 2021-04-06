@@ -18,7 +18,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: lightTheme,
+      theme: darkTheme,
       routes: {
         '/': (context) => HomeScreen(),
         SightDetailsScreen.routeName: (context) => SightDetailsScreen(),

@@ -17,6 +17,7 @@ class _VisitingScreenState extends State<VisitingScreen> {
           appBar: AppBar(
             title: Text(
               "Избранное",
+              style: Theme.of(context).primaryTextTheme.subtitle1.copyWith(fontSize: 18),
             ),
           ),
           body: Column(

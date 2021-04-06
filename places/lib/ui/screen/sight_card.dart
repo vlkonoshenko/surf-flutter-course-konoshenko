@@ -65,9 +65,10 @@ class SightCard extends StatelessWidget {
                       top: 16,
                       child: Text(
                         sightMeta.sight.type,
-                        style: textBoldSecondary14.copyWith(
-                          color: Colors.white,
-                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle2
+                            .copyWith(color: Colors.white),
                       ),
                     ),
                     Positioned(
@@ -78,7 +79,7 @@ class SightCard extends StatelessWidget {
                   ],
                 )),
             Container(
-              height: 102,
+              height: 108,
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -90,9 +91,9 @@ class SightCard extends StatelessWidget {
                     style: Theme.of(context).primaryTextTheme.subtitle1,
                   ),
                   SizedBox(height: 4),
-                  _buildDetailInfo(sightMeta),
+                  _buildDetailInfo(context, sightMeta),
                   if (sightMeta.wantVisit || sightMeta.visited)
-                    _buildSightStatus(),
+                    _buildSightStatus(context),
                 ],
               ),
             ),
@@ -102,17 +103,23 @@ class SightCard extends StatelessWidget {
     );
   }
 
-  Widget _buildSightStatus() {
+  Widget _buildSightStatus(BuildContext context) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
+          SizedBox(
+            height: 2,
+          ),
           Text(
             'закрыто до 09:00',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: textRegularSecondary14,
+            style: Theme.of(context)
+                .primaryTextTheme
+                .bodyText1
+                .copyWith(color: lmSecondary2Color),
           ),
           SizedBox(height: 12)
         ],
@@ -120,13 +127,13 @@ class SightCard extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailInfo(SightCardMeta sightMeta) {
+  Widget _buildDetailInfo(BuildContext context, SightCardMeta sightMeta) {
     if (sightMeta.visited) {
       return Text(
         'Цель достигнута 12 окт. 2020',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: textRegularSecondary14,
+        style: Theme.of(context).primaryTextTheme.bodyText1,
       );
     }
     if (sightMeta.wantVisit) {
@@ -134,14 +141,17 @@ class SightCard extends StatelessWidget {
         'Запланировано на 12 окт. 2020',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: textRegularSecondary14.copyWith(color: greenFromFigma),
+        style: Theme.of(context)
+            .primaryTextTheme
+            .bodyText1
+            .copyWith(color: lmGreenColor),
       );
     }
     return Text(
       sightMeta.sight.details,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
-      style: textRegularSecondary14,
+      style: Theme.of(context).primaryTextTheme.bodyText1,
     );
   }
 }

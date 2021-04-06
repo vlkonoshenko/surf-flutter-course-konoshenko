@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:places/res/res.dart';
 
 class BtnRaised extends StatelessWidget {
   const BtnRaised({
@@ -9,7 +8,7 @@ class BtnRaised extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {  },
+      onPressed: () {},
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -21,7 +20,6 @@ class BtnRaised extends StatelessWidget {
           SizedBox(width: 8),
           Text(
             'Построить маршрут'.toUpperCase(),
-            style: textButton,
           ),
         ],
       ),

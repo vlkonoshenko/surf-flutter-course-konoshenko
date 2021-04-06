@@ -1,107 +1,83 @@
 import 'package:flutter/material.dart';
+import 'package:places/res/text_style.dart';
 
 import 'colors.dart';
 
 final lightTheme = ThemeData(
-  canvasColor: lmCanvasColor,
-  cardColor: lmCardColor,
-  appBarTheme: AppBarTheme(
-    centerTitle: true,
-    elevation: 0,
-    backgroundColor: lmCanvasColor,
-  ),
-  primaryTextTheme: TextTheme(
-    headline4: TextStyle(
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.bold,
-      fontSize: 32,
-      color: Color(0xff3B3E5B),
+
+    canvasColor: lmCanvasColor,
+    cardColor: lmCardColor,
+    appBarTheme: AppBarTheme(
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: lmCanvasColor,
+        titleTextStyle: textAppBar.copyWith(color: lmMainColor)),
+    primaryTextTheme: TextTheme(
+      headline4: matHeadline5.copyWith(color: lmSecondaryColor),
+      headline5: matHeadline5.copyWith(color: lmSecondaryColor),
+      subtitle1: matSubtitle1.copyWith(color: lmSecondaryColor),
+      subtitle2: matSubtitle2.copyWith(color: lmSecondaryColor),
+      bodyText1: matBodyText1.copyWith(color: lmSecondaryColor),
+      caption: matCaption.copyWith(color: lmSecondary2Color.withOpacity(0.56)),
     ),
-    headline5: TextStyle(
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.bold,
-      fontSize: 24,
-      color: Color(0xff3B3E5B),
+    dividerColor: lmSecondaryColor,
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        primary: lmGreenColor,
+        minimumSize: Size.fromHeight(48),
+      ),
     ),
-    subtitle1: TextStyle(
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w500,
-      fontSize: 16,
-      color: Color(0xff3B3E5B),
+    tabBarTheme: TabBarTheme(
+      indicator: BoxDecoration(
+        borderRadius: BorderRadius.circular(
+          25.0,
+        ),
+        color: lmSecondaryColor,
+      ),
+      unselectedLabelColor: lmSecondary2Color,
+      labelColor: Colors.white,
+      labelStyle: TextStyle(
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w700,
+        fontSize: 14,
+        color: lmSecondaryColor,
+      ),
+      unselectedLabelStyle: TextStyle(
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w700,
+        fontSize: 14,
+        color: lmSecondary2Color,
+      ),
     ),
-    subtitle2: TextStyle(
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.bold,
-      fontSize: 14,
-      color: Color(0xff3B3E5B),
-    ),
-    bodyText1: TextStyle(
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.normal,
-      fontSize: 14,
-      color: Color(0xff3B3E5B),
-    ),
-    caption: TextStyle(
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.normal,
-      fontSize: 12,
-      color: Color(0xff7C7E92).withOpacity(0.56),
-    ),
-  ),
-);
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        selectedItemColor: lmMainColor,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        unselectedItemColor: lmMainColor.withOpacity(0.2)));
+
 final darkTheme = ThemeData(
     canvasColor: dmCanvasColor,
     cardColor: dmCardColor,
     appBarTheme: AppBarTheme(
       centerTitle: true,
       elevation: 0,
-      titleTextStyle: TextStyle(
-        fontStyle: FontStyle.normal,
-        fontWeight: FontWeight.w500,
-        fontSize: 18,
-        color: Colors.white,
-      ),
+      titleTextStyle: textAppBar.copyWith(color: Colors.white),
       backgroundColor: dmCanvasColor,
     ),
     primaryTextTheme: TextTheme(
-      headline4: TextStyle(
-        fontStyle: FontStyle.normal,
-        fontWeight: FontWeight.bold,
-        fontSize: 32,
-        color: Colors.white,
-      ),
-      headline5: TextStyle(
-        fontStyle: FontStyle.normal,
-        fontWeight: FontWeight.bold,
-        fontSize: 24,
-        color: Colors.white,
-      ),
-      subtitle1: TextStyle(
-        fontStyle: FontStyle.normal,
-        fontWeight: FontWeight.w500,
-        fontSize: 16,
-        color: Colors.white,
-      ),
-      subtitle2: TextStyle(
-        fontStyle: FontStyle.normal,
-        fontWeight: FontWeight.bold,
-        fontSize: 14,
-        color: Colors.white,
-      ),
-      bodyText1: TextStyle(
-        fontStyle: FontStyle.normal,
-        fontWeight: FontWeight.normal,
-        fontSize: 14,
-        color: Colors.white,
-      ),
-      caption: TextStyle(
-        fontStyle: FontStyle.normal,
-        fontWeight: FontWeight.normal,
-        fontSize: 12,
-        color: Colors.white.withOpacity(0.56),
-      ),
+      headline4: matHeadline5.copyWith(color: dmSecondaryColor),
+      headline5: matHeadline5.copyWith(color: dmSecondaryColor),
+      subtitle1: matSubtitle1.copyWith(color: dmSecondaryColor),
+      subtitle2: matSubtitle2.copyWith(color: dmSecondaryColor),
+      bodyText1: matBodyText1.copyWith(color: dmSecondaryColor),
+      caption: matCaption.copyWith(color: dmSecondary2Color.withOpacity(0.56)),
     ),
-    dividerColor: Color(0xff7C7E92),
+    dividerColor: dmSecondaryColor,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         elevation: 0,
@@ -119,19 +95,19 @@ final darkTheme = ThemeData(
         ),
         color: Colors.white,
       ),
-      unselectedLabelColor: Color(0xff7C7E92),
-      labelColor: Color(0xff3B3E5B),
+      unselectedLabelColor: lmSecondary2Color,
+      labelColor: lmSecondaryColor,
       labelStyle: TextStyle(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w700,
         fontSize: 14,
-        color: Color(0xff3B3E5B),
+        color: dmSecondaryColor,
       ),
       unselectedLabelStyle: TextStyle(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w700,
         fontSize: 14,
-        color: Color(0xff7C7E92),
+        color: dmSecondary2Color,
       ),
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
