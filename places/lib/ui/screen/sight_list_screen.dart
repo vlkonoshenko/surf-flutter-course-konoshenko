@@ -23,7 +23,7 @@ class _SightListScreenState extends State<SightListScreen> {
               alignment: Alignment.centerLeft,
               child: Text(
                 'Список\nинтересных мест',
-                style: textBold32,
+                style: Theme.of(context).primaryTextTheme.headline4,
               ),
             ),
           ),
