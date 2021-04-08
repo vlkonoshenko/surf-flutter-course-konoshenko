@@ -4,7 +4,8 @@ import 'package:places/res/text_style.dart';
 import 'colors.dart';
 
 final lightTheme = ThemeData(
-
+    primaryColor: Color(0xff1A1A20),
+    accentColor: lmGreenColor,
     canvasColor: lmCanvasColor,
     cardColor: lmCardColor,
     appBarTheme: AppBarTheme(
@@ -64,6 +65,8 @@ final lightTheme = ThemeData(
 final darkTheme = ThemeData(
     canvasColor: dmCanvasColor,
     cardColor: dmCardColor,
+    primaryColor: Color(0xffffffff),
+    accentColor: dmGreenColor,
     appBarTheme: AppBarTheme(
       centerTitle: true,
       elevation: 0,
@@ -82,7 +85,6 @@ final darkTheme = ThemeData(
       thickness: 0.8,
       color: Color(0xff7C7E92),
     ),
-
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         elevation: 0,

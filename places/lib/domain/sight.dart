@@ -10,7 +10,7 @@ class Sight{
 
 class Coordinate {
   double lat;
-  double lon;
+  double lng;
 
-  Coordinate(this.lat, this.lon);
+  Coordinate(this.lat, this.lng);
 }

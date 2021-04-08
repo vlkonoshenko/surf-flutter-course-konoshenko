@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:places/ui/screen/filters_screen.dart';
 import 'package:places/ui/screen/home_screen.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 
@@ -18,10 +19,11 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: darkTheme,
+      theme: lightTheme,
       routes: {
         '/': (context) => HomeScreen(),
         SightDetailsScreen.routeName: (context) => SightDetailsScreen(),
+        FilterScreen.routeName: (context) => FilterScreen(),
       },
       initialRoute: '/',
     );
