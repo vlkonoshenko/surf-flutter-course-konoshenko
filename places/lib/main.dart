@@ -9,6 +9,9 @@ void main() {
   runApp(App());
 }
 
+ChangeNotifier themeNotifier = ChangeNotifier();
+bool isDarkMode = false;
+
 class App extends StatefulWidget {
   @override
   _AppState createState() => _AppState();
@@ -17,9 +20,14 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
+    themeNotifier.addListener(() {
+      setState(() {
+        isDarkMode = !isDarkMode;
+      });
+    });
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: lightTheme,
+      theme: isDarkMode ? darkTheme : lightTheme,
       routes: {
         '/': (context) => HomeScreen(),
         SightDetailsScreen.routeName: (context) => SightDetailsScreen(),
