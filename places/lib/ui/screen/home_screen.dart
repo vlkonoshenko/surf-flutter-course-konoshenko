@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/screen/sight_list_screen.dart';
 import 'package:places/ui/screen/visiting_screen.dart';
@@ -30,7 +31,6 @@ class _HomeScreenState extends State<HomeScreen>
         children: [
           SightListScreen(),
           VisitingScreen(),
-
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -38,11 +38,17 @@ class _HomeScreenState extends State<HomeScreen>
         currentIndex: _tabController.index,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.list_alt_outlined), label: '1'),
-
+              icon: SvgPicture.asset(
+                  _tabController.index == 0 ? iconListFull : iconList),
+              label: 'List sight'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border), label: '2'),
-
+              icon: SvgPicture.asset(
+                  _tabController.index == 1 ? iconHeartFull : iconHeart),
+              label: '2'),
+          // BottomNavigationBarItem(
+          //     icon: SvgPicture.asset(
+          //         _tabController.index == 2 ? iconSettingsFull : iconSettings),
+          //     label: '2')
         ],
       ),
     );
