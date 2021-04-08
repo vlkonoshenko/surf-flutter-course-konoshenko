@@ -6,6 +6,7 @@ import 'colors.dart';
 final lightTheme = ThemeData(
     primaryColor: Color(0xff1A1A20),
     accentColor: lmGreenColor,
+    splashColor: Color(0x32C4C4C4),
     canvasColor: lmCanvasColor,
     cardColor: lmCardColor,
     appBarTheme: AppBarTheme(
@@ -63,6 +64,7 @@ final lightTheme = ThemeData(
         unselectedItemColor: lmMainColor.withOpacity(0.2)));
 
 final darkTheme = ThemeData(
+    splashColor: Color(0x32C4C4C4),
     canvasColor: dmCanvasColor,
     cardColor: dmCardColor,
     primaryColor: Color(0xffffffff),

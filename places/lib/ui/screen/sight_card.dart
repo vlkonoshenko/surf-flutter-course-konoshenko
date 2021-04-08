@@ -28,77 +28,81 @@ class SightCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(16),
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: () => Navigator.pushNamed(context, SightDetailsScreen.routeName,
-            arguments: sightMeta),
-        child: Column(
-          children: [
-            Container(
-                height: 96,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    Image.network(
-                      sightMeta.sight.url,
-                      fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CupertinoActivityIndicator.partiallyRevealed(
-                            progress: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
-                                : null,
-                          ),
-                        );
-                      },
-                    ),
-                    Positioned(
-                      left: 16,
-                      top: 16,
-                      child: Text(
-                        sightMeta.sight.type,
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle2
-                            .copyWith(color: Colors.white),
+    return Ink(
+      child: Card(
+        margin: EdgeInsets.all(16),
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: () => Navigator.pushNamed(context, SightDetailsScreen.routeName,
+              arguments: sightMeta),
+          child: Column(
+            children: [
+              Container(
+                  height: 96,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Ink(
+                        child: Image.network(
+                          sightMeta.sight.url,
+                          fit: BoxFit.cover,
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Center(
+                              child: CupertinoActivityIndicator.partiallyRevealed(
+                                progress: loadingProgress.expectedTotalBytes != null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes
+                                    : null,
+                              ),
+                            );
+                          },
+                        ),
                       ),
+                      Positioned(
+                        left: 16,
+                        top: 16,
+                        child: Text(
+                          sightMeta.sight.type,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle2
+                              .copyWith(color: Colors.white),
+                        ),
+                      ),
+                      Positioned(
+                        right: 16,
+                        top: 16,
+                        child: SightCardTools(sightMeta),
+                      ),
+                    ],
+                  )),
+              Container(
+                height: 108,
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(height: 16),
+                    Text(
+                      sightMeta.sight.name,
+                      maxLines: 2,
+                      style: Theme.of(context).primaryTextTheme.subtitle1,
                     ),
-                    Positioned(
-                      right: 16,
-                      top: 16,
-                      child: SightCardTools(sightMeta),
-                    ),
+                    SizedBox(height: 4),
+                    _buildDetailInfo(context, sightMeta),
+                    if (sightMeta.wantVisit || sightMeta.visited)
+                      _buildSightStatus(context),
                   ],
-                )),
-            Container(
-              height: 108,
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(height: 16),
-                  Text(
-                    sightMeta.sight.name,
-                    maxLines: 2,
-                    style: Theme.of(context).primaryTextTheme.subtitle1,
-                  ),
-                  SizedBox(height: 4),
-                  _buildDetailInfo(context, sightMeta),
-                  if (sightMeta.wantVisit || sightMeta.visited)
-                    _buildSightStatus(context),
-                ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

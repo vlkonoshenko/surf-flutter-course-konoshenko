@@ -30,7 +30,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Тёмная тема'),
+                Text(
+                  'Тёмная тема',
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subtitle1
+                      .copyWith(fontWeight: FontWeight.w400),
+                ),
                 CupertinoSwitch(
                     value: isDarkMode,
                     onChanged: (onChanged) {
@@ -42,7 +48,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Смотреть туториал'),
+                Text(
+                  'Смотреть туториал',
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subtitle1
+                      .copyWith(fontWeight: FontWeight.w400),
+                ),
                 IconButton(
                     icon: SvgPicture.asset(
                       iconInfo,
