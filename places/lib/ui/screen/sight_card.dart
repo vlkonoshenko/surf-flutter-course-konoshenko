@@ -36,33 +36,30 @@ class SightCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.0),
         ),
         clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: () => Navigator.pushNamed(context, SightDetailsScreen.routeName,
-              arguments: sightMeta),
-          child: Column(
+        child: Stack(children: [
+          Column(
             children: [
               Container(
                   height: 96,
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      Ink(
-                        child: Image.network(
-                          sightMeta.sight.url,
-                          fit: BoxFit.cover,
-                          loadingBuilder: (BuildContext context, Widget child,
-                              ImageChunkEvent loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return Center(
-                              child: CupertinoActivityIndicator.partiallyRevealed(
-                                progress: loadingProgress.expectedTotalBytes != null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes
-                                    : null,
-                              ),
-                            );
-                          },
-                        ),
+                      Image.network(
+                        sightMeta.sight.url,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CupertinoActivityIndicator.partiallyRevealed(
+                              progress:
+                                  loadingProgress.expectedTotalBytes != null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes
+                                      : null,
+                            ),
+                          );
+                        },
                       ),
                       Positioned(
                         left: 16,
@@ -74,11 +71,6 @@ class SightCard extends StatelessWidget {
                               .subtitle2
                               .copyWith(color: Colors.white),
                         ),
-                      ),
-                      Positioned(
-                        right: 16,
-                        top: 16,
-                        child: SightCardTools(sightMeta),
                       ),
                     ],
                   )),
@@ -103,7 +95,20 @@ class SightCard extends StatelessWidget {
               ),
             ],
           ),
-        ),
+          Positioned.fill(
+              child: new Material(
+                  color: Colors.transparent,
+                  child: new InkWell(
+                    onTap: () => Navigator.pushNamed(
+                        context, SightDetailsScreen.routeName,
+                        arguments: sightMeta),
+                  ))),
+          Positioned(
+            right: 16,
+            top: 16,
+            child: SightCardTools(sightMeta),
+          ),
+        ]),
       ),
     );
   }
@@ -173,48 +178,46 @@ class SightCardTools extends StatelessWidget {
         if (sightMeta.visited)
           Padding(
             padding: const EdgeInsets.only(left: 16.0),
-            child: btnIconShare(),
+            child: btnIcon(
+                icon: iconShare,
+                onClick: () {
+                  print('on click iconShare');
+                }),
           ),
         if (sightMeta.wantVisit)
           Padding(
             padding: const EdgeInsets.only(left: 16.0),
-            child: btnIconCalendar(),
+            child: btnIcon(
+                icon: iconCalendar,
+                onClick: () {
+                  print('on click iconCalendar');
+                }),
           ),
         Padding(
           padding: const EdgeInsets.only(left: 16.0),
           child: (sightMeta.visited || sightMeta.wantVisit)
-              ? btnIconClose()
-              : btnIconHeart(),
+              ? btnIcon(
+                  icon: iconClose,
+                  onClick: () {
+                    print('on click iconClose');
+                  })
+              : btnIcon(
+                  icon: iconHeart,
+                  onClick: () {
+                    print('on click iconShare');
+                  }),
         ),
       ],
     );
   }
 
-  Widget btnIconShare() {
-    VoidCallback _onClick = () {
-      print('on click iconShare');
-    };
-    return InkWell(onTap: _onClick, child: SvgPicture.asset(iconShare));
-  }
-
-  Widget btnIconCalendar() {
-    VoidCallback _onClick = () {
-      print('on click iconCalendar');
-    };
-    return InkWell(onTap: _onClick, child: SvgPicture.asset(iconCalendar));
-  }
-
-  Widget btnIconHeart() {
-    VoidCallback _onClick = () {
-      print('on click iconHeart');
-    };
-    return InkWell(onTap: _onClick, child: SvgPicture.asset(iconHeart));
-  }
-
-  Widget btnIconClose() {
-    VoidCallback _onClick = () {
-      print('on click iconClose');
-    };
-    return InkWell(onTap: _onClick, child: SvgPicture.asset(iconClose));
+  Widget btnIcon({icon, onClick}) {
+    return Material(
+        borderRadius: BorderRadius.all(Radius.circular(100)),
+        color: Colors.transparent,
+        child: InkWell(
+            borderRadius: BorderRadius.all(Radius.circular(100)),
+            onTap: onClick,
+            child: SvgPicture.asset(icon)));
   }
 }
