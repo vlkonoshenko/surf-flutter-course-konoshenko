@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:places/res/colors.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:places/res/icons.dart';
 
 class BtnWhiteSquare extends StatelessWidget {
   final IconData icon;
@@ -18,13 +19,16 @@ class BtnWhiteSquare extends StatelessWidget {
         ),
         height: 32,
         width: 32,
-        child: IconButton(
-          icon: Icon(
-            icon,
-            size: 12,
-            color: Theme.of(context).primaryTextTheme.subtitle2.color,
+        child: InkWell(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: SvgPicture.asset(
+              iconArrow,
+            ),
           ),
-          onPressed: () => Navigator.of(context).pop(),
         ));
   }
 }

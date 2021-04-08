@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/res/icons.dart';
+import 'package:places/res/res.dart';
 import 'package:places/ui/components/components.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
@@ -81,20 +82,18 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                               ],
                             ),
                             SizedBox(height: 24),
-                            ConstrainedBox(
-                              constraints: BoxConstraints(minHeight: 100),
-                              child: Text(
-                                sight.sight.details,
-                                style: Theme.of(context)
-                                    .primaryTextTheme
-                                    .bodyText1,
-                              ),
+                            Text(
+                              sight.sight.details,
+                              style:
+                                  Theme.of(context).primaryTextTheme.bodyText1,
                             )
                           ],
                         ),
                         SizedBox(height: 24),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            print('on click iconGo');
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -106,6 +105,7 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                               SizedBox(width: 8),
                               Text(
                                 'Построить маршрут'.toUpperCase(),
+                                style: textButtonElevation,
                               ),
                             ],
                           ),
@@ -117,13 +117,49 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                           children: [
                             Expanded(
                                 flex: 1,
-                                child: BtnSecondary(
-                                  title: 'Запланировать',
+                                child: TextButton(
+                                  onPressed: () {
+                                    print('on click iconCalendar');
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SvgPicture.asset(
+                                        iconCalendar,
+                                        color:
+                                            lmSecondary2Color.withOpacity(0.56),
+                                      ),
+                                      SizedBox(width: 8),
+                                      Text('Запланировать',
+                                          style: Theme.of(context)
+                                              .primaryTextTheme
+                                              .subtitle2
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w400,
+                                                  color: lmSecondary2Color
+                                                      .withOpacity(0.56)))
+                                    ],
+                                  ),
                                 )),
                             Expanded(
                                 flex: 1,
-                                child: BtnSecondary(
-                                  title: 'В Избранное',
+                                child: TextButton(
+                                  onPressed: () {
+                                    print('on click iconHeart');
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SvgPicture.asset(iconHeart),
+                                      SizedBox(width: 8),
+                                      Text('В Избранное',
+                                          style: Theme.of(context)
+                                              .primaryTextTheme
+                                              .subtitle2
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w400))
+                                    ],
+                                  ),
                                 ))
                           ],
                         )

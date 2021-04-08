@@ -24,6 +24,7 @@ final lightTheme = ThemeData(
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         elevation: 0,
+        textStyle: textButtonElevation,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
@@ -77,14 +78,19 @@ final darkTheme = ThemeData(
       bodyText1: matBodyText1.copyWith(color: dmSecondaryColor),
       caption: matCaption.copyWith(color: dmSecondary2Color.withOpacity(0.56)),
     ),
-    dividerColor: dmSecondaryColor,
+    dividerTheme: DividerThemeData(
+      thickness: 0.8,
+      color: Color(0xff7C7E92),
+    ),
+
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
-        primary: Color(0xff6ADA6F),
+        textStyle: textButtonElevation,
+        primary: dmGreenColor,
         minimumSize: Size.fromHeight(48),
       ),
     ),
