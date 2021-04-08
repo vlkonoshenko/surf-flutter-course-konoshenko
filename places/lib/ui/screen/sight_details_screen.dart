@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:places/res/icons.dart';
 import 'package:places/ui/components/components.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
@@ -66,7 +68,8 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                                   sight.sight.type.toLowerCase(),
                                   style: Theme.of(context)
                                       .primaryTextTheme
-                                      .subtitle2.copyWith(color: Color(0xff7C7E92)),
+                                      .subtitle2
+                                      .copyWith(color: Color(0xff7C7E92)),
                                 ),
                                 SizedBox(width: 16),
                                 Text(
@@ -90,7 +93,23 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                           ],
                         ),
                         SizedBox(height: 24),
-                        BtnRaised(),
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                iconGo,
+                                height: 24,
+                                width: 24,
+                              ),
+                              SizedBox(width: 8),
+                              Text(
+                                'Построить маршрут'.toUpperCase(),
+                              ),
+                            ],
+                          ),
+                        ),
                         SizedBox(height: 24),
                         Divider(),
                         SizedBox(height: 8),
