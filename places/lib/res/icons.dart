@@ -1,3 +1,4 @@
+//Common icons
 String _iconPath = 'assets/icons';
 
 String iconArrow = '$_iconPath/arrow.svg';
@@ -31,3 +32,13 @@ String iconView = '$_iconPath/view.svg';
 String iconWayArrowForward = '$_iconPath/way_arrow_1.svg';
 String iconWayArrowLeft = '$_iconPath/way_arrow_2.svg';
 String iconWayArrowRight = '$_iconPath/way_arrow_3.svg';
+
+//Catalog
+String _iconCatalogPath = 'assets/catalog';
+
+String iconCafe = '$_iconCatalogPath/cafe.svg';
+String iconHotel = '$_iconCatalogPath/hotel.svg';
+String iconMuseum = '$_iconCatalogPath/museum.svg';
+String iconPark = '$_iconCatalogPath/park.svg';
+String iconRestourant = '$_iconCatalogPath/restourant.svg';
+String iconParticularPlace = '$_iconCatalogPath/particular_place.svg';
