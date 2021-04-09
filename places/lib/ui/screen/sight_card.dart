@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
@@ -168,30 +169,48 @@ class SightCardTools extends StatelessWidget {
         if (sightMeta.visited)
           Padding(
             padding: const EdgeInsets.only(left: 16.0),
-            child: Icon(
-              Icons.share_outlined,
-              color: Colors.white,
-            ),
+            child: btnIconShare(),
           ),
         if (sightMeta.wantVisit)
           Padding(
             padding: const EdgeInsets.only(left: 16.0),
-            child: Icon(
-              Icons.calendar_today_outlined,
-              size: 20,
-              color: Colors.white,
-            ),
+            child: btnIconCalendar(),
           ),
         Padding(
           padding: const EdgeInsets.only(left: 16.0),
-          child: Icon(
-            (sightMeta.visited || sightMeta.wantVisit)
-                ? Icons.close
-                : Icons.favorite_border,
-            color: Colors.white,
-          ),
+          child: (sightMeta.visited || sightMeta.wantVisit)
+              ? btnIconClose()
+              : btnIconHeart(),
         ),
       ],
     );
+  }
+
+  Widget btnIconShare() {
+    VoidCallback _onClick = () {
+      print('on click iconShare');
+    };
+    return InkWell(onTap: _onClick, child: SvgPicture.asset(iconShare));
+  }
+
+  Widget btnIconCalendar() {
+    VoidCallback _onClick = () {
+      print('on click iconCalendar');
+    };
+    return InkWell(onTap: _onClick, child: SvgPicture.asset(iconCalendar));
+  }
+
+  Widget btnIconHeart() {
+    VoidCallback _onClick = () {
+      print('on click iconHeart');
+    };
+    return InkWell(onTap: _onClick, child: SvgPicture.asset(iconHeart));
+  }
+
+  Widget btnIconClose() {
+    VoidCallback _onClick = () {
+      print('on click iconClose');
+    };
+    return InkWell(onTap: _onClick, child: SvgPicture.asset(iconClose));
   }
 }

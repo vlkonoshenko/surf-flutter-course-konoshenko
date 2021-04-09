@@ -41,3 +41,11 @@ TextStyle textAppBar = _text.copyWith(
   fontWeight: FontWeight.w500,
   fontSize: 18,
 );
+
+TextStyle textButtonElevation = _text.copyWith(
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w700,
+  letterSpacing: 0.03,
+
+  fontSize: 14,
+);
