@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/res/res.dart';
+import 'package:places/ui/screen/settings_screen.dart';
 import 'package:places/ui/screen/sight_list_screen.dart';
 import 'package:places/ui/screen/visiting_screen.dart';
 
@@ -15,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(() {
       setState(() {});
     });
@@ -31,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen>
         children: [
           SightListScreen(),
           VisitingScreen(),
+          SettingsScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -45,10 +47,10 @@ class _HomeScreenState extends State<HomeScreen>
               icon: SvgPicture.asset(
                   _tabController.index == 1 ? iconHeartFull : iconHeart,color: Theme.of(context).bottomNavigationBarTheme.selectedItemColor,),
               label: '2'),
-          // BottomNavigationBarItem(
-          //     icon: SvgPicture.asset(
-          //         _tabController.index == 2 ? iconSettingsFull : iconSettings),
-          //     label: '2')
+          BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                  _tabController.index == 2 ? iconSettingsFull : iconSettings,color: Theme.of(context).bottomNavigationBarTheme.selectedItemColor,),
+              label: '2')
         ],
       ),
     );
