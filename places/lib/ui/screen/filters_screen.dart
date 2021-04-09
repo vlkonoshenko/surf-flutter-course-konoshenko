@@ -93,7 +93,7 @@ class _FilterScreenState extends State<FilterScreen> {
                       Text(
                         'Расстояние',
                         style:
-                            matSubtitle1.copyWith(fontWeight: FontWeight.w400),
+                        Theme.of(context).primaryTextTheme.subtitle1.copyWith(fontWeight: FontWeight.w400),
                       ),
                       Text(
                         'от ${valueSlider.start.floor()} до ${valueSlider.end.floor()} м',
@@ -237,7 +237,7 @@ class _FilterContentState extends State<FilterContent> {
           const SizedBox(height: 8),
           Text(
             widget.filterModel.title,
-            style: matCaption,
+            style: Theme.of(context).primaryTextTheme.caption,
           ),
         ],
       );
