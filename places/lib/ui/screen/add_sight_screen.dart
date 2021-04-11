@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/res/text_style.dart';
 import 'package:places/ui/components/label_text_widget.dart';
+import 'package:places/ui/screen/select_category_screen.dart';
 
 class AddSightScreen extends StatefulWidget {
   static const String routeName = '/add_sight_screen';
@@ -50,21 +51,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
         child: Column(
           children: [
             SizedBox(height: 24),
-            LabelWidget('категория'),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Смотреть туториал',
-                  style: Theme.of(context)
-                      .primaryTextTheme
-                      .subtitle1
-                      .copyWith(fontWeight: FontWeight.w400),
-                ),
-                Icon(Icons.chevron_right),
-              ],
-            ),
-            Divider(),
+            _buildCategory(),
             SizedBox(height: 24),
             _buildTitle(),
             SizedBox(height: 24),
@@ -86,47 +73,76 @@ class _AddSightScreenState extends State<AddSightScreen> {
       ),
     );
   }
-}
 
-Widget _buildTitle() {
-  return Column(
-    children: [
-      LabelWidget("название"),
-      TextField(),
-    ],
-  );
-}
-
-Widget _buildDescription() {
-  return Column(
-    children: [
-      LabelWidget("описание"),
-      TextField(),
-    ],
-  );
-}
-
-Widget _buildCoordinate() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Row(
-        children: [
-          Expanded(
-            child: Column(
-              children: [LabelWidget('широта'), TextField()],
-            ),
+  Widget _buildCategory() {
+    return Column(
+      children: [
+        LabelWidget('категория'),
+        SizedBox(height: 16),
+        InkWell(
+          onTap: () =>
+              Navigator.pushNamed(context, SelectCategoryScreen.routeName),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Не выбрано',
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .subtitle1
+                    .copyWith(fontWeight: FontWeight.w400),
+              ),
+              Icon(Icons.chevron_right),
+            ],
           ),
-          SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              children: [LabelWidget('долгота'), TextField()],
+        ),
+        Divider(),
+      ],
+    );
+  }
+
+  Widget _buildTitle() {
+    return Column(
+      children: [
+        LabelWidget("название"),
+        SizedBox(height: 16),
+        TextField(),
+      ],
+    );
+  }
+
+  Widget _buildDescription() {
+    return Column(
+      children: [
+        LabelWidget("описание"),
+        SizedBox(height: 16),
+        TextField(),
+      ],
+    );
+  }
+
+  Widget _buildCoordinate() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Column(
+                children: [LabelWidget('широта'), TextField()],
+              ),
             ),
-          )
-        ],
-      ),
-      SizedBox(height: 16),
-      Text('Указать на карте')
-    ],
-  );
+            SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                children: [LabelWidget('долгота'), TextField()],
+              ),
+            )
+          ],
+        ),
+        SizedBox(height: 16),
+        Text('Указать на карте')
+      ],
+    );
+  }
 }
