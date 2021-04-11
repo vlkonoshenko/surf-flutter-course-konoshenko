@@ -18,6 +18,7 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
   Widget build(BuildContext context) {
     final SightCardMeta sight = ModalRoute.of(context).settings.arguments;
     return Scaffold(
+
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
