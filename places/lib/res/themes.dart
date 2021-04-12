@@ -4,6 +4,23 @@ import 'package:places/res/text_style.dart';
 import 'colors.dart';
 
 final lightTheme = ThemeData(
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: lmMainColor,
+    ),
+
+    inputDecorationTheme: InputDecorationTheme(
+      isDense: true,
+      contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 16),
+      focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: lmGreenColor),
+          borderRadius: BorderRadius.all(Radius.circular(8))),
+      border: OutlineInputBorder(
+          borderSide: BorderSide(color: lmGreenColor),
+          borderRadius: BorderRadius.all(Radius.circular(8))),
+      enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: lmGreenColor),
+          borderRadius: BorderRadius.all(Radius.circular(8))),
+    ),
     primaryColor: Color(0xff1A1A20),
     accentColor: lmGreenColor,
     splashColor: Color(0x32C4C4C4),

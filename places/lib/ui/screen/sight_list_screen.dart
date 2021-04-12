@@ -56,6 +56,13 @@ class _SightListScreenState extends State<SightListScreen> {
                 left: 92,
                 right: 92,
                 child: ElevatedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24.0),
+                      ),
+                    ),
+                  ),
                   onPressed: () {
                     Navigator.pushNamed(context, AddSightScreen.routeName);
                   },

@@ -4,6 +4,11 @@ TextStyle _text = TextStyle(
   fontStyle: FontStyle.normal,
 );
 
+TextStyle textMedium = _text.copyWith(
+  fontSize: 16,
+  fontWeight: FontWeight.bold,
+);
+
 TextStyle matHeadline5 = _text.copyWith(
   fontWeight: FontWeight.bold,
   fontSize: 24,
@@ -46,6 +51,5 @@ TextStyle textButtonElevation = _text.copyWith(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w700,
   letterSpacing: 0.03,
-
   fontSize: 14,
 );
