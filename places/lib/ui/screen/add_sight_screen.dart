@@ -59,7 +59,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ElevatedButton(
-          onPressed: _isBtnValid
+          onPressed: _isBtnValid()
               ? () {
                   mocks.add(SightCardMeta(Sight(
                     _tcTitle.text,
@@ -202,6 +202,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
           focusNode: _fnDescription,
           controller: _tcDescription,
           maxLines: null,
+          textInputAction: TextInputAction.done,
           minLines: 3,
           decoration: InputDecoration(
             hintText: 'введите текст',
@@ -301,12 +302,13 @@ class _AddSightScreenState extends State<AddSightScreen> {
     );
   }
 
-  get _isBtnValid =>
-      selectedCategory.isNotEmpty &&
-      _tcDescription.text.isNotEmpty &&
-      _tcLon.text.isNotEmpty &&
-      _tcLat.text.isNotEmpty &&
-      _tcTitle.text.isNotEmpty;
+  bool _isBtnValid() {
+    return selectedCategory.isNotEmpty &&
+        _tcDescription.text.isNotEmpty &&
+        _tcLon.text.isNotEmpty &&
+        _tcLat.text.isNotEmpty &&
+        _tcTitle.text.isNotEmpty;
+  }
 }
 
 class TextFieldCleanSuffix extends StatelessWidget {
