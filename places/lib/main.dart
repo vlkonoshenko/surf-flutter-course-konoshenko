@@ -3,6 +3,7 @@ import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/filters_screen.dart';
 import 'package:places/ui/screen/home_screen.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
+import 'package:places/ui/screen/sight_search_screen.dart';
 
 import 'res/themes.dart';
 import 'ui/screen/select_category_screen.dart';
@@ -36,6 +37,7 @@ class _AppState extends State<App> {
         FilterScreen.routeName: (context) => FilterScreen(),
         AddSightScreen.routeName: (context) => AddSightScreen(),
         SelectCategoryScreen.routeName: (context) => SelectCategoryScreen(),
+        SightSearchScreen.routeName: (context) => SightSearchScreen(),
       },
       initialRoute: '/',
     );
