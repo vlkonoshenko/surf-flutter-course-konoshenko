@@ -65,7 +65,7 @@ class _FilterScreenState extends State<FilterScreen> {
             child: Row(
               children: [
                 Text(
-                  'категории'.toUpperCase(),
+                  'КАТЕГОРИИ',
                   style: matCaption.copyWith(color: Color(0xff7C7E92)),
                 ),
               ],
@@ -92,8 +92,10 @@ class _FilterScreenState extends State<FilterScreen> {
                     children: [
                       Text(
                         'Расстояние',
-                        style:
-                        Theme.of(context).primaryTextTheme.subtitle1.copyWith(fontWeight: FontWeight.w400),
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .subtitle1
+                            .copyWith(fontWeight: FontWeight.w400),
                       ),
                       Text(
                         'от ${valueSlider.start.floor()} до ${valueSlider.end.floor()} м',

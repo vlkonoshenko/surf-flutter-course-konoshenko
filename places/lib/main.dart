@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/filters_screen.dart';
 import 'package:places/ui/screen/home_screen.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 
 import 'res/themes.dart';
+import 'ui/screen/select_category_screen.dart';
 
 void main() {
   runApp(App());
@@ -32,6 +34,8 @@ class _AppState extends State<App> {
         '/': (context) => HomeScreen(),
         SightDetailsScreen.routeName: (context) => SightDetailsScreen(),
         FilterScreen.routeName: (context) => FilterScreen(),
+        AddSightScreen.routeName: (context) => AddSightScreen(),
+        SelectCategoryScreen.routeName: (context) => SelectCategoryScreen(),
       },
       initialRoute: '/',
     );
