@@ -21,10 +21,17 @@ class SightCardMeta {
   }
 }
 
-class SightCard extends StatelessWidget {
+class SightCard extends StatefulWidget {
   final SightCardMeta sightMeta;
+  final VoidCallback onDelete;
 
-  SightCard(this.sightMeta);
+  SightCard(this.sightMeta, {Key key, this.onDelete}) : super(key: key);
+
+  @override
+  _SightCardState createState() => _SightCardState();
+}
+
+class _SightCardState extends State<SightCard> {
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +52,7 @@ class SightCard extends StatelessWidget {
                     fit: StackFit.expand,
                     children: [
                       Image.network(
-                        sightMeta.sight.url,
+                        widget.sightMeta.sight.url,
                         fit: BoxFit.cover,
                         loadingBuilder: (BuildContext context, Widget child,
                             ImageChunkEvent loadingProgress) {
@@ -65,7 +72,7 @@ class SightCard extends StatelessWidget {
                         left: 16,
                         top: 16,
                         child: Text(
-                          sightMeta.sight.type??'',
+                          widget.sightMeta.sight.type ?? '',
                           style: Theme.of(context)
                               .textTheme
                               .subtitle2
@@ -82,13 +89,13 @@ class SightCard extends StatelessWidget {
                   children: [
                     SizedBox(height: 16),
                     Text(
-                      sightMeta.sight.name,
+                      widget.sightMeta.sight.name,
                       maxLines: 2,
                       style: Theme.of(context).primaryTextTheme.subtitle1,
                     ),
                     SizedBox(height: 4),
-                    _buildDetailInfo(context, sightMeta),
-                    if (sightMeta.wantVisit || sightMeta.visited)
+                    _buildDetailInfo(context, widget.sightMeta),
+                    if (widget.sightMeta.wantVisit || widget.sightMeta.visited)
                       _buildSightStatus(context),
                   ],
                 ),
@@ -101,12 +108,19 @@ class SightCard extends StatelessWidget {
                   child: new InkWell(
                     onTap: () => Navigator.pushNamed(
                         context, SightDetailsScreen.routeName,
-                        arguments: sightMeta),
+                        arguments: widget.sightMeta),
                   ))),
           Positioned(
             right: 16,
             top: 16,
-            child: SightCardTools(sightMeta),
+            child: Column(
+              children: [
+                SightCardTools(
+                  widget.sightMeta,
+                  onDelete: widget.onDelete,
+                ),
+              ],
+            ),
           ),
         ]),
       ),
@@ -168,8 +182,9 @@ class SightCard extends StatelessWidget {
 
 class SightCardTools extends StatelessWidget {
   final SightCardMeta sightMeta;
+  final VoidCallback onDelete;
 
-  const SightCardTools(this.sightMeta);
+  const SightCardTools(this.sightMeta, {this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -196,16 +211,12 @@ class SightCardTools extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 16.0),
           child: (sightMeta.visited || sightMeta.wantVisit)
-              ? btnIcon(
-                  icon: iconClose,
-                  onClick: () {
-                    print('on click iconClose');
-                  })
+              ? btnIcon(icon: iconClose, onClick: onDelete)
               : btnIcon(
-                  icon: iconHeart,
-                  onClick: () {
-                    print('on click iconShare');
-                  }),
+              icon: iconHeart,
+              onClick: () {
+                print('on click iconShare');
+              }),
         ),
       ],
     );
