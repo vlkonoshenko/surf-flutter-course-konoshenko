@@ -9,6 +9,7 @@ import 'package:places/ui/components/label_text_widget.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 import 'package:styled_text/styled_text.dart';
+import 'select_category_screen.dart';
 
 import 'filters_screen.dart';
 
@@ -218,7 +219,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                               height: 8,
                             ),
                             Text(
-                              result[index].sight.type,
+                              result[index].sight.type.toText(),
                               style: Theme.of(context)
                                   .primaryTextTheme
                                   .subtitle1

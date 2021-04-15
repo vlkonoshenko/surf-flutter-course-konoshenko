@@ -6,6 +6,8 @@ import 'package:places/res/res.dart';
 import 'package:places/ui/components/components.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
+import 'select_category_screen.dart';
+
 class SightDetailsScreen extends StatefulWidget {
   static const String routeName = '/sight_details_screen';
 
@@ -18,7 +20,6 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
   Widget build(BuildContext context) {
     final SightCardMeta sight = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
@@ -67,7 +68,7 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                             Row(
                               children: [
                                 Text(
-                                  sight.sight.type.toLowerCase(),
+                                  sight.sight.type.toText(),
                                   style: Theme.of(context)
                                       .primaryTextTheme
                                       .subtitle2

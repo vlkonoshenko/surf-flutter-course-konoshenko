@@ -5,6 +5,8 @@ import 'package:places/domain/sight.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 
+import 'select_category_screen.dart';
+
 class SightCardMeta {
   Sight sight;
   bool wantVisit;
@@ -32,7 +34,6 @@ class SightCard extends StatefulWidget {
 }
 
 class _SightCardState extends State<SightCard> {
-
   @override
   Widget build(BuildContext context) {
     return Ink(
@@ -72,7 +73,7 @@ class _SightCardState extends State<SightCard> {
                         left: 16,
                         top: 16,
                         child: Text(
-                          widget.sightMeta.sight.type ?? '',
+                          widget.sightMeta.sight.type.toText(),
                           style: Theme.of(context)
                               .textTheme
                               .subtitle2
@@ -213,10 +214,10 @@ class SightCardTools extends StatelessWidget {
           child: (sightMeta.visited || sightMeta.wantVisit)
               ? btnIcon(icon: iconClose, onClick: onDelete)
               : btnIcon(
-              icon: iconHeart,
-              onClick: () {
-                print('on click iconShare');
-              }),
+                  icon: iconHeart,
+                  onClick: () {
+                    print('on click iconShare');
+                  }),
         ),
       ],
     );
