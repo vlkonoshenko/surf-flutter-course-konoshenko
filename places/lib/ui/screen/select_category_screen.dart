@@ -12,8 +12,7 @@ class SelectCategoryScreen extends StatefulWidget {
 }
 
 class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
-  var category = ['Отель', 'Ресторан', 'Особое место', 'Парк', 'Музей', 'Кафе'];
-  String selectedCategory = '';
+  SightCategory selectedCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +40,12 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
                   return InkWell(
                     onTap: () {
                       setState(() {
-                        selectedCategory = category[index];
+                        selectedCategory = SightCategory.values[index];
                       });
                     },
                     child: ListTile(
-                      title: Text(category[index]),
-                      trailing: selectedCategory == category[index]
+                      title: Text(SightCategory.values[index].toText()),
+                      trailing: selectedCategory == SightCategory.values[index]
                           ? SvgPicture.asset(
                               iconTick,
                               color: Colors.green,
@@ -65,14 +64,16 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
                     ),
                   );
                 },
-                itemCount: category.length),
+                itemCount: SightCategory.values.length),
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
-              onPressed: selectedCategory.isNotEmpty?() {
-                Navigator.pop(context, selectedCategory);
-              }:null,
+              onPressed: selectedCategory != null
+                  ? () {
+                      Navigator.pop<SightCategory>(context, selectedCategory);
+                    }
+                  : null,
               child: Text(
                 'Сохранить'.toUpperCase(),
                 style: textButtonElevation,
@@ -80,5 +81,39 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
             ),
           ),
         ]));
+  }
+}
+
+enum SightCategory {
+  hotel,
+  restaurant,
+  special_place,
+  park,
+  museum,
+  cafe,
+}
+
+extension SightCategoryExt on SightCategory {
+  String toText() {
+    switch (this) {
+      case SightCategory.hotel:
+        return 'Отель';
+        break;
+      case SightCategory.restaurant:
+        return 'Ресторан';
+        break;
+      case SightCategory.special_place:
+        return 'Особое место';
+        break;
+      case SightCategory.park:
+        return 'Парк';
+        break;
+      case SightCategory.museum:
+        return 'Музей';
+        break;
+      case SightCategory.cafe:
+        return 'Кафе';
+        break;
+    }
   }
 }

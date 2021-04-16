@@ -17,7 +17,10 @@ class _VisitingScreenState extends State<VisitingScreen> {
           appBar: AppBar(
             title: Text(
               "Избранное",
-              style: Theme.of(context).primaryTextTheme.subtitle1.copyWith(fontSize: 18),
+              style: Theme.of(context)
+                  .primaryTextTheme
+                  .subtitle1
+                  .copyWith(fontSize: 18),
             ),
           ),
           body: Column(
@@ -58,24 +61,42 @@ class ListVisited extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SightCard(mocks[0].copyWith(visited: true)),
-        SightCard(mocks[1].copyWith(visited: true))
+        SightCard(
+          mocks[0].copyWith(visited: true),
+          key: ValueKey(mocks[0]),
+        ),
+        SightCard(
+          mocks[1].copyWith(visited: true),
+          key: ValueKey(mocks[1]),
+        )
       ],
     );
   }
 }
 
-class ListWantVisit extends StatelessWidget {
+class ListWantVisit extends StatefulWidget {
   const ListWantVisit({
     Key key,
   }) : super(key: key);
 
   @override
+  _ListWantVisitState createState() => _ListWantVisitState();
+}
+
+class _ListWantVisitState extends State<ListWantVisit> {
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SightCard(mocks[0].copyWith(wantVisit: true)),
-      ],
-    );
+    return ListView.builder(
+        itemCount: visit.length,
+        itemBuilder: (context, index) {
+          return SightCard(
+            visit[index],
+            key: ObjectKey(visit[index]),
+            onDelete: () {
+              visit.removeAt(index);
+              setState(() {});
+            },
+          );
+        });
   }
 }

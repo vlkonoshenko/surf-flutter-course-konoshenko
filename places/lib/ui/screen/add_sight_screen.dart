@@ -34,7 +34,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
   final FocusNode _fnLat = FocusNode();
   final FocusNode _fnLon = FocusNode();
 
-  String selectedCategory = '';
+  SightCategory selectedCategory;
 
   @override
   void initState() {
@@ -138,9 +138,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
         SizedBox(height: 16),
         InkWell(
           onTap: () async {
-            dynamic result = await Navigator.pushNamed(
+            var result = await Navigator.pushNamed(
                 context, SelectCategoryScreen.routeName);
-            if (result is String && result.isNotEmpty) {
+            if (result != null) {
               setState(() {
                 selectedCategory = result;
               });
@@ -150,7 +150,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                selectedCategory.isNotEmpty ? selectedCategory : 'Не выбрано',
+                selectedCategory != null ? selectedCategory.toText() : 'Не выбрано',
                 style: Theme.of(context)
                     .primaryTextTheme
                     .subtitle2
@@ -303,7 +303,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
   }
 
   bool _isBtnValid() {
-    return selectedCategory.isNotEmpty &&
+    return selectedCategory != null &&
         _tcDescription.text.isNotEmpty &&
         _tcLon.text.isNotEmpty &&
         _tcLat.text.isNotEmpty &&
