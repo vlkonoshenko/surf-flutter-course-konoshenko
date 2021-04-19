@@ -321,33 +321,31 @@ class _AddSightScreenState extends State<AddSightScreen> {
     return Container(
       height: 120,
       width: double.maxFinite,
-      child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 24.0),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                BtnAddPhoto(
-                  context: context,
-                  onAddClick: () {
-                    images.add(
-                      'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
-                    );
-                    setState(() {});
-                  },
-                ),
-                ...images
-                    .map((e) => ImagePreview(
-                          url: e,
-                          onDelete: () {
-                            images.remove(e);
-                            setState(() {});
-                          },
-                        ))
-                    .toList()
-              ],
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            BtnAddPhoto(
+              context: context,
+              onAddClick: () {
+                images.add(
+                  'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
+                );
+                setState(() {});
+              },
             ),
-          )),
+            ...images
+                .map((e) => ImagePreview(
+                      url: e,
+                      onDelete: () {
+                        images.remove(e);
+                        setState(() {});
+                      },
+                    ))
+                .toList()
+          ],
+        ),
+      ),
     );
   }
 }
