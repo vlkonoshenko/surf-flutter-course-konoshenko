@@ -16,7 +16,7 @@ final List<SightCardMeta> mocks = [
   SightCardMeta(
     Sight(
         'A park of forged figures with a long title to showcase the second row',
-        'https://prodonbass.ru/wp-content/uploads/2020/09/22-24.jpg',
+        'https://lh3.googleusercontent.com/proxy/L10i5lEDvQj1J0M_hgdtwG0cSTLFOWu35zBd4pmR9J-wAEHcC4nvKnTvaxYINS54pcBEoeEGvZk2A6AfE_50X4QXZv2xVlvzNCuzSVLU4oASjw0tgsKxyoe1sg',
         Coordinate(48.015881, 37.799938),
         'Парк в Донецке со скульптурными композициями, выкованными из металла. ',
         SightCategory.park),
@@ -36,7 +36,7 @@ final List<SightCardMeta> visit = [
   SightCardMeta(
     Sight(
         '2 A park of forged figures with a long title to showcase the second row',
-        'https://prodonbass.ru/wp-content/uploads/2020/09/22-24.jpg',
+        'https://lh3.googleusercontent.com/proxy/L10i5lEDvQj1J0M_hgdtwG0cSTLFOWu35zBd4pmR9J-wAEHcC4nvKnTvaxYINS54pcBEoeEGvZk2A6AfE_50X4QXZv2xVlvzNCuzSVLU4oASjw0tgsKxyoe1sg',
         Coordinate(48.015881, 37.799938),
         'Парк в Донецке со скульптурными композициями, выкованными из металла. ',
         SightCategory.park),
@@ -54,7 +54,7 @@ final List<SightCardMeta> visit = [
   SightCardMeta(
     Sight(
         'A park of forged figures with a long title to showcase the second row',
-        'https://prodonbass.ru/wp-content/uploads/2020/09/22-24.jpg',
+        'https://lh3.googleusercontent.com/proxy/L10i5lEDvQj1J0M_hgdtwG0cSTLFOWu35zBd4pmR9J-wAEHcC4nvKnTvaxYINS54pcBEoeEGvZk2A6AfE_50X4QXZv2xVlvzNCuzSVLU4oASjw0tgsKxyoe1sg',
         Coordinate(48.015881, 37.799938),
         'Парк в Донецке со скульптурными композициями, выкованными из металла. ',
         SightCategory.park),
