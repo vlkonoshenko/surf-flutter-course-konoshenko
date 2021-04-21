@@ -3,18 +3,16 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
+import 'package:places/res/res.dart';
 import 'package:places/res/text_style.dart';
+import 'package:places/ui/components/add_signt_screen/components.dart';
 import 'package:places/ui/components/label_text_widget.dart';
 import 'package:places/ui/screen/select_category_screen.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
-import '../../res/colors.dart';
-import '../../res/res.dart';
 
-//TODO: Правильно ли я сделал этот экран? Так как клавиатура перекрывает форму.
 
 class AddSightScreen extends StatefulWidget {
   static const String routeName = '/add_sight_screen';
@@ -35,6 +33,13 @@ class _AddSightScreenState extends State<AddSightScreen> {
   final FocusNode _fnLon = FocusNode();
 
   SightCategory selectedCategory;
+
+  final images = [
+    'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
+    'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
+    'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
+    'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg'
+  ];
 
   @override
   void initState() {
@@ -115,7 +120,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 24),
+              _buildPhotoGallery(),
               _buildCategory(),
               SizedBox(height: 24),
               _buildTitle(),
@@ -150,7 +155,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                selectedCategory != null ? selectedCategory.toText() : 'Не выбрано',
+                selectedCategory != null
+                    ? selectedCategory.toText()
+                    : 'Не выбрано',
                 style: Theme.of(context)
                     .primaryTextTheme
                     .subtitle2
@@ -309,26 +316,38 @@ class _AddSightScreenState extends State<AddSightScreen> {
         _tcLat.text.isNotEmpty &&
         _tcTitle.text.isNotEmpty;
   }
-}
 
-class TextFieldCleanSuffix extends StatelessWidget {
-  final TextEditingController textEditingController;
-
-  const TextFieldCleanSuffix(
-    this.textEditingController, {
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        textEditingController.clear();
-      },
-      child: SvgPicture.asset(
-        iconClear,
-        color: lmMainColor,
-      ),
+  Widget _buildPhotoGallery() {
+    return Container(
+      height: 120,
+      width: double.maxFinite,
+      child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 24.0),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                BtnAddPhoto(
+                  context: context,
+                  onAddClick: () {
+                    images.add(
+                      'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
+                    );
+                    setState(() {});
+                  },
+                ),
+                ...images
+                    .map((e) => ImagePreview(
+                          url: e,
+                          onDelete: () {
+                            images.remove(e);
+                            setState(() {});
+                          },
+                        ))
+                    .toList()
+              ],
+            ),
+          )),
     );
   }
 }
