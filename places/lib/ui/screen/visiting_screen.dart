@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
@@ -52,24 +53,66 @@ class _VisitingScreenState extends State<VisitingScreen> {
   }
 }
 
-class ListVisited extends StatelessWidget {
+class ListVisited extends StatefulWidget {
   const ListVisited({
     Key key,
   }) : super(key: key);
 
   @override
+  _ListVisitedState createState() => _ListVisitedState();
+}
+
+class _ListVisitedState extends State<ListVisited> {
+  List<SightCardMeta> list = [
+    mocks[0].copyWith(visited: true),
+    mocks[1].copyWith(visited: true)
+  ];
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SightCard(
-          mocks[0].copyWith(visited: true),
-          key: ValueKey(mocks[0]),
-        ),
-        SightCard(
-          mocks[1].copyWith(visited: true),
-          key: ValueKey(mocks[1]),
-        )
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          for (var index in list)
+            DragTarget<SightCardMeta>(
+              onWillAccept: (data) {
+                return true;
+              },
+              onAccept: (data) {
+                setState(() {
+                  var newPos = list.indexOf(index);
+                  var dragIndex = list.indexOf(data);
+                  var tmp = index;
+                  list[newPos] = data;
+                  list[dragIndex] = tmp;
+                });
+              },
+              builder: (context, List<SightCardMeta> candidate, rejected) {
+                return Draggable<SightCardMeta>(
+                  data: index,
+                  child: SightCard(
+                    index,
+                    key: ValueKey(index),
+                  ),
+                  childWhenDragging: SizedBox(
+                      height: 240,
+                      width: MediaQuery.of(context).size.width - 16,
+                      child: SightCard(
+                        index,
+                        sightCardState: SightCardState.drag,
+                      )),
+                  feedback: SizedBox(
+                      height: 240,
+                      width: MediaQuery.of(context).size.width - 16,
+                      child: SightCard(
+                        index,
+                        sightCardState: SightCardState.drag,
+                      )),
+                );
+              },
+            ),
+        ],
+      ),
     );
   }
 }
