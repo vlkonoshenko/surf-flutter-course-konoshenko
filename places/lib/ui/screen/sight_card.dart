@@ -25,6 +25,8 @@ class SightCardMeta {
 
 enum SightCardState { drag, simple }
 
+//TODO: Мне не нравится как сделал Dismissable обрезание углов через Stack думаю есть не такое костыльное решение
+
 class SightCard extends StatefulWidget {
   final SightCardMeta sightMeta;
   final VoidCallback onDelete;
@@ -41,103 +43,154 @@ class SightCard extends StatefulWidget {
 class _SightCardState extends State<SightCard> {
   @override
   Widget build(BuildContext context) {
-    return _buildSimple(context);
+    return Container(margin: EdgeInsets.all(16), child: _buildSimple(context));
   }
 
-  Card _buildSimple(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(16),
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Stack(children: [
-        Column(
-          children: [
-            Container(
-                height: 96,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    Image.network(
-                      widget.sightMeta.sight.url,
-                      fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CupertinoActivityIndicator.partiallyRevealed(
-                            progress: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
-                                : null,
-                          ),
-                        );
-                      },
-                    ),
+  Widget _buildSimple(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Positioned.fill(
+            child: _buildDissmissBackground(context)), // instead of background
+        Dismissible(
+          onDismissed: (value) {
+            widget.onDelete();
+          },
+          direction: DismissDirection.endToStart,
+          key: ObjectKey(widget.sightMeta),
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.green, borderRadius: BorderRadius.circular(16)),
+            child: ClipRRect(
+              clipBehavior: Clip.hardEdge,
+              borderRadius: BorderRadius.all(Radius.circular(16)),
+              child: Card(
+                margin: EdgeInsets.all(0),
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                child: Stack(children: [
+                  Column(
+                    children: [
+                      Container(
+                          height: 96,
+                          child: Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Image.network(
+                                widget.sightMeta.sight.url,
+                                fit: BoxFit.cover,
+                                loadingBuilder: (BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return Center(
+                                    child: CupertinoActivityIndicator
+                                        .partiallyRevealed(
+                                      progress: loadingProgress
+                                                  .expectedTotalBytes !=
+                                              null
+                                          ? loadingProgress
+                                                  .cumulativeBytesLoaded /
+                                              loadingProgress.expectedTotalBytes
+                                          : null,
+                                    ),
+                                  );
+                                },
+                              ),
+                              Positioned(
+                                left: 16,
+                                top: 16,
+                                child: Text(
+                                  widget.sightMeta.sight.type.toText(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2
+                                      .copyWith(color: Colors.white),
+                                ),
+                              ),
+                            ],
+                          )),
+                      Container(
+                        height: 108,
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            SizedBox(height: 16),
+                            Text(
+                              widget.sightMeta.sight.name,
+                              maxLines: 2,
+                              style:
+                                  Theme.of(context).primaryTextTheme.subtitle1,
+                            ),
+                            SizedBox(height: 4),
+                            _buildDetailInfo(context, widget.sightMeta),
+                            if (widget.sightMeta.wantVisit ||
+                                widget.sightMeta.visited)
+                              _buildSightStatus(context),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Positioned.fill(
+                      child: new Material(
+                          color: Colors.transparent,
+                          child: new InkWell(
+                            onTap: () => Navigator.pushNamed(
+                                context, SightDetailsScreen.routeName,
+                                arguments: widget.sightMeta),
+                          ))),
+                  if (widget.sightCardState == SightCardState.simple)
                     Positioned(
-                      left: 16,
+                      right: 16,
                       top: 16,
-                      child: Text(
-                        widget.sightMeta.sight.type.toText(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle2
-                            .copyWith(color: Colors.white),
+                      child: Column(
+                        children: [
+                          SightCardTools(
+                            widget.sightMeta,
+                            onDelete: widget.onDelete,
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                )),
-            Container(
-              height: 108,
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(height: 16),
-                  Text(
-                    widget.sightMeta.sight.name,
-                    maxLines: 2,
-                    style: Theme.of(context).primaryTextTheme.subtitle1,
-                  ),
-                  SizedBox(height: 4),
-                  _buildDetailInfo(context, widget.sightMeta),
-                  if (widget.sightMeta.wantVisit || widget.sightMeta.visited)
-                    _buildSightStatus(context),
-                ],
+                ]),
               ),
-            ),
-          ],
-        ),
-        widget.sightCardState == SightCardState.simple
-            ? Positioned.fill(
-                child: new Material(
-                    color: Colors.transparent,
-                    child: new InkWell(
-                      onTap: () => Navigator.pushNamed(
-                          context, SightDetailsScreen.routeName,
-                          arguments: widget.sightMeta),
-                    )))
-            : Positioned.fill(
-                child: Container(
-                  color: Colors.white54,
-                ),
-              ),
-        if (widget.sightCardState == SightCardState.simple)
-          Positioned(
-            right: 16,
-            top: 16,
-            child: Column(
-              children: [
-                SightCardTools(
-                  widget.sightMeta,
-                  onDelete: widget.onDelete,
-                ),
-              ],
             ),
           ),
-      ]),
+        )
+      ],
+    );
+  }
+
+  Container _buildDissmissBackground(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(right: 16),
+      decoration: BoxDecoration(
+          color: lmRedColor,
+          borderRadius: BorderRadius.all(Radius.circular(16))),
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              iconBucket,
+              width: 24,
+              height: 24,
+            ),
+            SizedBox(height: 8),
+            Text(
+              'Удалить',
+              style: Theme.of(context)
+                  .primaryTextTheme
+                  .caption
+                  .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+            )
+          ],
+        ),
+      ),
     );
   }
 
