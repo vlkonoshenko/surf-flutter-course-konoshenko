@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:places/mocks.dart';
+import 'package:places/ui/components/overscroll_glow_absorber.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
-import '../../mocks.dart';
-
 class VisitingScreen extends StatefulWidget {
+  const VisitingScreen({Key key}) : super(key: key);
+
   @override
   _VisitingScreenState createState() => _VisitingScreenState();
 }
@@ -17,7 +21,7 @@ class _VisitingScreenState extends State<VisitingScreen> {
         child: Scaffold(
           appBar: AppBar(
             title: Text(
-              "Избранное",
+              'Избранное',
               style: Theme.of(context)
                   .primaryTextTheme
                   .subtitle1
@@ -26,30 +30,37 @@ class _VisitingScreenState extends State<VisitingScreen> {
           ),
           body: Column(
             children: [
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 16),
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).cardColor,
-                  borderRadius: BorderRadius.circular(
-                    25.0,
-                  ),
-                ),
-                child: TabBar(
-                  tabs: [
-                    Tab(text: 'Хочу посетить'),
-                    Tab(text: 'Посетил'),
-                  ],
-                ),
-              ),
-              Expanded(
+              _tabBar(context),
+              const Expanded(
                 child: TabBarView(
-                  children: [ListWantVisit(), ListVisited()],
+                  children: [
+                    ListWantVisit(),
+                    ListVisited(),
+                  ],
                 ),
               ),
             ],
           ),
         ));
+  }
+
+  Container _tabBar(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      height: 40,
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(
+          25.0,
+        ),
+      ),
+      child: const TabBar(
+        tabs: [
+          Tab(text: 'Хочу посетить'),
+          Tab(text: 'Посетил'),
+        ],
+      ),
+    );
   }
 }
 
@@ -63,55 +74,54 @@ class ListVisited extends StatefulWidget {
 }
 
 class _ListVisitedState extends State<ListVisited> {
-  List<SightCardMeta> list = [
-    mocks[0].copyWith(visited: true),
-    mocks[1].copyWith(visited: true)
-  ];
+  List<SightCardMeta> list =
+      visit.map((e) => e.copyWith(visited: true)).toList();
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          for (var index in list)
-            DragTarget<SightCardMeta>(
-              onWillAccept: (data) {
-                return true;
-              },
-              onAccept: (data) {
-                setState(() {
-                  var newPos = list.indexOf(index);
-                  var dragIndex = list.indexOf(data);
-                  var tmp = index;
-                  list[newPos] = data;
-                  list[dragIndex] = tmp;
-                });
-              },
-              builder: (context, List<SightCardMeta> candidate, rejected) {
-                return Draggable<SightCardMeta>(
-                  data: index,
+    return OverscrollGlowAbsorber(
+      child: ListView.builder(
+        physics: Platform.isAndroid
+            ? const ClampingScrollPhysics()
+            : const BouncingScrollPhysics(),
+        itemCount: list.length,
+        itemBuilder: (context, index) => DragTarget<SightCardMeta>(
+          onWillAccept: (data) {
+            return true;
+          },
+          onAccept: (data) {
+            setState(() {
+              final newPos = list.indexOf(list[index]);
+              final dragIndex = list.indexOf(data);
+              final tmp = list[index];
+              list[newPos] = data;
+              list[dragIndex] = tmp;
+            });
+          },
+          builder: (context, candidate, rejected) {
+            return Draggable<SightCardMeta>(
+              data: list[index],
+              childWhenDragging: SizedBox(
+                  height: 240,
+                  width: MediaQuery.of(context).size.width - 16,
                   child: SightCard(
-                    index,
-                    key: ValueKey(index),
-                  ),
-                  childWhenDragging: SizedBox(
-                      height: 240,
-                      width: MediaQuery.of(context).size.width - 16,
-                      child: SightCard(
-                        index,
-                        sightCardState: SightCardState.drag,
-                      )),
-                  feedback: SizedBox(
-                      height: 240,
-                      width: MediaQuery.of(context).size.width - 16,
-                      child: SightCard(
-                        index,
-                        sightCardState: SightCardState.drag,
-                      )),
-                );
-              },
-            ),
-        ],
+                    list[index],
+                    sightCardState: SightCardState.drag,
+                  )),
+              feedback: SizedBox(
+                  height: 240,
+                  width: MediaQuery.of(context).size.width - 16,
+                  child: SightCard(
+                    list[index],
+                    sightCardState: SightCardState.drag,
+                  )),
+              child: SightCard(
+                list[index],
+                key: ValueKey(index),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -129,17 +139,22 @@ class ListWantVisit extends StatefulWidget {
 class _ListWantVisitState extends State<ListWantVisit> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: visit.length,
-        itemBuilder: (context, index) {
-          return SightCard(
-            visit[index],
-            key: ObjectKey(visit[index]),
-            onDelete: () {
-              visit.removeAt(index);
-              setState(() {});
-            },
-          );
-        });
+    return OverscrollGlowAbsorber(
+      child: ListView.builder(
+          physics: Platform.isAndroid
+              ? const ClampingScrollPhysics()
+              : const BouncingScrollPhysics(),
+          itemCount: visit.length,
+          itemBuilder: (context, index) {
+            return SightCard(
+              visit[index],
+              key: ObjectKey(visit[index]),
+              onDelete: () {
+                visit.removeAt(index);
+                setState(() {});
+              },
+            );
+          }),
+    );
   }
 }

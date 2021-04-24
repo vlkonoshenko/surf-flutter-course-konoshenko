@@ -13,6 +13,7 @@ import 'package:places/ui/screen/select_category_screen.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
 class AddSightScreen extends StatefulWidget {
+  const AddSightScreen({Key key}) : super(key: key);
   static const String routeName = '/add_sight_screen';
 
   @override
@@ -102,7 +103,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Новое место",
+                  'Новое место',
                   style: Theme.of(context)
                       .primaryTextTheme
                       .subtitle1
@@ -120,13 +121,13 @@ class _AddSightScreenState extends State<AddSightScreen> {
             children: [
               _buildPhotoGallery(),
               _buildCategory(),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               _buildTitle(),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               _buildCoordinate(),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               _buildDescription(),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
             ],
           ),
         ),
@@ -137,11 +138,11 @@ class _AddSightScreenState extends State<AddSightScreen> {
   Widget _buildCategory() {
     return Column(
       children: [
-        LabelWidget('категория'),
-        SizedBox(height: 16),
+        const LabelWidget('категория'),
+        const SizedBox(height: 16),
         InkWell(
           onTap: () async {
-            var result = await Navigator.pushNamed(
+            final result = await Navigator.pushNamed<SightCategory>(
                 context, SelectCategoryScreen.routeName);
             if (result != null) {
               setState(() {
@@ -161,11 +162,11 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     .subtitle2
                     .copyWith(fontWeight: FontWeight.w300),
               ),
-              Icon(Icons.chevron_right),
+              const Icon(Icons.chevron_right),
             ],
           ),
         ),
-        Divider(),
+        const Divider(),
       ],
     );
   }
@@ -173,23 +174,25 @@ class _AddSightScreenState extends State<AddSightScreen> {
   Widget _buildTitle() {
     return Column(
       children: [
-        LabelWidget("название"),
-        SizedBox(height: 16),
+        const LabelWidget('название'),
+        const SizedBox(height: 16),
         TextField(
           focusNode: _fnTitle,
           controller: _tcTitle,
           decoration: InputDecoration(
             hintText: 'Название места',
-            suffixIconConstraints: BoxConstraints(maxHeight: 40, minWidth: 40),
+            suffixIconConstraints: const BoxConstraints(
+              maxHeight: 40,
+              minWidth: 40,
+            ),
             suffixIcon: AnimatedSwitcher(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               child: _fnTitle.hasFocus
                   ? TextFieldCleanSuffix(_tcTitle)
-                  : SizedBox.shrink(),
+                  : const SizedBox.shrink(),
             ),
           ),
           onSubmitted: (value) => _fnLat.requestFocus(),
-          selectionHeightStyle: BoxHeightStyle.tight,
           cursorHeight: 24,
           cursorWidth: 1,
           cursorColor: lmMainColor,
@@ -201,8 +204,8 @@ class _AddSightScreenState extends State<AddSightScreen> {
   Widget _buildDescription() {
     return Column(
       children: [
-        LabelWidget("описание"),
-        SizedBox(height: 16),
+        const LabelWidget('описание'),
+        const SizedBox(height: 16),
         TextField(
           focusNode: _fnDescription,
           controller: _tcDescription,
@@ -211,13 +214,13 @@ class _AddSightScreenState extends State<AddSightScreen> {
           minLines: 3,
           decoration: InputDecoration(
             hintText: 'введите текст',
-            contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-            suffixIconConstraints: BoxConstraints(maxHeight: 40, minWidth: 40),
+            contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+            suffixIconConstraints: const BoxConstraints(maxHeight: 40, minWidth: 40),
             suffixIcon: AnimatedSwitcher(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               child: _fnDescription.hasFocus
                   ? TextFieldCleanSuffix(_tcDescription)
-                  : SizedBox.shrink(),
+                  : const SizedBox.shrink(),
             ),
           ),
           cursorHeight: 24,
@@ -238,8 +241,8 @@ class _AddSightScreenState extends State<AddSightScreen> {
             Expanded(
               child: Column(
                 children: [
-                  LabelWidget('широта'),
-                  SizedBox(height: 16),
+                  const LabelWidget('широта'),
+                  const SizedBox(height: 16),
                   TextField(
                     focusNode: _fnLat,
                     controller: _tcLat,
@@ -247,15 +250,14 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     keyboardType: TextInputType.number,
                     onSubmitted: (value) => _fnLon.requestFocus(),
-                    selectionHeightStyle: BoxHeightStyle.tight,
                     decoration: InputDecoration(
                       hintText: 'введите текст',
-                      suffixIconConstraints: BoxConstraints(maxHeight: 40),
+                      suffixIconConstraints: const BoxConstraints(maxHeight: 40),
                       suffixIcon: AnimatedSwitcher(
-                        duration: Duration(milliseconds: 300),
+                        duration: const Duration(milliseconds: 300),
                         child: _fnLat.hasFocus
                             ? TextFieldCleanSuffix(_tcLat)
-                            : SizedBox.shrink(),
+                            : const SizedBox.shrink(),
                       ),
                     ),
                     cursorHeight: 24,
@@ -265,28 +267,27 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 ],
               ),
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 children: [
-                  LabelWidget('долгота'),
-                  SizedBox(height: 16),
+                  const LabelWidget('долгота'),
+                  const SizedBox(height: 16),
                   TextField(
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     onSubmitted: (value) => _fnDescription.requestFocus(),
                     focusNode: _fnLon,
                     controller: _tcLon,
                     keyboardType: TextInputType.number,
-                    selectionHeightStyle: BoxHeightStyle.tight,
                     decoration: InputDecoration(
                       hintText: 'введите текст',
                       suffixIconConstraints:
-                          BoxConstraints(maxHeight: 40, minWidth: 40),
+                          const BoxConstraints(maxHeight: 40, minWidth: 40),
                       suffixIcon: AnimatedSwitcher(
-                        duration: Duration(milliseconds: 300),
+                        duration: const Duration(milliseconds: 300),
                         child: _fnLon.hasFocus
                             ? TextFieldCleanSuffix(_tcLon)
-                            : SizedBox.shrink(),
+                            : const SizedBox.shrink(),
                       ),
                     ),
                     cursorHeight: 24,
@@ -298,7 +299,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
             )
           ],
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Text(
           'Указать на карте',
           style: textMedium.copyWith(color: lmGreenColor),
@@ -316,7 +317,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
   }
 
   Widget _buildPhotoGallery() {
-    return Container(
+    return SizedBox(
       height: 120,
       width: double.maxFinite,
       child: SingleChildScrollView(

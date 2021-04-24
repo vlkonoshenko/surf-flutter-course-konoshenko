@@ -10,6 +10,7 @@ import 'package:places/res/icons.dart';
 import 'package:places/res/text_style.dart';
 
 class FilterScreen extends StatefulWidget {
+  const FilterScreen({Key key}) : super(key: key);
   static const String routeName = '/filter_screen';
 
   @override
@@ -18,15 +19,15 @@ class FilterScreen extends StatefulWidget {
 
 class _FilterScreenState extends State<FilterScreen> {
   List<FilterModel> filters = [
-    FilterModel(iconHotel, 'Отель', false),
-    FilterModel(iconRestourant, 'Ресторан', false),
-    FilterModel(iconParticularPlace, 'Особое место', false),
-    FilterModel(iconPark, 'Парк', false),
-    FilterModel(iconMuseum, 'Музей', false),
-    FilterModel(iconCafe, 'Кафе', false),
+    FilterModel(iconHotel, 'Отель', isSelected: false),
+    FilterModel(iconRestourant, 'Ресторан', isSelected: false),
+    FilterModel(iconParticularPlace, 'Особое место', isSelected: false),
+    FilterModel(iconPark, 'Парк', isSelected: false),
+    FilterModel(iconMuseum, 'Музей', isSelected: false),
+    FilterModel(iconCafe, 'Кафе', isSelected: false),
   ];
 
-  RangeValues valueSlider = RangeValues(100, 10000);
+  RangeValues valueSlider = const RangeValues(100, 10000);
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +37,10 @@ class _FilterScreenState extends State<FilterScreen> {
           TextButton(
               onPressed: () {
                 setState(() {
-                  filters.forEach((element) {
+                  for (final element in filters) {
                     element.isSelected = false;
-                  });
-                  valueSlider = RangeValues(100, 10000);
+                  }
+                  valueSlider = const RangeValues(100, 10000);
                 });
               },
               child: Text(
@@ -59,14 +60,14 @@ class _FilterScreenState extends State<FilterScreen> {
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               children: [
                 Text(
                   'КАТЕГОРИИ',
-                  style: matCaption.copyWith(color: Color(0xff7C7E92)),
+                  style: matCaption.copyWith(color: const Color(0xff7C7E92)),
                 ),
               ],
             ),
@@ -78,14 +79,12 @@ class _FilterScreenState extends State<FilterScreen> {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
                 crossAxisCount: 3,
-                childAspectRatio: 1,
                 children: filters.map((e) => FilterContent(e)).toList()),
           ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -105,21 +104,20 @@ class _FilterScreenState extends State<FilterScreen> {
                       )
                     ],
                   ),
-                  SizedBox(
-                    height: 32,
-                  ),
+                  const SizedBox(height: 32),
                   SliderTheme(
                     data: SliderTheme.of(context).copyWith(
-                      inactiveTrackColor: Color(0xff8d8e98),
+                      inactiveTrackColor: const Color(0xff8d8e98),
                       activeTrackColor: Theme.of(context).accentColor,
-                      thumbColor: Color(0xfff5f5f5),
-                      overlayShape: RoundSliderOverlayShape(overlayRadius: 0),
+                      thumbColor: const Color(0xfff5f5f5),
+                      overlayShape:
+                          const RoundSliderOverlayShape(overlayRadius: 0),
                       trackHeight: 1,
                     ),
                     child: RangeSlider(
                       min: 100,
                       max: 10000,
-                      onChanged: (RangeValues value) {
+                      onChanged: (value) {
                         setState(() {
                           valueSlider = value;
                         });
@@ -135,7 +133,7 @@ class _FilterScreenState extends State<FilterScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: ElevatedButton(
               onPressed: () {
-                print('on click iconGo');
+                //print('on click iconGo');
               },
               child: Text(
                 'Показать (${countPlaceInRange()})'.toUpperCase(),
@@ -143,9 +141,7 @@ class _FilterScreenState extends State<FilterScreen> {
               ),
             ),
           ),
-          SizedBox(
-            height: 8,
-          )
+          const SizedBox(height: 8)
         ],
       ),
     );
@@ -153,33 +149,34 @@ class _FilterScreenState extends State<FilterScreen> {
 
   int countPlaceInRange() {
     int result = 0;
-    mocks.forEach((element) {
+    for (final element in mocks) {
       if (arePointsNear(element.sight.coordinate,
           Coordinate(48.025297, 37.796868), valueSlider)) {
         result++;
       }
-    });
+    }
+
     return result;
   }
 
   bool arePointsNear(
       Coordinate checkPoint, Coordinate centerPoint, RangeValues range) {
-    var kmH = range.end / 1000;
-    var kmL = range.start / 1000;
-    var ky = 40000 / 360;
-    var kx = cos(pi * centerPoint.lat / 180.0) * ky;
-    var dx = (centerPoint.lng - checkPoint.lng).abs() * kx;
-    var dy = (centerPoint.lat - checkPoint.lat).abs() * ky;
-    var distance = sqrt(dx * dx + dy * dy);
-    var result = distance <= kmH && distance >= kmL;
+    final kmH = range.end / 1000;
+    final kmL = range.start / 1000;
+    const ky = 40000 / 360;
+    final kx = cos(pi * centerPoint.lat / 180.0) * ky;
+    final dx = (centerPoint.lng - checkPoint.lng).abs() * kx;
+    final dy = (centerPoint.lat - checkPoint.lat).abs() * ky;
+    final distance = sqrt(dx * dx + dy * dy);
+    final result = distance <= kmH && distance >= kmL;
     return result;
   }
 }
 
 class FilterContent extends StatefulWidget {
-  final FilterModel filterModel;
+  const FilterContent(this.filterModel, {Key key}) : super(key: key);
 
-  const FilterContent(this.filterModel);
+  final FilterModel filterModel;
 
   @override
   _FilterContentState createState() => _FilterContentState();
@@ -226,7 +223,7 @@ class _FilterContentState extends State<FilterContent> {
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Theme.of(context).primaryColor),
-                    duration: Duration(milliseconds: 200),
+                    duration: const Duration(milliseconds: 200),
                     child: SvgPicture.asset(
                       iconTick,
                       color: Theme.of(context).canvasColor,
@@ -246,9 +243,9 @@ class _FilterContentState extends State<FilterContent> {
 }
 
 class FilterModel {
+  FilterModel(this.icon, this.title, {this.isSelected});
+
   String icon;
   String title;
   bool isSelected;
-
-  FilterModel(this.icon, this.title, this.isSelected);
 }
