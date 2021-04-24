@@ -21,7 +21,7 @@ class ImagePreview extends StatelessWidget {
       onDismissed: (direction) => onDelete(),
       direction: DismissDirection.up,
       child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 24),
           child: Stack(
             children: [
               AspectRatio(

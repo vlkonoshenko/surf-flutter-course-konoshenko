@@ -26,7 +26,8 @@ class BtnWhiteSquare extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: SvgPicture.asset(
-              iconArrow,color: Theme.of(context).primaryColor,
+              iconArrow,
+              color: Theme.of(context).primaryColor,
             ),
           ),
         ));

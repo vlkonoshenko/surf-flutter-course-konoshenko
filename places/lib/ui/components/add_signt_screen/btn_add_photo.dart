@@ -35,5 +35,3 @@ class BtnAddPhoto extends StatelessWidget {
     );
   }
 }
-
-

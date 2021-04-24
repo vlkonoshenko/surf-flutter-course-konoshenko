@@ -7,10 +7,9 @@ final lightTheme = ThemeData(
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: lmMainColor,
     ),
-
     inputDecorationTheme: InputDecorationTheme(
       isDense: true,
-      contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 16),
+      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: lmGreenColor),
           borderRadius: BorderRadius.all(Radius.circular(8))),

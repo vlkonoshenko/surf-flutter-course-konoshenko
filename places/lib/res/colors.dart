@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 const lmCanvasColor = Color(0xffFFFFFF),
     lmMainColor = Color(0xff252849),
     lmSecondaryColor = Color(0xff3B3E5B),

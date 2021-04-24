@@ -61,4 +61,3 @@ final List<SightCardMeta> visit = [
     wantVisit: true,
   )
 ];
-

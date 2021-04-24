@@ -36,7 +36,7 @@ class _SightListScreenState extends State<SightListScreen> {
           children: [
             SearchBar(),
             Padding(
-              padding: const EdgeInsets.only(top:60.0),
+              padding: const EdgeInsets.only(top: 60.0),
               child: ListView.builder(
                 itemCount: mocks.length,
                 itemBuilder: (context, index) => SightCard(mocks[index]),

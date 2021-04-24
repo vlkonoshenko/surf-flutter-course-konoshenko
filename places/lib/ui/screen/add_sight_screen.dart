@@ -12,8 +12,6 @@ import 'package:places/ui/components/label_text_widget.dart';
 import 'package:places/ui/screen/select_category_screen.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
-
-
 class AddSightScreen extends StatefulWidget {
   static const String routeName = '/add_sight_screen';
 
