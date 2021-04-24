@@ -3,13 +3,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/res/icons.dart';
 
 class BtnAddPhoto extends StatelessWidget {
-  final VoidCallback onAddClick;
-
   const BtnAddPhoto({
     @required this.onAddClick,
-    Key key,
     @required this.context,
+    Key key,
   }) : super(key: key);
+
+  final VoidCallback onAddClick;
 
   final BuildContext context;
 
@@ -20,17 +20,18 @@ class BtnAddPhoto extends StatelessWidget {
       child: Container(
         height: 72,
         width: 72,
-        margin: EdgeInsets.only(right: 8),
+        margin: const EdgeInsets.only(right: 8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Theme.of(context).accentColor, width: 2),
+        ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           child: SvgPicture.asset(
             iconPlus,
             color: Theme.of(context).accentColor,
           ),
         ),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-            border: Border.all(color: Theme.of(context).accentColor, width: 2)),
       ),
     );
   }

@@ -5,6 +5,8 @@ import 'package:places/res/icons.dart';
 import 'package:places/res/text_style.dart';
 
 class SelectCategoryScreen extends StatefulWidget {
+  const SelectCategoryScreen({Key key}) : super(key: key);
+
   static const String routeName = '/select_category_screen';
 
   @override
@@ -20,11 +22,11 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.chevron_right),
+            icon: const Icon(Icons.chevron_right),
             onPressed: () => Navigator.pop(context),
           ),
           title: Text(
-            "Категория",
+            'Категория',
             style: Theme.of(context)
                 .primaryTextTheme
                 .subtitle1
@@ -34,7 +36,7 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
         body: Column(children: [
           Expanded(
             child: ListView.separated(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return InkWell(
@@ -50,7 +52,7 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
                               iconTick,
                               color: Colors.green,
                             )
-                          : SizedBox.shrink(),
+                          : const SizedBox.shrink(),
                     ),
                   );
                 },
@@ -87,7 +89,7 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
 enum SightCategory {
   hotel,
   restaurant,
-  special_place,
+  specialPlace,
   park,
   museum,
   cafe,
@@ -102,7 +104,7 @@ extension SightCategoryExt on SightCategory {
       case SightCategory.restaurant:
         return 'Ресторан';
         break;
-      case SightCategory.special_place:
+      case SightCategory.specialPlace:
         return 'Особое место';
         break;
       case SightCategory.park:
@@ -114,6 +116,8 @@ extension SightCategoryExt on SightCategory {
       case SightCategory.cafe:
         return 'Кафе';
         break;
+      default:
+        return '';
     }
   }
 }

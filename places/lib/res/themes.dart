@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:places/res/res.dart';
 import 'package:places/res/text_style.dart';
 
-import 'colors.dart';
 
 final lightTheme = ThemeData(
-    textSelectionTheme: TextSelectionThemeData(
+    textSelectionTheme: const TextSelectionThemeData(
       cursorColor: lmMainColor,
     ),
-    inputDecorationTheme: InputDecorationTheme(
+    inputDecorationTheme: const InputDecorationTheme(
       isDense: true,
       contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       focusedBorder: OutlineInputBorder(
@@ -20,9 +20,9 @@ final lightTheme = ThemeData(
           borderSide: BorderSide(color: lmGreenColor),
           borderRadius: BorderRadius.all(Radius.circular(8))),
     ),
-    primaryColor: Color(0xff1A1A20),
+    primaryColor: const Color(0xff1A1A20),
     accentColor: lmGreenColor,
-    splashColor: Color(0x32C4C4C4),
+    splashColor: const Color(0x32C4C4C4),
     canvasColor: lmCanvasColor,
     cardColor: lmCardColor,
     appBarTheme: AppBarTheme(
@@ -47,7 +47,7 @@ final lightTheme = ThemeData(
           borderRadius: BorderRadius.circular(12.0),
         ),
         primary: lmGreenColor,
-        minimumSize: Size.fromHeight(48),
+        minimumSize: const Size.fromHeight(48),
       ),
     ),
     tabBarTheme: TabBarTheme(
@@ -59,13 +59,13 @@ final lightTheme = ThemeData(
       ),
       unselectedLabelColor: lmSecondary2Color,
       labelColor: Colors.white,
-      labelStyle: TextStyle(
+      labelStyle: const TextStyle(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w700,
         fontSize: 14,
         color: lmSecondaryColor,
       ),
-      unselectedLabelStyle: TextStyle(
+      unselectedLabelStyle: const TextStyle(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w700,
         fontSize: 14,
@@ -80,10 +80,10 @@ final lightTheme = ThemeData(
         unselectedItemColor: lmMainColor.withOpacity(0.2)));
 
 final darkTheme = ThemeData(
-    splashColor: Color(0x32C4C4C4),
+    splashColor: const Color(0x32C4C4C4),
     canvasColor: dmCanvasColor,
     cardColor: dmCardColor,
-    primaryColor: Color(0xffffffff),
+    primaryColor: const Color(0xffffffff),
     accentColor: dmGreenColor,
     appBarTheme: AppBarTheme(
       centerTitle: true,
@@ -99,7 +99,7 @@ final darkTheme = ThemeData(
       bodyText1: matBodyText1.copyWith(color: dmSecondaryColor),
       caption: matCaption.copyWith(color: dmSecondary2Color.withOpacity(0.56)),
     ),
-    dividerTheme: DividerThemeData(
+    dividerTheme: const DividerThemeData(
       thickness: 0.8,
       color: Color(0xff7C7E92),
     ),
@@ -111,7 +111,7 @@ final darkTheme = ThemeData(
         ),
         textStyle: textButtonElevation,
         primary: dmGreenColor,
-        minimumSize: Size.fromHeight(48),
+        minimumSize: const Size.fromHeight(48),
       ),
     ),
     tabBarTheme: TabBarTheme(
@@ -123,13 +123,13 @@ final darkTheme = ThemeData(
       ),
       unselectedLabelColor: lmSecondary2Color,
       labelColor: lmSecondaryColor,
-      labelStyle: TextStyle(
+      labelStyle: const TextStyle(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w700,
         fontSize: 14,
         color: dmSecondaryColor,
       ),
-      unselectedLabelStyle: TextStyle(
+      unselectedLabelStyle: const TextStyle(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w700,
         fontSize: 14,

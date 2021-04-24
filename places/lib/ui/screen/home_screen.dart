@@ -6,6 +6,7 @@ import 'package:places/ui/screen/sight_list_screen.dart';
 import 'package:places/ui/screen/visiting_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key key}) :super(key: key);
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -27,9 +28,9 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: TabBarView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         controller: _tabController,
-        children: [
+        children: const [
           SightListScreen(),
           VisitingScreen(),
           SettingsScreen(),

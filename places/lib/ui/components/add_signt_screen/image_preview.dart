@@ -1,18 +1,16 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/res/icons.dart';
 
 class ImagePreview extends StatelessWidget {
-  final String url;
-  final VoidCallback onDelete;
-
   const ImagePreview({
     @required this.url,
     @required this.onDelete,
     Key key,
   }) : super(key: key);
+
+  final String url;
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-TextStyle _text = TextStyle(
+TextStyle _text = const TextStyle(
   fontStyle: FontStyle.normal,
 );
 
