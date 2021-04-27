@@ -7,58 +7,47 @@ List<String> history = [];
 final List<SightCardMeta> mocks = [
   SightCardMeta(
     Sight(
-        'Donbass arena',
+        'Донбасс арена',
         'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
         Coordinate(48.018330, 37.814148),
         'Футбольный стадион в Донецке, построенный в 2009 году, рассчитан на 52 667 зрителей.',
-        SightCategory.special_place),
+        SightCategory.specialPlace),
   ),
   SightCardMeta(
     Sight(
-        'A park of forged figures with a long title to showcase the second row',
-        'https://lh3.googleusercontent.com/proxy/L10i5lEDvQj1J0M_hgdtwG0cSTLFOWu35zBd4pmR9J-wAEHcC4nvKnTvaxYINS54pcBEoeEGvZk2A6AfE_50X4QXZv2xVlvzNCuzSVLU4oASjw0tgsKxyoe1sg',
+        'Парк кованых фигур',
+        'https://planetofhotels.com/guide/sites/default/files/styles/paragraph__hero_banner__hb_image__1880bp/public/hero_banner/Park_of_forged_sculptures.jpg',
         Coordinate(48.015881, 37.799938),
         'Парк в Донецке со скульптурными композициями, выкованными из металла. ',
         SightCategory.park),
-  )
+  ),
+  SightCardMeta(
+    Sight(
+        'Спасо-Преображенский собор',
+        'https://www.videnovum.com/foto/ukraine/135/donetsk/spaso-preobrazhensky-sobor/sDSC_0114.JPG',
+        Coordinate(48.015881, 37.799938),
+        'Собор находится в центре города на центральной улице. Он построен после устновления независимости Украины',
+        SightCategory.specialPlace),
+  ),
 ];
 
 final List<SightCardMeta> visit = [
   SightCardMeta(
     Sight(
-        'Donbass arena 2',
+        'Донбасс арена',
         'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
         Coordinate(48.018330, 37.814148),
         'Футбольный стадион в Донецке, построенный в 2009 году, рассчитан на 52 667 зрителей.',
-        SightCategory.special_place),
+        SightCategory.specialPlace),
     wantVisit: true,
   ),
   SightCardMeta(
     Sight(
-        '2 A park of forged figures with a long title to showcase the second row',
-        'https://lh3.googleusercontent.com/proxy/L10i5lEDvQj1J0M_hgdtwG0cSTLFOWu35zBd4pmR9J-wAEHcC4nvKnTvaxYINS54pcBEoeEGvZk2A6AfE_50X4QXZv2xVlvzNCuzSVLU4oASjw0tgsKxyoe1sg',
-        Coordinate(48.015881, 37.799938),
-        'Парк в Донецке со скульптурными композициями, выкованными из металла. ',
-        SightCategory.park),
-    wantVisit: true,
-  ),
-  SightCardMeta(
-    Sight(
-        'Donbass arena',
-        'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
-        Coordinate(48.018330, 37.814148),
-        'Футбольный стадион в Донецке, построенный в 2009 году, рассчитан на 52 667 зрителей.',
-        SightCategory.special_place),
-    wantVisit: true,
-  ),
-  SightCardMeta(
-    Sight(
-        'A park of forged figures with a long title to showcase the second row',
-        'https://lh3.googleusercontent.com/proxy/L10i5lEDvQj1J0M_hgdtwG0cSTLFOWu35zBd4pmR9J-wAEHcC4nvKnTvaxYINS54pcBEoeEGvZk2A6AfE_50X4QXZv2xVlvzNCuzSVLU4oASjw0tgsKxyoe1sg',
+        'Парк кованых фигур',
+        'https://planetofhotels.com/guide/sites/default/files/styles/paragraph__hero_banner__hb_image__1880bp/public/hero_banner/Park_of_forged_sculptures.jpg',
         Coordinate(48.015881, 37.799938),
         'Парк в Донецке со скульптурными композициями, выкованными из металла. ',
         SightCategory.park),
     wantVisit: true,
   )
 ];
-

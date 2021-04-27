@@ -3,20 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/res/res.dart';
+import 'package:places/ui/screen/select_category_screen.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 
-import 'select_category_screen.dart';
-
 class SightCardMeta {
+  SightCardMeta(this.sight, {this.wantVisit = false, this.visited = false});
+
   Sight sight;
   bool wantVisit;
   bool visited;
 
-  SightCardMeta(this.sight, {this.wantVisit = false, this.visited = false});
-
   SightCardMeta copyWith({bool wantVisit, bool visited}) {
     return SightCardMeta(
-      this.sight,
+      sight,
       wantVisit: wantVisit ?? this.wantVisit,
       visited: visited ?? this.visited,
     );
@@ -25,16 +24,14 @@ class SightCardMeta {
 
 enum SightCardState { drag, simple }
 
-//TODO: Мне не нравится как сделал Dismissable обрезание углов через Stack думаю есть не такое костыльное решение
-
 class SightCard extends StatefulWidget {
+  const SightCard(this.sightMeta,
+      {Key key, this.onDelete, this.sightCardState = SightCardState.simple})
+      : super(key: key);
+
   final SightCardMeta sightMeta;
   final VoidCallback onDelete;
   final SightCardState sightCardState;
-
-  SightCard(this.sightMeta,
-      {Key key, this.onDelete, this.sightCardState = SightCardState.simple})
-      : super(key: key);
 
   @override
   _SightCardState createState() => _SightCardState();
@@ -43,133 +40,142 @@ class SightCard extends StatefulWidget {
 class _SightCardState extends State<SightCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(margin: EdgeInsets.all(16), child: _buildSimple(context));
+    return Container(
+      margin: const EdgeInsets.all(16),
+      child: _cardSight(context),
+    );
   }
 
-  Widget _buildSimple(BuildContext context) {
+  Widget _cardSight(BuildContext context) {
+    final isDismissed = widget.sightMeta.visited || widget.sightMeta.wantVisit;
     return Stack(
       children: <Widget>[
         Positioned.fill(
-            child: _buildDissmissBackground(context)), // instead of background
-        Dismissible(
-          onDismissed: (value) {
-            widget.onDelete();
-          },
-          direction: DismissDirection.endToStart,
-          key: ObjectKey(widget.sightMeta),
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.green, borderRadius: BorderRadius.circular(16)),
-            child: ClipRRect(
-              clipBehavior: Clip.hardEdge,
-              borderRadius: BorderRadius.all(Radius.circular(16)),
-              child: Card(
-                margin: EdgeInsets.all(0),
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                child: Stack(children: [
-                  Column(
-                    children: [
-                      Container(
-                          height: 96,
-                          child: Stack(
-                            fit: StackFit.expand,
-                            children: [
-                              Image.network(
-                                widget.sightMeta.sight.url,
-                                fit: BoxFit.cover,
-                                loadingBuilder: (BuildContext context,
-                                    Widget child,
-                                    ImageChunkEvent loadingProgress) {
-                                  if (loadingProgress == null) return child;
-                                  return Center(
-                                    child: CupertinoActivityIndicator
-                                        .partiallyRevealed(
-                                      progress: loadingProgress
-                                                  .expectedTotalBytes !=
-                                              null
-                                          ? loadingProgress
-                                                  .cumulativeBytesLoaded /
-                                              loadingProgress.expectedTotalBytes
-                                          : null,
-                                    ),
-                                  );
-                                },
-                              ),
-                              Positioned(
-                                left: 16,
-                                top: 16,
-                                child: Text(
-                                  widget.sightMeta.sight.type.toText(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle2
-                                      .copyWith(color: Colors.white),
-                                ),
-                              ),
-                            ],
-                          )),
-                      Container(
-                        height: 108,
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            SizedBox(height: 16),
-                            Text(
-                              widget.sightMeta.sight.name,
-                              maxLines: 2,
-                              style:
-                                  Theme.of(context).primaryTextTheme.subtitle1,
-                            ),
-                            SizedBox(height: 4),
-                            _buildDetailInfo(context, widget.sightMeta),
-                            if (widget.sightMeta.wantVisit ||
-                                widget.sightMeta.visited)
-                              _buildSightStatus(context),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Positioned.fill(
-                      child: new Material(
-                          color: Colors.transparent,
-                          child: new InkWell(
-                            onTap: () => Navigator.pushNamed(
-                                context, SightDetailsScreen.routeName,
-                                arguments: widget.sightMeta),
-                          ))),
-                  if (widget.sightCardState == SightCardState.simple)
-                    Positioned(
-                      right: 16,
-                      top: 16,
-                      child: Column(
-                        children: [
-                          SightCardTools(
-                            widget.sightMeta,
-                            onDelete: widget.onDelete,
-                          ),
-                        ],
-                      ),
-                    ),
-                ]),
-              ),
-            ),
-          ),
-        )
+          child: _buildDismissBackground(context),
+        ),
+        isDismissed
+            ? Dismissible(
+                onDismissed: (value) {
+                  widget.onDelete();
+                },
+                direction: DismissDirection.endToStart,
+                key: ObjectKey(widget.sightMeta),
+                child: _cardBody(context),
+              )
+            : _cardBody(context)
       ],
     );
   }
 
-  Container _buildDissmissBackground(BuildContext context) {
+  ClipRRect _cardBody(BuildContext context) {
+    return ClipRRect(
+      clipBehavior: Clip.hardEdge,
+      borderRadius: BorderRadius.circular(16),
+      child: Card(
+        margin: const EdgeInsets.all(0),
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        child: Stack(children: [
+          Column(
+            children: [
+              _cardHeaderImage(context),
+              _cardContent(context),
+            ],
+          ),
+          Positioned.fill(
+            child: _cardClickArea(context),
+          ),
+          if (widget.sightCardState == SightCardState.simple)
+            Positioned(
+              right: 16,
+              top: 16,
+              child: SightCardTools(
+                widget.sightMeta,
+                onDelete: widget.onDelete,
+              ),
+            ),
+        ]),
+      ),
+    );
+  }
+
+  Widget _cardClickArea(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => Navigator.pushNamed(context, SightDetailsScreen.routeName,
+            arguments: widget.sightMeta),
+      ),
+    );
+  }
+
+  Widget _cardContent(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(right: 16),
+      height: 108,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const SizedBox(height: 16),
+          Text(
+            widget.sightMeta.sight.name,
+            maxLines: 2,
+            style: Theme.of(context).primaryTextTheme.subtitle1,
+          ),
+          const SizedBox(height: 4),
+          _buildDetailInfo(context, widget.sightMeta),
+          if (widget.sightMeta.wantVisit || widget.sightMeta.visited)
+            _buildSightStatus(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _cardHeaderImage(BuildContext context) {
+    return SizedBox(
+        height: 96,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.network(
+              widget.sightMeta.sight.url,
+              fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  child: CupertinoActivityIndicator.partiallyRevealed(
+                    progress: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes
+                        : null,
+                  ),
+                );
+              },
+            ),
+            Positioned(
+              left: 16,
+              top: 16,
+              child: Text(
+                widget.sightMeta.sight.type.toText(),
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle2
+                    .copyWith(color: Colors.white),
+              ),
+            ),
+          ],
+        ));
+  }
+
+  Widget _buildDismissBackground(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(right: 16),
       decoration: BoxDecoration(
-          color: lmRedColor,
-          borderRadius: BorderRadius.all(Radius.circular(16))),
+        color: lmRedColor,
+        borderRadius: BorderRadius.circular(16),
+      ),
       child: Align(
         alignment: Alignment.centerRight,
         child: Column(
@@ -180,7 +186,7 @@ class _SightCardState extends State<SightCard> {
               width: 24,
               height: 24,
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               'Удалить',
               style: Theme.of(context)
@@ -200,9 +206,7 @@ class _SightCardState extends State<SightCard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          SizedBox(
-            height: 2,
-          ),
+          const SizedBox(height: 2),
           Text(
             'закрыто до 09:00',
             maxLines: 1,
@@ -212,7 +216,7 @@ class _SightCardState extends State<SightCard> {
                 .bodyText1
                 .copyWith(color: lmSecondary2Color),
           ),
-          SizedBox(height: 12)
+          const SizedBox(height: 12)
         ],
       ),
     );
@@ -248,10 +252,11 @@ class _SightCardState extends State<SightCard> {
 }
 
 class SightCardTools extends StatelessWidget {
+  const SightCardTools(this.sightMeta, {this.onDelete, Key key})
+      : super(key: key);
+
   final SightCardMeta sightMeta;
   final VoidCallback onDelete;
-
-  const SightCardTools(this.sightMeta, {this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -263,7 +268,7 @@ class SightCardTools extends StatelessWidget {
             child: btnIcon(
                 icon: iconShare,
                 onClick: () {
-                  print('on click iconShare');
+                  //print('on click iconShare');
                 }),
           ),
         if (sightMeta.wantVisit)
@@ -272,7 +277,7 @@ class SightCardTools extends StatelessWidget {
             child: btnIcon(
                 icon: iconCalendar,
                 onClick: () {
-                  print('on click iconCalendar');
+                  //print('on click iconCalendar');
                 }),
           ),
         Padding(
@@ -282,19 +287,19 @@ class SightCardTools extends StatelessWidget {
               : btnIcon(
                   icon: iconHeart,
                   onClick: () {
-                    print('on click iconShare');
+                    //print('on click iconShare');
                   }),
         ),
       ],
     );
   }
 
-  Widget btnIcon({icon, onClick}) {
+  Widget btnIcon({String icon, VoidCallback onClick}) {
     return Material(
-        borderRadius: BorderRadius.all(Radius.circular(100)),
+        borderRadius: BorderRadius.circular(100),
         color: Colors.transparent,
         child: InkWell(
-            borderRadius: BorderRadius.all(Radius.circular(100)),
+            borderRadius: BorderRadius.circular(100),
             onTap: onClick,
             child: SvgPicture.asset(icon)));
   }

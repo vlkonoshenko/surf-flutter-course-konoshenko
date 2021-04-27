@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:places/res/res.dart';
 
 class LabelWidget extends StatelessWidget {
-  final String text;
+  const LabelWidget(this.text,{Key key}):super(key: key);
 
-  const LabelWidget(this.text);
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class LabelWidget extends StatelessWidget {
       children: [
         Text(
           text.toUpperCase(),
-          style: matCaption.copyWith(color: Color(0xff7C7E92)),
+          style: matCaption.copyWith(color: const Color(0xff7C7E92)),
         ),
       ],
     );

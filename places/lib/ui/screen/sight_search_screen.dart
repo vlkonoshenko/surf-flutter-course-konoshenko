@@ -6,14 +6,14 @@ import 'package:places/res/icons.dart';
 import 'package:places/res/res.dart';
 import 'package:places/res/text_style.dart';
 import 'package:places/ui/components/label_text_widget.dart';
+import 'package:places/ui/screen/filters_screen.dart';
+import 'package:places/ui/screen/select_category_screen.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 import 'package:styled_text/styled_text.dart';
-import 'select_category_screen.dart';
-
-import 'filters_screen.dart';
 
 class SightSearchScreen extends StatefulWidget {
+  const SightSearchScreen({Key key}) : super(key: key);
   static const String routeName = '/sight_search_screen';
 
   @override
@@ -21,8 +21,8 @@ class SightSearchScreen extends StatefulWidget {
 }
 
 class _SightSearchScreenState extends State<SightSearchScreen> {
-  FocusNode _fnSearch = FocusNode();
-  TextEditingController _tcSearch = TextEditingController();
+  final FocusNode _fnSearch = FocusNode();
+  final TextEditingController _tcSearch = TextEditingController();
   List<SightCardMeta> result = [];
 
   bool isLoading = false;
@@ -42,7 +42,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
           title: Text(
-            "Список интересных мест",
+            'Список интересных мест',
             style: Theme.of(context)
                 .primaryTextTheme
                 .subtitle1
@@ -69,7 +69,6 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                         FocusManager.instance.primaryFocus.unfocus();
                       },
                       onChanged: _onChangedSearch,
-                      maxLines: 1,
                       cursorWidth: 1,
                       decoration: InputDecoration(
                         filled: true,
@@ -77,12 +76,12 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                         hintText: 'Поиск',
                         hintStyle: TextStyle(
                             fontSize: 16,
-                            color: Color(0xff7C7E92).withOpacity(0.54)),
+                            color: const Color(0xff7C7E92).withOpacity(0.54)),
                         prefixIcon: Padding(
-                          padding: EdgeInsets.all(6),
+                          padding: const EdgeInsets.all(6),
                           child: SvgPicture.asset(
                             iconSearch,
-                            color: Color(0xff7C7E92).withOpacity(0.54),
+                            color: const Color(0xff7C7E92).withOpacity(0.54),
                           ),
                         ),
                         fillColor: const Color(0x128e8e93),
@@ -98,7 +97,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                     ),
                   ),
                   AnimatedSwitcher(
-                    duration: Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 300),
                     child: _fnSearch.hasFocus
                         ? IconButton(
                             icon: SvgPicture.asset(iconClear,
@@ -120,11 +119,11 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
             ),
             Expanded(
               child: AnimatedSwitcher(
-                duration: Duration(milliseconds: 400),
+                duration: const Duration(milliseconds: 400),
                 child: _tcSearch.text.isEmpty
                     ? _buildHistoryState()
                     : isLoading
-                        ? CircularProgressIndicator()
+                        ? const CircularProgressIndicator()
                         : result.isEmpty
                             ? _buildEmptyState()
                             : _buildResultState(),
@@ -140,21 +139,17 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
       children: [
         SvgPicture.asset(
           iconSearch,
-          color: Color(0xff7C7E92).withOpacity(0.54),
+          color: const Color(0xff7C7E92).withOpacity(0.54),
           width: 50,
           height: 50,
         ),
-        SizedBox(
-          height: 32,
-        ),
+        const SizedBox(height: 32),
         Text('Ничего не найдено.',
             style: Theme.of(context)
                 .primaryTextTheme
                 .caption
                 .copyWith(fontSize: 18)),
-        SizedBox(
-          height: 8,
-        ),
+        const SizedBox(height: 8),
         Text(
           'Попробуйте изменить параметры поиска',
           style: Theme.of(context).primaryTextTheme.caption,
@@ -174,13 +169,11 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                 arguments: result[index]);
           },
           child: Container(
-            padding: EdgeInsets.only(top: 16),
+            padding: const EdgeInsets.only(top: 16),
             height: 80,
             child: Row(
               children: [
-                SizedBox(
-                  width: 16,
-                ),
+                const SizedBox(width: 16),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: AspectRatio(
@@ -194,9 +187,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 16,
-                ),
+                const SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,19 +196,14 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              height: 4,
-                            ),
+                            const SizedBox(height: 4),
                             _buildTitle(
                               context,
                               result[index].sight.name,
                               _tcSearch.text,
                             ),
-                            SizedBox(
-                              height: 8,
-                            ),
+                            const SizedBox(height: 8),
                             Text(
                               result[index].sight.type.toText(),
                               style: Theme.of(context)
@@ -225,20 +211,16 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                                   .subtitle1
                                   .copyWith(
                                       fontWeight: FontWeight.w400,
-                                      color: Color(0xff7C7E92)),
+                                      color: const Color(0xff7C7E92)),
                             ),
                           ],
                         ),
                       ),
-                      Divider(
-                        height: 1,
-                      )
+                      const Divider(height: 1)
                     ],
                   ),
                 ),
-                SizedBox(
-                  width: 16,
-                ),
+                const SizedBox(width: 16),
               ],
             ),
           ),
@@ -248,7 +230,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
   }
 
   Widget _buildTitle(BuildContext context, String word, String part) {
-    var resultStr = word.replaceAll(part, "<bold>$part</bold>");
+    final resultStr = word.replaceAll(part, '<bold>$part</bold>');
     return StyledText(
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
@@ -263,15 +245,15 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     );
   }
 
-  void _onChangedSearch(String value) async {
+  Future<void> _onChangedSearch(String value) async {
     setState(() {
       isLoading = true;
     });
-    var founded = mocks
+    final founded = mocks
         .where((element) =>
             element.sight.name.toLowerCase().contains(value.toLowerCase()))
         .toList();
-    await Future.delayed(Duration(seconds: 1));
+    await Future<void>.delayed(const Duration(seconds: 1));
     setState(() {
       result = founded;
       isLoading = false;
@@ -287,18 +269,17 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             LabelWidget(
                 history.isNotEmpty ? 'Вы искали' : 'История поиска пуста'),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ListView.builder(
                 itemCount: history.length,
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   return Column(
                     mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Row(
                         children: [
@@ -309,13 +290,14 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                                 .primaryTextTheme
                                 .subtitle1
                                 .copyWith(
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0xff7C7E92)),
+                                  fontWeight: FontWeight.w400,
+                                  color: const Color(0xff7C7E92),
+                                ),
                           )),
                           IconButton(
                               icon: SvgPicture.asset(
                                 iconClose,
-                                color: Color(0xff7C7E92),
+                                color: const Color(0xff7C7E92),
                                 width: 20,
                               ),
                               onPressed: () {
@@ -325,11 +307,11 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                               }),
                         ],
                       ),
-                      if (index != history.length - 1) Divider()
+                      if (index != history.length - 1) const Divider()
                     ],
                   );
                 }),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             InkWell(
               onTap: () {
                 setState(() {
@@ -341,7 +323,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                       'Очистить историю',
                       style: textMedium.copyWith(color: lmGreenColor),
                     )
-                  : SizedBox.shrink(),
+                  : const SizedBox.shrink(),
             )
           ],
         ),

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:places/mocks.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/screen/filters_screen.dart';
-import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/screen/sight_search_screen.dart';
 
 class SearchBar extends StatefulWidget {
+  const SearchBar({Key key}) : super(key: key);
+
   @override
   _SearchBarState createState() => _SearchBarState();
 }
 
 class _SearchBarState extends State<SearchBar> {
-
   @override
   Widget build(BuildContext context) => Column(
         children: [
@@ -27,8 +26,6 @@ class _SearchBarState extends State<SearchBar> {
                     onTap: () {
                       Navigator.pushNamed(context, SightSearchScreen.routeName);
                     },
-
-                    maxLines: 1,
                     readOnly: true,
                     cursorWidth: 1,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -38,21 +35,21 @@ class _SearchBarState extends State<SearchBar> {
                       hintText: 'Поиск',
                       hintStyle: TextStyle(
                           fontSize: 16,
-                          color: Color(0xff7C7E92).withOpacity(0.54)),
+                          color: const Color(0xff7C7E92).withOpacity(0.54)),
                       prefixIcon: Padding(
-                        padding: EdgeInsets.all(6),
+                        padding: const EdgeInsets.all(6),
                         child: SvgPicture.asset(
                           iconSearch,
-                          color: Color(0xff7C7E92).withOpacity(0.54),
+                          color: const Color(0xff7C7E92).withOpacity(0.54),
                         ),
                       ),
                       fillColor: const Color(0x128e8e93),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
+                        borderSide: const BorderSide(color: Colors.transparent),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
+                        borderSide: const BorderSide(color: Colors.transparent),
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
@@ -67,7 +64,6 @@ class _SearchBarState extends State<SearchBar> {
               ],
             ),
           ),
-
         ],
       );
 }

@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:places/main.dart';
 import 'package:places/res/icons.dart';
 
-import '../../main.dart';
-
 class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({Key key}) : super(key: key);
+
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
@@ -16,7 +17,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Настройки",
+          'Настройки',
           style: Theme.of(context)
               .primaryTextTheme
               .subtitle1
@@ -44,7 +45,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     })
               ],
             ),
-            Divider(),
+            const Divider(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -63,7 +64,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     onPressed: () {})
               ],
             ),
-            Divider(),
+            const Divider(),
           ],
         ),
       ),

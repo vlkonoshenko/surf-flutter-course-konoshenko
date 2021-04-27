@@ -3,12 +3,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:places/res/icons.dart';
 
 class BtnWhiteSquare extends StatelessWidget {
-  final IconData icon;
-
   const BtnWhiteSquare({
     @required this.icon,
     Key key,
   }) : super(key: key);
+
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,8 @@ class BtnWhiteSquare extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: SvgPicture.asset(
-              iconArrow,color: Theme.of(context).primaryColor,
+              iconArrow,
+              color: Theme.of(context).primaryColor,
             ),
           ),
         ));

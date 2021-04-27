@@ -4,11 +4,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/components/components.dart';
+import 'package:places/ui/screen/select_category_screen.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
-import 'select_category_screen.dart';
-
 class SightDetailsScreen extends StatefulWidget {
+  const SightDetailsScreen({Key key}) : super(key: key);
   static const String routeName = '/sight_details_screen';
 
   @override
@@ -18,7 +18,8 @@ class SightDetailsScreen extends StatefulWidget {
 class _SightDetailsScreenState extends State<SightDetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    final SightCardMeta sight = ModalRoute.of(context).settings.arguments;
+    final SightCardMeta sight =
+        ModalRoute.of(context).settings.arguments as SightCardMeta;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -36,8 +37,7 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                     child: Image.network(
                       sight.sight.url,
                       fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent loadingProgress) {
+                      loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
                         return Center(
                           child: CupertinoActivityIndicator.partiallyRevealed(
@@ -51,7 +51,10 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 24,
+                    ),
                     child: Column(
                       children: [
                         Column(
@@ -64,7 +67,7 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Row(
                               children: [
                                 Text(
@@ -72,9 +75,9 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                                   style: Theme.of(context)
                                       .primaryTextTheme
                                       .subtitle2
-                                      .copyWith(color: Color(0xff7C7E92)),
+                                      .copyWith(color: const Color(0xff7C7E92)),
                                 ),
-                                SizedBox(width: 16),
+                                const SizedBox(width: 16),
                                 Text(
                                   'закрыто до 09:00',
                                   style: Theme.of(context)
@@ -83,7 +86,7 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                                 )
                               ],
                             ),
-                            SizedBox(height: 24),
+                            const SizedBox(height: 24),
                             Text(
                               sight.sight.details,
                               style:
@@ -91,10 +94,10 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                             )
                           ],
                         ),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         ElevatedButton(
                           onPressed: () {
-                            print('on click iconGo');
+                            //print('on click iconGo');
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -104,7 +107,7 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                                 height: 24,
                                 width: 24,
                               ),
-                              SizedBox(width: 8),
+                              const SizedBox(width: 8),
                               Text(
                                 'Построить маршрут'.toUpperCase(),
                                 style: textButtonElevation,
@@ -112,16 +115,15 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 24),
-                        Divider(),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 24),
+                        const Divider(),
+                        const SizedBox(height: 8),
                         Row(
                           children: [
                             Expanded(
-                                flex: 1,
                                 child: TextButton(
                                   onPressed: () {
-                                    print('on click iconCalendar');
+                                    //print('on click iconCalendar');
                                   },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -131,7 +133,7 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                                         color:
                                             lmSecondary2Color.withOpacity(0.56),
                                       ),
-                                      SizedBox(width: 8),
+                                      const SizedBox(width: 8),
                                       Text('Запланировать',
                                           style: Theme.of(context)
                                               .primaryTextTheme
@@ -144,16 +146,19 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                                   ),
                                 )),
                             Expanded(
-                                flex: 1,
                                 child: TextButton(
                                   onPressed: () {
-                                    print('on click iconHeart');
+                                    //print('on click iconHeart');
                                   },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SvgPicture.asset(iconHeart),
-                                      SizedBox(width: 8),
+                                      SvgPicture.asset(
+                                        iconHeart,
+                                        color:
+                                            lmSecondary2Color.withOpacity(0.56),
+                                      ),
+                                      const SizedBox(width: 8),
                                       Text('В Избранное',
                                           style: Theme.of(context)
                                               .primaryTextTheme
@@ -170,7 +175,7 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                   )
                 ],
               )),
-          Positioned(
+          const Positioned(
             top: 0,
             left: 0,
             right: 0,
