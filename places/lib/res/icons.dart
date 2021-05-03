@@ -1,5 +1,10 @@
 //Common icons
 String _iconPath = 'assets/icons';
+String _tutorialPath = 'assets/tutorial';
+
+String iconTutorial1 = '$_tutorialPath/tutorial_1.svg';
+String iconTutorial2 = '$_tutorialPath/tutorial_2.svg';
+String iconTutorial3 = '$_tutorialPath/tutorial_3.svg';
 
 String iconArrow = '$_iconPath/arrow.svg';
 String iconBucket = '$_iconPath/bucket.svg';

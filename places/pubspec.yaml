@@ -23,6 +23,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/catalog/
+    - assets/tutorial/
   fonts:
     - family: Roboto
       fonts:
