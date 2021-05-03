@@ -10,7 +10,7 @@ class Sight {
   );
 
   String name;
-  String url;
+  List<String> url;
   Coordinate coordinate;
   String details;
 

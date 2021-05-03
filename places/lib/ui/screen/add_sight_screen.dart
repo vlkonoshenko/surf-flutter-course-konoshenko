@@ -67,7 +67,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
               ? () {
                   mocks.add(SightCardMeta(Sight(
                     _tcTitle.text,
-                    '',
+                    [],
                     Coordinate(
                       double.tryParse(_tcLat.text),
                       double.tryParse(_tcLon.text),

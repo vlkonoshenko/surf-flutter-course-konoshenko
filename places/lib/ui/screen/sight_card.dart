@@ -140,7 +140,7 @@ class _SightCardState extends State<SightCard> {
           fit: StackFit.expand,
           children: [
             Image.network(
-              widget.sightMeta.sight.url,
+              widget.sightMeta.sight.url.first,
               fit: BoxFit.cover,
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) return child;

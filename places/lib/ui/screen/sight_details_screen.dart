@@ -35,7 +35,7 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                     height: 300,
                     width: double.infinity,
                     child: Image.network(
-                      sight.sight.url,
+                      sight.sight.url.first,
                       fit: BoxFit.cover,
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
