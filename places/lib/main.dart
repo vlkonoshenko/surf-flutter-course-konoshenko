@@ -3,6 +3,7 @@ import 'package:places/res/themes.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/filters_screen.dart';
 import 'package:places/ui/screen/home_screen.dart';
+import 'package:places/ui/screen/onboarding_screen.dart';
 import 'package:places/ui/screen/select_category_screen.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 import 'package:places/ui/screen/sight_search_screen.dart';
@@ -33,7 +34,7 @@ class _AppState extends State<App> {
       title: 'Flutter Demo',
       theme: isDarkMode ? darkTheme : lightTheme,
       routes: {
-        '/': (context) => const HomeScreen(),
+        '/': (context) => const OnboardingScreen(),
         SightDetailsScreen.routeName: (context) => const SightDetailsScreen(),
         FilterScreen.routeName: (context) => const FilterScreen(),
         AddSightScreen.routeName: (context) => const AddSightScreen(),
@@ -42,6 +43,7 @@ class _AppState extends State<App> {
         SightSearchScreen.routeName: (context) => const SightSearchScreen(),
       },
       initialRoute: '/',
+
     );
   }
 }
