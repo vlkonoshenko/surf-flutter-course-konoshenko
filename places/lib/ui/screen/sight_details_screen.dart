@@ -16,10 +16,11 @@ class SightDetailsScreen extends StatefulWidget {
 }
 
 class _SightDetailsScreenState extends State<SightDetailsScreen> {
+  SightCardMeta sight;
+
   @override
   Widget build(BuildContext context) {
-    final SightCardMeta sight =
-        ModalRoute.of(context).settings.arguments as SightCardMeta;
+    sight = ModalRoute.of(context).settings.arguments as SightCardMeta;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -31,25 +32,7 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
               right: 0.0,
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 300,
-                    width: double.infinity,
-                    child: Image.network(
-                      sight.sight.url,
-                      fit: BoxFit.cover,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CupertinoActivityIndicator.partiallyRevealed(
-                            progress: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
-                                : null,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                  GalleryView(sight.sight.url),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16,
@@ -122,52 +105,50 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                           children: [
                             Expanded(
                                 child: TextButton(
-                                  onPressed: () {
-                                    //print('on click iconCalendar');
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SvgPicture.asset(
-                                        iconCalendar,
-                                        color:
-                                            lmSecondary2Color.withOpacity(0.56),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Text('Запланировать',
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .subtitle2
-                                              .copyWith(
-                                                  fontWeight: FontWeight.w400,
-                                                  color: lmSecondary2Color
-                                                      .withOpacity(0.56)))
-                                    ],
+                              onPressed: () {
+                                //print('on click iconCalendar');
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    iconCalendar,
+                                    color: lmSecondary2Color.withOpacity(0.56),
                                   ),
-                                )),
+                                  const SizedBox(width: 8),
+                                  Text('Запланировать',
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .subtitle2
+                                          .copyWith(
+                                              fontWeight: FontWeight.w400,
+                                              color: lmSecondary2Color
+                                                  .withOpacity(0.56)))
+                                ],
+                              ),
+                            )),
                             Expanded(
                                 child: TextButton(
-                                  onPressed: () {
-                                    //print('on click iconHeart');
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SvgPicture.asset(
-                                        iconHeart,
-                                        color:
-                                            lmSecondary2Color.withOpacity(0.56),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Text('В Избранное',
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .subtitle2
-                                              .copyWith(
-                                                  fontWeight: FontWeight.w400))
-                                    ],
+                              onPressed: () {
+                                //print('on click iconHeart');
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    iconHeart,
+                                    color: lmSecondary2Color.withOpacity(0.56),
                                   ),
-                                ))
+                                  const SizedBox(width: 8),
+                                  Text('В Избранное',
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .subtitle2
+                                          .copyWith(
+                                              fontWeight: FontWeight.w400))
+                                ],
+                              ),
+                            ))
                           ],
                         )
                       ],
@@ -182,6 +163,98 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
             child: CustomAppBar(),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class GalleryView extends StatefulWidget {
+  const GalleryView(this.images, {Key key}) : super(key: key);
+  final List<String> images;
+
+  @override
+  _GalleryViewState createState() => _GalleryViewState();
+}
+
+class _GalleryViewState extends State<GalleryView> {
+  int currentPageValue = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        height: 300,
+        width: double.infinity,
+        child: Stack(
+          children: [
+            PageView.builder(
+                onPageChanged: (int page) {
+                  currentPageValue = page;
+                  setState(() {});
+                },
+                physics: const ClampingScrollPhysics(),
+                itemCount: widget.images.length,
+                itemBuilder: (context, index) {
+                  return Image.network(
+                    widget.images[index],
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CupertinoActivityIndicator.partiallyRevealed(
+                          progress: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes
+                              : null,
+                        ),
+                      );
+                    },
+                  );
+                }),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Stack(
+                alignment: AlignmentDirectional.bottomCenter,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      for (int i = 0; i < widget.images.length; i++)
+                        progressBar(i)
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
+        ));
+  }
+
+  Widget progressBar(int index) {
+    final isActive = index == currentPageValue;
+    return Expanded(
+      child: SizedBox(
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 150),
+          height: 8,
+          width: isActive
+              ? MediaQuery.of(context).size.width / widget.images.length
+              : 0,
+          decoration: BoxDecoration(
+              color: isActive ? lmMainColor : Colors.transparent,
+              borderRadius: BorderRadius.only(
+                topLeft: index == 0 ? Radius.circular(0) : Radius.circular(12),
+                topRight: index == widget.images.length - 1
+                    ? Radius.circular(0)
+                    : Radius.circular(12),
+                bottomRight: index == widget.images.length - 1
+                    ? Radius.circular(0)
+                    : Radius.circular(12),
+                bottomLeft:
+                    index == 0 ? Radius.circular(0) : Radius.circular(12),
+              )),
+        ),
       ),
     );
   }
