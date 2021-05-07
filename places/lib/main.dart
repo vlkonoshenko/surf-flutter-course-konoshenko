@@ -34,7 +34,7 @@ class _AppState extends State<App> {
       title: 'Flutter Demo',
       theme: isDarkMode ? darkTheme : lightTheme,
       routes: {
-        '/': (context) => const OnboardingScreen(),
+        '/': (context) => const HomeScreen(),
         SightDetailsScreen.routeName: (context) => const SightDetailsScreen(),
         FilterScreen.routeName: (context) => const FilterScreen(),
         AddSightScreen.routeName: (context) => const AddSightScreen(),
