@@ -6,7 +6,9 @@ import 'package:places/ui/screen/sight_list_screen.dart';
 import 'package:places/ui/screen/visiting_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+
   const HomeScreen({Key key}) :super(key: key);
+  static const String routeName = '/home_screen';
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
