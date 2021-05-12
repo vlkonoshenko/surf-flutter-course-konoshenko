@@ -151,9 +151,6 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                       ))
                     ],
                   ),
-                  SizedBox(
-                    height: 400,
-                  )
                 ],
               ),
             ),

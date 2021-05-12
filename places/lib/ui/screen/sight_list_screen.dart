@@ -1,12 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/mocks.dart';
 import 'package:places/res/res.dart';
-import 'package:places/ui/components/overscroll_glow_absorber.dart';
-import 'package:places/ui/components/search_bar.dart';
+import 'package:places/ui/components/sight_list_screen/app_header_delegat.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
@@ -23,23 +20,20 @@ class _SightListScreenState extends State<SightListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: Text(
-            'Список интересных мест',
-            style: Theme.of(context)
-                .primaryTextTheme
-                .subtitle1
-                .copyWith(fontSize: 18),
-          ),
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-        ),
         body: Stack(
           children: [
-            const SearchBar(),
-            Padding(
-              padding: const EdgeInsets.only(top: 60.0),
-              child: _listSight(),
+            CustomScrollView(
+              slivers: [
+                SliverPersistentHeader(
+                  pinned: true,
+                  floating: true,
+                  delegate: AppHeader(),
+                ),
+                SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                        (context, index) => SightCard(mocks[index]),
+                        childCount: mocks.length))
+              ],
             ),
             Positioned(
               bottom: 16,
@@ -49,18 +43,6 @@ class _SightListScreenState extends State<SightListScreen> {
             ),
           ],
         ));
-  }
-
-  Widget _listSight() {
-    return OverscrollGlowAbsorber(
-      child: ListView.builder(
-        physics: Platform.isAndroid
-            ? const ClampingScrollPhysics()
-            : const BouncingScrollPhysics(),
-        itemCount: mocks.length,
-        itemBuilder: (context, index) => SightCard(mocks[index]),
-      ),
-    );
   }
 
   Widget _btnAddSight(BuildContext context) {
