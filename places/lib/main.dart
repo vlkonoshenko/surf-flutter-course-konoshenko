@@ -7,6 +7,7 @@ import 'package:places/ui/screen/onboarding_screen.dart';
 import 'package:places/ui/screen/select_category_screen.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 import 'package:places/ui/screen/sight_search_screen.dart';
+import 'package:places/ui/screen/splash_screen.dart';
 
 void main() {
   runApp(const App());
@@ -34,8 +35,9 @@ class _AppState extends State<App> {
       title: 'Flutter Demo',
       theme: isDarkMode ? darkTheme : lightTheme,
       routes: {
-        '/': (context) => const HomeScreen(),
+        '/': (context) => const SplashScreen(),
         SightDetailsScreen.routeName: (context) => const SightDetailsScreen(),
+        HomeScreen.routeName: (context) => const HomeScreen(),
         FilterScreen.routeName: (context) => const FilterScreen(),
         AddSightScreen.routeName: (context) => const AddSightScreen(),
         SelectCategoryScreen.routeName: (context) =>
