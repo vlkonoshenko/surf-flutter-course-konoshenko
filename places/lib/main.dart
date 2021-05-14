@@ -40,12 +40,11 @@ class _AppState extends State<App> {
         HomeScreen.routeName: (context) => const HomeScreen(),
         FilterScreen.routeName: (context) => const FilterScreen(),
         AddSightScreen.routeName: (context) => const AddSightScreen(),
-        SelectCategoryScreen.routeName: (context) =>
-            const SelectCategoryScreen(),
+        SelectCategoryScreen.routeName: (context) => const SelectCategoryScreen(),
         SightSearchScreen.routeName: (context) => const SightSearchScreen(),
+        OnboardingScreen.routeName: (context) => const OnboardingScreen(),
       },
       initialRoute: '/',
-
     );
   }
 }

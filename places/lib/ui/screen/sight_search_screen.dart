@@ -41,6 +41,14 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
+          leading: IconButton(
+            icon: SvgPicture.asset(iconArrow,
+                color:
+                Theme.of(context).bottomNavigationBarTheme.selectedItemColor),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           title: Text(
             'Список интересных мест',
             style: Theme.of(context)
