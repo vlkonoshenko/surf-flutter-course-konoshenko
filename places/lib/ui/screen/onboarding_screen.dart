@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/res/res.dart';
+import 'package:places/ui/screen/home_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key key}) : super(key: key);
+  static const String routeName = '/onboarding_screen';
 
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
@@ -128,7 +130,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(),
                             onPressed: () {
-                              //print('on click iconGo');
+                              Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
                             },
                             child: Text(
                               'на старт'.toUpperCase(),

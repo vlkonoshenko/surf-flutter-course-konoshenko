@@ -20,7 +20,11 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    sight = ModalRoute.of(context).settings.arguments as SightCardMeta;
+    final args = ModalRoute.of(context).settings.arguments;
+    if (args != null && args is SightCardMeta) {
+      sight = ModalRoute.of(context).settings.arguments as SightCardMeta;
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: CustomScrollView(
@@ -200,22 +204,24 @@ class _GalleryViewState extends State<GalleryView> {
                 },
               );
             }),
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: Stack(
-            alignment: AlignmentDirectional.bottomCenter,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  for (int i = 0; i < widget.images.length; i++) progressBar(i)
-                ],
-              ),
-            ],
-          ),
-        )
+        if (widget.images.length > 1)
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Stack(
+              alignment: AlignmentDirectional.bottomCenter,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    for (int i = 0; i < widget.images.length; i++)
+                      progressBar(i)
+                  ],
+                ),
+              ],
+            ),
+          )
       ],
     );
   }
