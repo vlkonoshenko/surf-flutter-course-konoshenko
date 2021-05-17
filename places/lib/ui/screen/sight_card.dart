@@ -104,9 +104,19 @@ class _SightCardState extends State<SightCard> {
   Widget _cardClickArea(BuildContext context) {
     return Material(
       color: Colors.transparent,
+
       child: InkWell(
-        onTap: () => Navigator.pushNamed(context, SightDetailsScreen.routeName,
-            arguments: widget.sightMeta),
+        onTap: () =>  showModalBottomSheet<void>(
+          context: context,
+          clipBehavior: Clip.antiAlias,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              )),
+          isScrollControlled: true,
+          builder: (_) => SightDetailsScreen(sight:widget.sightMeta),
+        ),
       ),
     );
   }
