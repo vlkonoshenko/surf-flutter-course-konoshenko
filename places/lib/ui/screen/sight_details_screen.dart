@@ -28,158 +28,169 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
       sight = widget.sight;
     }
     return DraggableScrollableSheet(
-      expand: false,
-      initialChildSize: 0.9,
-      maxChildSize: 0.9,
-      minChildSize: 0.5,
-      builder: (context,controller){
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: CustomScrollView(
-            controller: controller,
-            slivers: [
-              SliverAppBar(
-                actions: [
-                  Container(
-                    alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.only(left: 16),
-                    child: const BtnWhiteSquare(
-                      icon: Icons.arrow_back_ios_outlined,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 16,
-                  )
-                ],
-                expandedHeight: 300,
-                automaticallyImplyLeading: false,
-                flexibleSpace: GalleryView(sight.sight.url),
-              ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 24,
-                  ),
-                  child: Column(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            sight.sight.name,
-                            style: Theme.of(context).primaryTextTheme.headline5,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              Text(
-                                sight.sight.type.toText(),
-                                style: Theme.of(context)
-                                    .primaryTextTheme
-                                    .subtitle2
-                                    .copyWith(color: const Color(0xff7C7E92)),
-                              ),
-                              const SizedBox(width: 16),
-                              Text(
-                                'закрыто до 09:00',
-                                style:
-                                Theme.of(context).primaryTextTheme.caption,
-                              )
-                            ],
-                          ),
-                          const SizedBox(height: 24),
-                          Text(
-                            sight.sight.details,
-                            style: Theme.of(context).primaryTextTheme.bodyText1,
-                          )
-                        ],
+        expand: false,
+        initialChildSize: 0.9,
+        maxChildSize: 0.9,
+        minChildSize: 0.5,
+        builder: (context, controller) {
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: CustomScrollView(
+              controller: controller,
+              slivers: [
+                SliverAppBar(
+                  actions: [
+                    Container(
+                      alignment: Alignment.centerRight,
+                      padding: const EdgeInsets.only(left: 16),
+                      child: const BtnWhiteSquare(
+                        icon: Icons.arrow_back_ios_outlined,
                       ),
-                      const SizedBox(height: 24),
-                      ElevatedButton(
-                        onPressed: () {
-                          //print('on click iconGo');
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                    ),
+                    SizedBox(
+                      width: 16,
+                    )
+                  ],
+                  expandedHeight: 300,
+                  automaticallyImplyLeading: false,
+                  flexibleSpace: GalleryView(sight.sight.url),
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 24,
+                    ),
+                    child: Column(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SvgPicture.asset(
-                              iconGo,
-                              height: 24,
-                              width: 24,
-                            ),
-                            const SizedBox(width: 8),
                             Text(
-                              'Построить маршрут'.toUpperCase(),
-                              style: textButtonElevation,
+                              sight.sight.name,
+                              style:
+                                  Theme.of(context).primaryTextTheme.headline5,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                Text(
+                                  sight.sight.type.toText(),
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .subtitle2
+                                      .copyWith(color: const Color(0xff7C7E92)),
+                                ),
+                                const SizedBox(width: 16),
+                                Text(
+                                  'закрыто до 09:00',
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .caption,
+                                )
+                              ],
+                            ),
+                            const SizedBox(height: 24),
+                            Text(
+                              sight.sight.details,
+                              style:
+                                  Theme.of(context).primaryTextTheme.bodyText1,
+                            )
                           ],
                         ),
-                      ),
-                      const SizedBox(height: 24),
-                      const Divider(),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Expanded(
-                              child: TextButton(
-                                onPressed: () {
-                                  //print('on click iconCalendar');
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      iconCalendar,
-                                      color: lmSecondary2Color.withOpacity(0.56),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text('Запланировать',
-                                        style: Theme.of(context)
-                                            .primaryTextTheme
-                                            .subtitle2
-                                            .copyWith(
-                                            fontWeight: FontWeight.w400,
-                                            color: lmSecondary2Color
-                                                .withOpacity(0.56)))
-                                  ],
-                                ),
-                              )),
-                          Expanded(
-                              child: TextButton(
-                                onPressed: () {
-                                  //print('on click iconHeart');
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      iconHeart,
-                                      color: lmSecondary2Color.withOpacity(0.56),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text('В Избранное',
-                                        style: Theme.of(context)
-                                            .primaryTextTheme
-                                            .subtitle2
-                                            .copyWith(fontWeight: FontWeight.w400))
-                                  ],
-                                ),
-                              ))
-                        ],
-                      ),
-                    ],
+                        const SizedBox(height: 24),
+                        ElevatedButton(
+                          onPressed: () {
+                            //print('on click iconGo');
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                iconGo,
+                                height: 24,
+                                width: 24,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Построить маршрут'.toUpperCase(),
+                                style: textButtonElevation,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        const Divider(),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Expanded(
+                                child: TextButton(
+                              onPressed: () {
+                                showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime.now()
+                                            .subtract(Duration(days: 100)),
+                                        lastDate: DateTime.now()
+                                            .add(Duration(days: 100)))
+                                    .then((value) => showTimePicker(
+                                        context: context,
+                                        initialTime: TimeOfDay.now()));
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    iconCalendar,
+                                    color: lmSecondary2Color.withOpacity(0.56),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text('Запланировать',
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .subtitle2
+                                          .copyWith(
+                                              fontWeight: FontWeight.w400,
+                                              color: lmSecondary2Color
+                                                  .withOpacity(0.56)))
+                                ],
+                              ),
+                            )),
+                            Expanded(
+                                child: TextButton(
+                              onPressed: () {
+                                //print('on click iconHeart');
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    iconHeart,
+                                    color: lmSecondary2Color.withOpacity(0.56),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text('В Избранное',
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .subtitle2
+                                          .copyWith(
+                                              fontWeight: FontWeight.w400))
+                                ],
+                              ),
+                            ))
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ],
-          ),
-        );
-      }
-    );
-
+                )
+              ],
+            ),
+          );
+        });
   }
 }
 
@@ -244,7 +255,6 @@ class _GalleryViewState extends State<GalleryView> {
           top: 10,
           left: 0,
           right: 0,
-
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
