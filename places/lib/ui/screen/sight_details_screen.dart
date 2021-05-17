@@ -27,19 +27,16 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
     } else {
       sight = widget.sight;
     }
-
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(20),
-        topRight: Radius.circular(20),
-      )),
-      child: ConstrainedBox(
-        constraints:
-            BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.9),
-        child: Scaffold(
+    return DraggableScrollableSheet(
+      expand: false,
+      initialChildSize: 0.9,
+      maxChildSize: 0.9,
+      minChildSize: 0.5,
+      builder: (context,controller){
+        return Scaffold(
           resizeToAvoidBottomInset: false,
           body: CustomScrollView(
+            controller: controller,
             slivers: [
               SliverAppBar(
                 actions: [
@@ -89,7 +86,7 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                               Text(
                                 'закрыто до 09:00',
                                 style:
-                                    Theme.of(context).primaryTextTheme.caption,
+                                Theme.of(context).primaryTextTheme.caption,
                               )
                             ],
                           ),
@@ -128,49 +125,49 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                         children: [
                           Expanded(
                               child: TextButton(
-                            onPressed: () {
-                              //print('on click iconCalendar');
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  iconCalendar,
-                                  color: lmSecondary2Color.withOpacity(0.56),
-                                ),
-                                const SizedBox(width: 8),
-                                Text('Запланировать',
-                                    style: Theme.of(context)
-                                        .primaryTextTheme
-                                        .subtitle2
-                                        .copyWith(
+                                onPressed: () {
+                                  //print('on click iconCalendar');
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      iconCalendar,
+                                      color: lmSecondary2Color.withOpacity(0.56),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text('Запланировать',
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .subtitle2
+                                            .copyWith(
                                             fontWeight: FontWeight.w400,
                                             color: lmSecondary2Color
                                                 .withOpacity(0.56)))
-                              ],
-                            ),
-                          )),
+                                  ],
+                                ),
+                              )),
                           Expanded(
                               child: TextButton(
-                            onPressed: () {
-                              //print('on click iconHeart');
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  iconHeart,
-                                  color: lmSecondary2Color.withOpacity(0.56),
+                                onPressed: () {
+                                  //print('on click iconHeart');
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      iconHeart,
+                                      color: lmSecondary2Color.withOpacity(0.56),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text('В Избранное',
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .subtitle2
+                                            .copyWith(fontWeight: FontWeight.w400))
+                                  ],
                                 ),
-                                const SizedBox(width: 8),
-                                Text('В Избранное',
-                                    style: Theme.of(context)
-                                        .primaryTextTheme
-                                        .subtitle2
-                                        .copyWith(fontWeight: FontWeight.w400))
-                              ],
-                            ),
-                          ))
+                              ))
                         ],
                       ),
                     ],
@@ -179,9 +176,10 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
               )
             ],
           ),
-        ),
-      ),
+        );
+      }
     );
+
   }
 }
 
