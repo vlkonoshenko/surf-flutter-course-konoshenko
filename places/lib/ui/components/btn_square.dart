@@ -14,11 +14,12 @@ class BtnWhiteSquare extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
           color: Theme.of(context).canvasColor,
+          shape: BoxShape.circle
         ),
-        height: 32,
-        width: 32,
+
+        height: 40,
+        width: 40,
         child: InkWell(
           onTap: () {
             Navigator.of(context).pop();
@@ -26,7 +27,7 @@ class BtnWhiteSquare extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: SvgPicture.asset(
-              iconArrow,
+              iconClose,
               color: Theme.of(context).primaryColor,
             ),
           ),
