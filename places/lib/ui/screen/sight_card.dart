@@ -104,7 +104,6 @@ class _SightCardState extends State<SightCard> {
   Widget _cardClickArea(BuildContext context) {
     return Material(
       color: Colors.transparent,
-
       child: InkWell(
         onTap: () =>  showModalBottomSheet<void>(
           context: context,

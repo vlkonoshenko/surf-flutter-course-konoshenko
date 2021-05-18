@@ -7,6 +7,7 @@ import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/res/res.dart';
 import 'package:places/res/text_style.dart';
+import 'package:places/ui/components/add_signt_screen/add_photo_dialog.dart';
 import 'package:places/ui/components/add_signt_screen/components.dart';
 import 'package:places/ui/components/label_text_widget.dart';
 import 'package:places/ui/screen/select_category_screen.dart';
@@ -214,8 +215,10 @@ class _AddSightScreenState extends State<AddSightScreen> {
           minLines: 3,
           decoration: InputDecoration(
             hintText: 'введите текст',
-            contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-            suffixIconConstraints: const BoxConstraints(maxHeight: 40, minWidth: 40),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+            suffixIconConstraints:
+                const BoxConstraints(maxHeight: 40, minWidth: 40),
             suffixIcon: AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
               child: _fnDescription.hasFocus
@@ -252,7 +255,8 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     onSubmitted: (value) => _fnLon.requestFocus(),
                     decoration: InputDecoration(
                       hintText: 'введите текст',
-                      suffixIconConstraints: const BoxConstraints(maxHeight: 40),
+                      suffixIconConstraints:
+                          const BoxConstraints(maxHeight: 40),
                       suffixIcon: AnimatedSwitcher(
                         duration: const Duration(milliseconds: 300),
                         child: _fnLat.hasFocus
@@ -326,12 +330,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
           children: [
             BtnAddPhoto(
               context: context,
-              onAddClick: () {
-                images.add(
-                  'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
-                );
-                setState(() {});
-              },
+              onAddClick: () => _dialogCall(context),
             ),
             ...images
                 .map((e) => ImagePreview(
@@ -346,5 +345,14 @@ class _AddSightScreenState extends State<AddSightScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _dialogCall(BuildContext context) {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return  AddPhotoDialog();
+        });
   }
 }
