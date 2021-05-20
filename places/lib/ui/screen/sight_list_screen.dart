@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/mocks.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/components/sight_list_screen/app_header_delegat.dart';
+import 'package:places/ui/components/sight_list_screen/app_header_landscape_delegat.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
@@ -18,34 +19,71 @@ class SightListScreen extends StatefulWidget {
 class _SightListScreenState extends State<SightListScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+      child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            CustomScrollView(
-              slivers: [
-                SliverPersistentHeader(
-                  pinned: true,
-                  floating: true,
-                  delegate: AppHeader(),
-                ),
-                SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                        (context, index) => SightCard(mocks[index]),
-                        childCount: mocks.length))
-              ],
-            ),
-            Positioned(
+            OrientationBuilder(builder: (context, orientation) {
+              return orientation == Orientation.landscape
+                  ? CustomScrollView(
+                      slivers: [
+                        SliverPersistentHeader(
+                          pinned: true,
+                          floating: true,
+                          delegate: AppHeaderLandscape(),
+                        ),
+                        SliverGrid(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 10.0,
+                            crossAxisSpacing: 10.0,
+                            childAspectRatio: 1.8,
+                          ),
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) => SightCard(mocks[index]),
+                            childCount: mocks.length,
+                          ),
+                        ),
+                      ],
+                    )
+                  : CustomScrollView(
+                      slivers: [
+                        SliverPersistentHeader(
+                          pinned: true,
+                          floating: true,
+                          delegate: AppHeader(),
+                        ),
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) => SightCard(mocks[index]),
+                            childCount: mocks.length,
+                          ),
+                        ),
+                      ],
+                    );
+            }),
+            const Positioned(
               bottom: 16,
               left: 0,
               right: 0,
-              child: _btnAddSight(context),
+              child: AddSightBtn(),
             ),
           ],
-        ));
+        ),
+      ),
+    );
   }
+}
 
-  Widget _btnAddSight(BuildContext context) {
+class AddSightBtn extends StatelessWidget {
+  const AddSightBtn({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -71,7 +109,7 @@ class _SightListScreenState extends State<SightListScreen> {
                   color: Colors.black12,
                   offset: Offset(5, 5),
                   blurRadius: 10,
-                )
+                ),
               ],
             ),
             child: Row(
