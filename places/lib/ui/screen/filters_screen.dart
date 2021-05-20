@@ -72,15 +72,33 @@ class _FilterScreenState extends State<FilterScreen> {
               ],
             ),
           ),
-          Expanded(
-            child: GridView.count(
-                primary: false,
-                padding: const EdgeInsets.all(20),
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                crossAxisCount: 3,
-                children: filters.map((e) => FilterContent(e)).toList()),
-          ),
+          MediaQuery.of(context).size.height < 800
+              ? Container(
+                  height: 120,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: filters
+                        .map((e) => Padding(
+                              padding: const EdgeInsets.only(
+                                left: 8.0,
+                                right: 8,
+                                top: 16,
+                              ),
+                              child: FilterContent(e),
+                            ))
+                        .toList(),
+                  ),
+                )
+              : GridView.count(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  primary: false,
+                  padding: const EdgeInsets.all(16),
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  crossAxisCount: 3,
+                  children: filters.map((e) => FilterContent(e)).toList(),
+                ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
