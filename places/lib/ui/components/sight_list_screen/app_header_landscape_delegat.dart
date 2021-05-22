@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/ui/components/search_bar.dart';
 
-class AppHeader extends SliverPersistentHeaderDelegate {
+class AppHeaderLandscape extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
     BuildContext context,
@@ -22,7 +22,7 @@ class AppHeader extends SliverPersistentHeaderDelegate {
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 500),
               reverseDuration: const Duration(milliseconds: 100),
-              child: percentage < 0.4
+              child: percentage < 0.9
                   ? Text(
                       'Список интересных мест',
                       style: Theme.of(context)
@@ -34,14 +34,14 @@ class AppHeader extends SliverPersistentHeaderDelegate {
             ),
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 100),
-              child: percentage > 0.95
+              child: percentage > 0.9
                   ? Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       alignment: Alignment.centerLeft,
                       child: Column(
                         children: [
                           Text(
-                            'Список \nинтересных мест',
+                            'Список интересных мест',
                             style: Theme.of(context)
                                 .primaryTextTheme
                                 .subtitle1
@@ -67,10 +67,10 @@ class AppHeader extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => 230.0;
+  double get maxExtent => 160.0;
 
   @override
-  double get minExtent => 30.0;
+  double get minExtent => 50.0;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
