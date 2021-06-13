@@ -3,15 +3,12 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:places/domain/sight.dart';
-import 'package:places/mocks.dart';
 import 'package:places/res/res.dart';
 import 'package:places/res/text_style.dart';
 import 'package:places/ui/components/add_signt_screen/add_photo_dialog.dart';
 import 'package:places/ui/components/add_signt_screen/components.dart';
 import 'package:places/ui/components/label_text_widget.dart';
 import 'package:places/ui/screen/select_category_screen.dart';
-import 'package:places/ui/screen/sight_card.dart';
 
 class AddSightScreen extends StatefulWidget {
   const AddSightScreen({Key key}) : super(key: key);
@@ -38,7 +35,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
     'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
     'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
     'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
-    'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg'
+    'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
   ];
 
   @override
@@ -66,16 +63,16 @@ class _AddSightScreenState extends State<AddSightScreen> {
         child: ElevatedButton(
           onPressed: _isBtnValid()
               ? () {
-                  mocks.add(SightCardMeta(Sight(
-                    _tcTitle.text,
-                    [],
-                    Coordinate(
-                      double.tryParse(_tcLat.text),
-                      double.tryParse(_tcLon.text),
-                    ),
-                    _tcDescription.text,
-                    selectedCategory,
-                  )));
+                  // mocks.add(SightCardMeta(Sight(
+                  //   _tcTitle.text,
+                  //   [],
+                  //   Coordinate(
+                  //     double.tryParse(_tcLat.text),
+                  //     double.tryParse(_tcLon.text),
+                  //   ),
+                  //   _tcDescription.text,
+                  //   selectedCategory,
+                  // )));
                   Navigator.pop(context);
                 }
               : null,
@@ -95,7 +92,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 child: Text(
                   'Отмена',
                   style: textMedium.copyWith(
-                      color: lmSecondary2Color, fontWeight: FontWeight.w300),
+                    color: lmSecondary2Color,
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
               ),
             ),
@@ -120,7 +119,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              _buildPhotoGallery(),
+              PhotoGallery(images),
               _buildCategory(),
               const SizedBox(height: 24),
               _buildTitle(),
@@ -144,7 +143,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
         InkWell(
           onTap: () async {
             final result = await Navigator.pushNamed<SightCategory>(
-                context, SelectCategoryScreen.routeName);
+              context,
+              SelectCategoryScreen.routeName,
+            );
             if (result != null) {
               setState(() {
                 selectedCategory = result;
@@ -267,7 +268,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     cursorHeight: 24,
                     cursorWidth: 1,
                     cursorColor: lmMainColor,
-                  )
+                  ),
                 ],
               ),
             ),
@@ -297,17 +298,17 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     cursorHeight: 24,
                     cursorWidth: 1,
                     cursorColor: lmMainColor,
-                  )
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
         const SizedBox(height: 16),
         Text(
           'Указать на карте',
           style: textMedium.copyWith(color: lmGreenColor),
-        )
+        ),
       ],
     );
   }
@@ -319,8 +320,20 @@ class _AddSightScreenState extends State<AddSightScreen> {
         _tcLat.text.isNotEmpty &&
         _tcTitle.text.isNotEmpty;
   }
+}
 
-  Widget _buildPhotoGallery() {
+class PhotoGallery extends StatefulWidget {
+  final List<String> images;
+
+  const PhotoGallery(this.images, {Key key}) : super(key: key);
+
+  @override
+  _PhotoGalleryState createState() => _PhotoGalleryState();
+}
+
+class _PhotoGalleryState extends State<PhotoGallery> {
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       height: 120,
       width: double.maxFinite,
@@ -332,15 +345,15 @@ class _AddSightScreenState extends State<AddSightScreen> {
               context: context,
               onAddClick: () => _dialogCall(context),
             ),
-            ...images
+            ...widget.images
                 .map((e) => ImagePreview(
                       url: e,
                       onDelete: () {
-                        images.remove(e);
+                        widget.images.remove(e);
                         setState(() {});
                       },
                     ))
-                .toList()
+                .toList(),
           ],
         ),
       ),
@@ -349,10 +362,11 @@ class _AddSightScreenState extends State<AddSightScreen> {
 
   Future<void> _dialogCall(BuildContext context) {
     return showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) {
-          return  AddPhotoDialog();
-        });
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return const AddPhotoDialog();
+      },
+    );
   }
 }

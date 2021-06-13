@@ -7,7 +7,6 @@ import 'package:places/res/res.dart';
 import 'package:places/res/text_style.dart';
 import 'package:places/ui/components/label_text_widget.dart';
 import 'package:places/ui/screen/filters_screen.dart';
-import 'package:places/ui/screen/select_category_screen.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 import 'package:styled_text/styled_text.dart';
@@ -39,130 +38,116 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: AppBar(
-          leading: IconButton(
-            icon: SvgPicture.asset(iconArrow,
-                color:
-                Theme.of(context).bottomNavigationBarTheme.selectedItemColor),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: SvgPicture.asset(
+            iconArrow,
+            color: Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
           ),
-          title: Text(
-            'Список интересных мест',
-            style: Theme.of(context)
-                .primaryTextTheme
-                .subtitle1
-                .copyWith(fontSize: 18),
-          ),
-          elevation: 0,
-          backgroundColor: Colors.transparent,
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Stack(
-                alignment: Alignment.centerRight,
-                children: <Widget>[
-                  SizedBox(
-                    height: 40,
-                    child: TextField(
-                      textInputAction: TextInputAction.search,
-                      controller: _tcSearch,
-                      focusNode: _fnSearch,
-                      onSubmitted: (value) {
-                        history.add(value);
-                        FocusManager.instance.primaryFocus.unfocus();
-                      },
-                      onChanged: _onChangedSearch,
-                      cursorWidth: 1,
-                      decoration: InputDecoration(
-                        filled: true,
-                        isDense: true,
-                        hintText: 'Поиск',
-                        hintStyle: TextStyle(
-                            fontSize: 16,
-                            color: const Color(0xff7C7E92).withOpacity(0.54)),
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.all(6),
-                          child: SvgPicture.asset(
-                            iconSearch,
-                            color: const Color(0xff7C7E92).withOpacity(0.54),
-                          ),
+        title: Text(
+          'Список интересных мест',
+          style: Theme.of(context)
+              .primaryTextTheme
+              .subtitle1
+              .copyWith(fontSize: 18),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Stack(
+              alignment: Alignment.centerRight,
+              children: <Widget>[
+                SizedBox(
+                  height: 40,
+                  child: TextField(
+                    textInputAction: TextInputAction.search,
+                    controller: _tcSearch,
+                    focusNode: _fnSearch,
+                    onSubmitted: (value) {
+                      history.add(value);
+                      FocusManager.instance.primaryFocus.unfocus();
+                    },
+                    onChanged: _onChangedSearch,
+                    cursorWidth: 1,
+                    decoration: InputDecoration(
+                      filled: true,
+                      isDense: true,
+                      hintText: 'Поиск',
+                      hintStyle: TextStyle(
+                        fontSize: 16,
+                        color: const Color(0xff7C7E92).withOpacity(0.54),
+                      ),
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: SvgPicture.asset(
+                          iconSearch,
+                          color: const Color(0xff7C7E92).withOpacity(0.54),
                         ),
-                        fillColor: const Color(0x128e8e93),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                      ),
+                      fillColor: const Color(0x128e8e93),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                   ),
-                  AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 300),
-                    child: _fnSearch.hasFocus
-                        ? IconButton(
-                            icon: SvgPicture.asset(iconClear,
-                                color: Theme.of(context).primaryColor),
-                            onPressed: () {
-                              _tcSearch.clear();
-                              _onChangedSearch('');
-                            })
-                        : IconButton(
-                            icon: SvgPicture.asset(iconFilter,
-                                color: Theme.of(context).accentColor),
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                  context, FilterScreen.routeName);
-                            }),
-                  )
-                ],
-              ),
+                ),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  child: _fnSearch.hasFocus
+                      ? IconButton(
+                          icon: SvgPicture.asset(
+                            iconClear,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          onPressed: () {
+                            _tcSearch.clear();
+                            _onChangedSearch('');
+                          },
+                        )
+                      : IconButton(
+                          icon: SvgPicture.asset(
+                            iconFilter,
+                            color: Theme.of(context).accentColor,
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              FilterScreen.routeName,
+                            );
+                          },
+                        ),
+                ),
+              ],
             ),
-            Expanded(
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 400),
-                child: _tcSearch.text.isEmpty
-                    ? _buildHistoryState()
-                    : isLoading
-                        ? const CircularProgressIndicator()
-                        : result.isEmpty
-                            ? _buildEmptyState()
-                            : _buildResultState(),
-              ),
-            )
-          ],
-        ));
-  }
-
-  Widget _buildEmptyState() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SvgPicture.asset(
-          iconSearch,
-          color: const Color(0xff7C7E92).withOpacity(0.54),
-          width: 50,
-          height: 50,
-        ),
-        const SizedBox(height: 32),
-        Text('Ничего не найдено.',
-            style: Theme.of(context)
-                .primaryTextTheme
-                .caption
-                .copyWith(fontSize: 18)),
-        const SizedBox(height: 8),
-        Text(
-          'Попробуйте изменить параметры поиска',
-          style: Theme.of(context).primaryTextTheme.caption,
-        ),
-      ],
+          ),
+          Expanded(
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 400),
+              child: _tcSearch.text.isEmpty
+                  ? _buildHistoryState()
+                  : isLoading
+                      ? const CircularProgressIndicator()
+                      : result.isEmpty
+                          ? const EmptyState()
+                          : _buildResultState(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -173,8 +158,11 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
         return InkWell(
           onTap: () {
             history.add(result[index].sight.name);
-            Navigator.pushNamed(context, SightDetailsScreen.routeName,
-                arguments: result[index]);
+            Navigator.pushNamed(
+              context,
+              SightDetailsScreen.routeName,
+              arguments: result[index],
+            );
           },
           child: Container(
             padding: const EdgeInsets.only(top: 16),
@@ -189,7 +177,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.network(
-                        result[index].sight.url.first,
+                        result[index].sight.urls.first,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -213,18 +201,19 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              result[index].sight.type.toText(),
+                              result[index].sight.placeType,
                               style: Theme.of(context)
                                   .primaryTextTheme
                                   .subtitle1
                                   .copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      color: const Color(0xff7C7E92)),
+                                    fontWeight: FontWeight.w400,
+                                    color: const Color(0xff7C7E92),
+                                  ),
                             ),
                           ],
                         ),
                       ),
-                      const Divider(height: 1)
+                      const Divider(height: 1),
                     ],
                   ),
                 ),
@@ -239,17 +228,20 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
 
   Widget _buildTitle(BuildContext context, String word, String part) {
     final resultStr = word.replaceAll(part, '<bold>$part</bold>');
+
+    final tag = StyledTextTag(
+      style: Theme.of(context)
+          .primaryTextTheme
+          .subtitle1
+          .copyWith(fontWeight: FontWeight.bold),
+    );
+
     return StyledText(
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       text: resultStr,
       style: Theme.of(context).primaryTextTheme.subtitle1,
-      styles: {
-        'bold': Theme.of(context)
-            .primaryTextTheme
-            .subtitle1
-            .copyWith(fontWeight: FontWeight.bold),
-      },
+      tags: {'bold': tag},
     );
   }
 
@@ -279,20 +271,21 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
           children: [
             const SizedBox(height: 24),
             LabelWidget(
-                history.isNotEmpty ? 'Вы искали' : 'История поиска пуста'),
+              history.isNotEmpty ? 'Вы искали' : 'История поиска пуста',
+            ),
             const SizedBox(height: 10),
             ListView.builder(
-                itemCount: history.length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                              child: Text(
+              itemCount: history.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
                             history[index],
                             style: Theme.of(context)
                                 .primaryTextTheme
@@ -301,24 +294,27 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                                   fontWeight: FontWeight.w400,
                                   color: const Color(0xff7C7E92),
                                 ),
-                          )),
-                          IconButton(
-                              icon: SvgPicture.asset(
-                                iconClose,
-                                color: const Color(0xff7C7E92),
-                                width: 20,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  history.removeAt(index);
-                                });
-                              }),
-                        ],
-                      ),
-                      if (index != history.length - 1) const Divider()
-                    ],
-                  );
-                }),
+                          ),
+                        ),
+                        IconButton(
+                          icon: SvgPicture.asset(
+                            iconClose,
+                            color: const Color(0xff7C7E92),
+                            width: 20,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              history.removeAt(index);
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                    if (index != history.length - 1) const Divider(),
+                  ],
+                );
+              },
+            ),
             const SizedBox(height: 24),
             InkWell(
               onTap: () {
@@ -332,10 +328,40 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                       style: textMedium.copyWith(color: lmGreenColor),
                     )
                   : const SizedBox.shrink(),
-            )
+            ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class EmptyState extends StatelessWidget {
+  const EmptyState({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SvgPicture.asset(
+          iconSearch,
+          color: const Color(0xff7C7E92).withOpacity(0.54),
+          width: 50,
+          height: 50,
+        ),
+        const SizedBox(height: 32),
+        Text(
+          'Ничего не найдено.',
+          style:
+              Theme.of(context).primaryTextTheme.caption.copyWith(fontSize: 18),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          'Попробуйте изменить параметры поиска',
+          style: Theme.of(context).primaryTextTheme.caption,
+        ),
+      ],
     );
   }
 }

@@ -19,11 +19,13 @@ class BtnSecondary extends StatelessWidget {
           child: Placeholder(),
         ),
         const SizedBox(width: 8),
-        Text(title,
-            style: Theme.of(context)
-                .primaryTextTheme
-                .subtitle2
-                .copyWith(fontWeight: FontWeight.w400))
+        Text(
+          title,
+          style: Theme.of(context)
+              .primaryTextTheme
+              .subtitle2
+              .copyWith(fontWeight: FontWeight.w400),
+        ),
       ],
     );
   }

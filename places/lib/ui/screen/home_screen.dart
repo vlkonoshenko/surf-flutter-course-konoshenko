@@ -43,29 +43,29 @@ class _HomeScreenState extends State<HomeScreen>
         currentIndex: _tabController.index,
         items: [
           BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                _tabController.index == 0 ? iconListFull : iconList,
-                color: Theme.of(context)
-                    .bottomNavigationBarTheme
-                    .selectedItemColor,
-              ),
-              label: 'List sight'),
+            icon: SvgPicture.asset(
+              _tabController.index == 0 ? iconListFull : iconList,
+              color:
+                  Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+            ),
+            label: 'List sight',
+          ),
           BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                _tabController.index == 1 ? iconHeartFull : iconHeart,
-                color: Theme.of(context)
-                    .bottomNavigationBarTheme
-                    .selectedItemColor,
-              ),
-              label: '2'),
+            icon: SvgPicture.asset(
+              _tabController.index == 1 ? iconHeartFull : iconHeart,
+              color:
+                  Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+            ),
+            label: '2',
+          ),
           BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                _tabController.index == 2 ? iconSettingsFull : iconSettings,
-                color: Theme.of(context)
-                    .bottomNavigationBarTheme
-                    .selectedItemColor,
-              ),
-              label: '2')
+            icon: SvgPicture.asset(
+              _tabController.index == 2 ? iconSettingsFull : iconSettings,
+              color:
+                  Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+            ),
+            label: '2',
+          ),
         ],
       ),
     );

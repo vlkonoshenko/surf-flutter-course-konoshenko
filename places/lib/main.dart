@@ -24,6 +24,8 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+
+
   @override
   Widget build(BuildContext context) {
     themeNotifier.addListener(() {
@@ -31,6 +33,7 @@ class _AppState extends State<App> {
         isDarkMode = !isDarkMode;
       });
     });
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: isDarkMode ? darkTheme : lightTheme,

@@ -20,31 +20,37 @@ class _VisitingScreenState extends State<VisitingScreen> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(
-              'Избранное',
-              style: Theme.of(context)
-                  .primaryTextTheme
-                  .subtitle1
-                  .copyWith(fontSize: 18),
-            ),
+          title: Text(
+            'Избранное',
+            style: Theme.of(context)
+                .primaryTextTheme
+                .subtitle1
+                .copyWith(fontSize: 18),
           ),
-          body: Column(
-            children: [
-              _tabBar(context),
-              const Expanded(
-                child: TabBarView(
-                  children: [
-                    ListWantVisit(),
-                    ListVisited(),
-                  ],
-                ),
+        ),
+        body: Column(
+          children: const [
+            _TabBarScreen(),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  ListWantVisit(),
+                  ListVisited(),
+                ],
               ),
-            ],
-          ),
-        ));
+            ),
+          ],
+        ),
+      ),
+    );
   }
+}
 
-  Container _tabBar(BuildContext context) {
+class _TabBarScreen extends StatelessWidget {
+  const _TabBarScreen({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       height: 40,
@@ -102,19 +108,21 @@ class _ListVisitedState extends State<ListVisited> {
             return Draggable<SightCardMeta>(
               data: list[index],
               childWhenDragging: SizedBox(
-                  height: 240,
-                  width: MediaQuery.of(context).size.width - 16,
-                  child: SightCard(
-                    list[index],
-                    sightCardState: SightCardState.drag,
-                  )),
+                height: 240,
+                width: MediaQuery.of(context).size.width - 16,
+                child: SightCard(
+                  list[index],
+                  sightCardState: SightCardState.drag,
+                ),
+              ),
               feedback: SizedBox(
-                  height: 240,
-                  width: MediaQuery.of(context).size.width - 16,
-                  child: SightCard(
-                    list[index],
-                    sightCardState: SightCardState.drag,
-                  )),
+                height: 240,
+                width: MediaQuery.of(context).size.width - 16,
+                child: SightCard(
+                  list[index],
+                  sightCardState: SightCardState.drag,
+                ),
+              ),
               child: SightCard(
                 list[index],
                 key: ValueKey(index),
@@ -144,17 +152,18 @@ class _ListWantVisitState extends State<ListWantVisit> {
           physics: Platform.isAndroid
               ? const ClampingScrollPhysics()
               : const BouncingScrollPhysics(),
-          itemCount: visit.length,
-          itemBuilder: (context, index) {
-            return SightCard(
-              visit[index],
-              key: ObjectKey(visit[index]),
-              onDelete: () {
-                visit.removeAt(index);
-                setState(() {});
-              },
-            );
-          }),
+        itemCount: visit.length,
+        itemBuilder: (context, index) {
+          return SightCard(
+            visit[index],
+            key: ObjectKey(visit[index]),
+            onDelete: () {
+              visit.removeAt(index);
+              setState(() {});
+            },
+          );
+        },
+      ),
     );
   }
 }

@@ -34,19 +34,20 @@ class ImagePreview extends StatelessWidget {
               ),
               Positioned(
                 right: 0,
-                child: Padding(
-                  padding: const EdgeInsets.all(6.0),
-                  child: GestureDetector(
-                    onTap: onDelete,
-                    child: SvgPicture.asset(
-                      iconClear,
-                      color: Colors.white,
-                    ),
+              child: Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: GestureDetector(
+                  onTap: onDelete,
+                  child: SvgPicture.asset(
+                    iconClear,
+                    color: Colors.white,
                   ),
                 ),
-              )
-            ],
-          )),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

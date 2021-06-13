@@ -36,22 +36,24 @@ class _FilterScreenState extends State<FilterScreen> {
         actions: [
           TextButton(
               onPressed: () {
-                setState(() {
-                  for (final element in filters) {
-                    element.isSelected = false;
-                  }
-                  valueSlider = const RangeValues(100, 10000);
-                });
-              },
-              child: Text(
-                'Очистить',
-                style: TextStyle(color: Theme.of(context).accentColor),
-              ))
+              setState(() {
+                for (final element in filters) {
+                  element.isSelected = false;
+                }
+                valueSlider = const RangeValues(100, 10000);
+              });
+            },
+            child: Text(
+              'Очистить',
+              style: TextStyle(color: Theme.of(context).accentColor),
+            ),
+          ),
         ],
         leading: IconButton(
-          icon: SvgPicture.asset(iconArrow,
-              color:
-                  Theme.of(context).bottomNavigationBarTheme.selectedItemColor),
+          icon: SvgPicture.asset(
+            iconArrow,
+            color: Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -73,7 +75,7 @@ class _FilterScreenState extends State<FilterScreen> {
             ),
           ),
           MediaQuery.of(context).size.height < 800
-              ? Container(
+              ? SizedBox(
                   height: 120,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
@@ -90,7 +92,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   ),
                 )
               : GridView.count(
-                  physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   primary: false,
                   padding: const EdgeInsets.all(16),
@@ -117,9 +119,10 @@ class _FilterScreenState extends State<FilterScreen> {
                       Text(
                         'от ${valueSlider.start.floor()} до ${valueSlider.end.floor()} м',
                         style: matSubtitle1.copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: lmSecondary2Color),
-                      )
+                          fontWeight: FontWeight.w400,
+                          color: lmSecondary2Color,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 32),
@@ -142,7 +145,7 @@ class _FilterScreenState extends State<FilterScreen> {
                       },
                       values: valueSlider,
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -159,7 +162,7 @@ class _FilterScreenState extends State<FilterScreen> {
               ),
             ),
           ),
-          const SizedBox(height: 8)
+          const SizedBox(height: 8),
         ],
       ),
     );
@@ -168,8 +171,11 @@ class _FilterScreenState extends State<FilterScreen> {
   int countPlaceInRange() {
     int result = 0;
     for (final element in mocks) {
-      if (arePointsNear(element.sight.coordinate,
-          Coordinate(48.025297, 37.796868), valueSlider)) {
+      if (arePointsNear(
+        Coordinate(element.sight.lat, element.sight.lng),
+        Coordinate(48.025297, 37.796868),
+        valueSlider,
+      )) {
         result++;
       }
     }
@@ -178,7 +184,10 @@ class _FilterScreenState extends State<FilterScreen> {
   }
 
   bool arePointsNear(
-      Coordinate checkPoint, Coordinate centerPoint, RangeValues range) {
+    Coordinate checkPoint,
+    Coordinate centerPoint,
+    RangeValues range,
+  ) {
     final kmH = range.end / 1000;
     final kmL = range.start / 1000;
     const ky = 40000 / 360;
@@ -187,6 +196,7 @@ class _FilterScreenState extends State<FilterScreen> {
     final dy = (centerPoint.lat - checkPoint.lat).abs() * ky;
     final distance = sqrt(dx * dx + dy * dy);
     final result = distance <= kmH && distance >= kmL;
+
     return result;
   }
 }
@@ -223,12 +233,15 @@ class _FilterContentState extends State<FilterContent> {
                     width: 64,
                     clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
-                        color: lmGreenColor.withOpacity(0.16),
-                        shape: BoxShape.circle),
+                      color: lmGreenColor.withOpacity(0.16),
+                      shape: BoxShape.circle,
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: SvgPicture.asset(widget.filterModel.icon,
-                          color: Theme.of(context).accentColor),
+                      child: SvgPicture.asset(
+                        widget.filterModel.icon,
+                        color: Theme.of(context).accentColor,
+                      ),
                     ),
                   ),
                 ),
@@ -239,15 +252,16 @@ class _FilterContentState extends State<FilterContent> {
                     height: widget.filterModel.isSelected ? 16 : 0,
                     width: widget.filterModel.isSelected ? 16 : 0,
                     decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Theme.of(context).primaryColor),
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).primaryColor,
+                    ),
                     duration: const Duration(milliseconds: 200),
                     child: SvgPicture.asset(
                       iconTick,
                       color: Theme.of(context).canvasColor,
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),

@@ -49,11 +49,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         automaticallyImplyLeading: false,
         actions: [
           TextButton(
-              onPressed: nextFunction,
-              child: Text(
-                isLastPage() ? '' : 'Пропустить',
-                style: TextStyle(color: Theme.of(context).accentColor),
-              ))
+            onPressed: nextFunction,
+            child: Text(
+              isLastPage() ? '' : 'Пропустить',
+              style: TextStyle(color: Theme.of(context).accentColor),
+            ),
+          ),
         ],
       ),
       body: SafeArea(
@@ -63,11 +64,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: Stack(
                 children: <Widget>[
                   PageView(
-                    onPageChanged: (value) {
-                      setState(() {
-                        currentIndex = value;
-                      });
-                    },
+                    onPageChanged: (value) =>
+                        setState(() => currentIndex = value),
                     controller: _pageController,
                     children: <Widget>[
                       OnboardingPage(
@@ -94,26 +92,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     left: 0,
                     right: 0,
                     child: Row(
-                      mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Indicator(
                           positionIndex: 0,
                           currentIndex: currentIndex,
                         ),
-                        SizedBox(width: 10),
-                        Indicator(
-                          positionIndex: 1,
-                          currentIndex: currentIndex,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Indicator(
-                          positionIndex: 2,
-                          currentIndex: currentIndex,
-                        ),
+                        const SizedBox(width: 10),
+                        Indicator(positionIndex: 1, currentIndex: currentIndex),
+                        const SizedBox(width: 10),
+                        Indicator(positionIndex: 2, currentIndex: currentIndex),
                       ],
                     ),
                   ),
@@ -121,25 +109,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
             SizedBox(
-                height: 48,
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
-                  child: isLastPage()
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(),
-                            onPressed: () {
-                              Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
-                            },
-                            child: Text(
-                              'на старт'.toUpperCase(),
-                              style: textButtonElevation,
-                            ),
+              height: 48,
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                child: isLastPage()
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(),
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushReplacementNamed(HomeScreen.routeName);
+                          },
+                          child: Text(
+                            'на старт'.toUpperCase(),
+                            style: textButtonElevation,
                           ),
-                        )
-                      : SizedBox(),
-                ))
+                        ),
+                      )
+                    : const SizedBox(),
+              ),
+            ),
           ],
         ),
       ),
@@ -198,9 +188,10 @@ class Indicator extends StatelessWidget {
       height: 8,
       width: positionIndex == currentIndex ? 24 : 8,
       decoration: BoxDecoration(
-          color: positionIndex == currentIndex ? lmGreenColor : Colors.grey,
-          borderRadius: BorderRadius.circular(100)),
-      duration: Duration(milliseconds: 200),
+        color: positionIndex == currentIndex ? lmGreenColor : Colors.grey,
+        borderRadius: BorderRadius.circular(100),
+      ),
+      duration: const Duration(milliseconds: 200),
     );
   }
 }

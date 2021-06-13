@@ -40,10 +40,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       .copyWith(fontWeight: FontWeight.w400),
                 ),
                 CupertinoSwitch(
-                    value: isDarkMode,
-                    onChanged: (onChanged) {
-                      themeNotifier.notifyListeners();
-                    })
+                  value: isDarkMode,
+                  onChanged: (onChanged) {
+                    themeNotifier.notifyListeners();
+                  },
+                ),
               ],
             ),
             const Divider(),
@@ -63,11 +64,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         .copyWith(fontWeight: FontWeight.w400),
                   ),
                   IconButton(
-                      icon: SvgPicture.asset(
-                        iconInfo,
-                        color: Theme.of(context).accentColor,
-                      ),
-                      onPressed: () {})
+                    icon: SvgPicture.asset(
+                      iconInfo,
+                      color: Theme.of(context).accentColor,
+                    ),
+                    onPressed: () async {
+                      // final data =
+                      //     await PlaceRepository(ApiClient().createDio())
+                      //         .getPlaceList();
+                      // print(data);
+                    },
+                  ),
                 ],
               ),
             ),
