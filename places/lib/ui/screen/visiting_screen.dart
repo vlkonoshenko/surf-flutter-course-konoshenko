@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:places/mocks.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/ui/components/overscroll_glow_absorber.dart';
 import 'package:places/ui/screen/sight_card.dart';
+import 'package:provider/provider.dart';
 
 class VisitingScreen extends StatefulWidget {
   const VisitingScreen({Key key}) : super(key: key);
@@ -17,9 +19,9 @@ class _VisitingScreenState extends State<VisitingScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
           title: Text(
             'Избранное',
             style: Theme.of(context)
@@ -80,8 +82,7 @@ class ListVisited extends StatefulWidget {
 }
 
 class _ListVisitedState extends State<ListVisited> {
-  List<SightCardMeta> list =
-      visit.map((e) => e.copyWith(visited: true)).toList();
+  List<Place> list = [];
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +92,7 @@ class _ListVisitedState extends State<ListVisited> {
             ? const ClampingScrollPhysics()
             : const BouncingScrollPhysics(),
         itemCount: list.length,
-        itemBuilder: (context, index) => DragTarget<SightCardMeta>(
+        itemBuilder: (context, index) => DragTarget<Place>(
           onWillAccept: (data) {
             return true;
           },
@@ -105,7 +106,7 @@ class _ListVisitedState extends State<ListVisited> {
             });
           },
           builder: (context, candidate, rejected) {
-            return Draggable<SightCardMeta>(
+            return Draggable<Place>(
               data: list[index],
               childWhenDragging: SizedBox(
                 height: 240,
@@ -147,23 +148,32 @@ class ListWantVisit extends StatefulWidget {
 class _ListWantVisitState extends State<ListWantVisit> {
   @override
   Widget build(BuildContext context) {
-    return OverscrollGlowAbsorber(
-      child: ListView.builder(
-          physics: Platform.isAndroid
-              ? const ClampingScrollPhysics()
-              : const BouncingScrollPhysics(),
-        itemCount: visit.length,
-        itemBuilder: (context, index) {
-          return SightCard(
-            visit[index],
-            key: ObjectKey(visit[index]),
-            onDelete: () {
-              visit.removeAt(index);
-              setState(() {});
+    return Consumer<PlaceInteractor>(
+      builder: (context, interactor, child) {
+        return OverscrollGlowAbsorber(
+          child: ListView.builder(
+            physics: Platform.isAndroid
+                ? const ClampingScrollPhysics()
+                : const BouncingScrollPhysics(),
+            itemCount: interactor.favorites.length,
+            itemBuilder: (context, index) {
+              return Container(
+                width: 120,
+                height: 120,
+                child: SightCard(
+                  interactor.favorites.elementAt(index),
+                  key: ObjectKey(interactor.favorites.elementAt(index)),
+                  onDelete: () {
+                    interactor.favorites
+                        .remove(interactor.favorites.elementAt(index));
+                    setState(() {});
+                  },
+                ),
+              );
             },
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

@@ -8,25 +8,25 @@ import 'package:places/data/model/place.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/components/components.dart';
-import 'package:places/ui/screen/sight_card.dart';
+import 'package:provider/provider.dart';
 
 class SightDetailsScreen extends StatefulWidget {
   const SightDetailsScreen({this.sight, Key key}) : super(key: key);
   static const String routeName = '/sight_details_screen';
-  final SightCardMeta sight;
+  final Place sight;
 
   @override
   _SightDetailsScreenState createState() => _SightDetailsScreenState();
 }
 
 class _SightDetailsScreenState extends State<SightDetailsScreen> {
-  SightCardMeta sight;
+  Place sight;
 
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context).settings.arguments;
-    sight = args != null && args is SightCardMeta
-        ? ModalRoute.of(context).settings.arguments as SightCardMeta
+    sight = args != null && args is Place
+        ? ModalRoute.of(context).settings.arguments as Place
         : widget.sight;
 
     return DraggableScrollableSheet(
@@ -55,10 +55,10 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                 ],
                 expandedHeight: 300,
                 automaticallyImplyLeading: false,
-                flexibleSpace: _GalleryView(sight.sight.urls),
+                flexibleSpace: _GalleryView(sight.urls),
               ),
               SliverToBoxAdapter(
-                child: _BodyContent(sight.sight),
+                child: _BodyContent(sight),
               ),
             ],
           ),
@@ -183,13 +183,29 @@ class __BottomControlPanelState extends State<_BottomControlPanel> {
         Expanded(
           child: TextButton(
             onPressed: () {
-              PlaceInteractor().addToFavorites(widget.sight);
+              if (context
+                  .read<PlaceInteractor>()
+                  .favorites
+                  .contains(widget.sight)) {
+                context
+                    .read<PlaceInteractor>()
+                    .removeFromFavorites(widget.sight);
+              } else {
+                context.read<PlaceInteractor>().addToFavorites(widget.sight);
+              }
+
+              Navigator.pop(context);
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SvgPicture.asset(
-                  iconHeart,
+                  context
+                          .read<PlaceInteractor>()
+                          .favorites
+                          .contains(widget.sight)
+                      ? iconHeartFull
+                      : iconHeart,
                   color: lmSecondary2Color.withOpacity(0.56),
                 ),
                 const SizedBox(width: 8),

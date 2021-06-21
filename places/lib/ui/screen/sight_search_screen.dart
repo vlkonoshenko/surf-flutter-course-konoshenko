@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:places/mocks.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/res/res.dart';
 import 'package:places/res/text_style.dart';
 import 'package:places/ui/components/label_text_widget.dart';
 import 'package:places/ui/screen/filters_screen.dart';
-import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 import 'package:styled_text/styled_text.dart';
 
@@ -22,7 +21,8 @@ class SightSearchScreen extends StatefulWidget {
 class _SightSearchScreenState extends State<SightSearchScreen> {
   final FocusNode _fnSearch = FocusNode();
   final TextEditingController _tcSearch = TextEditingController();
-  List<SightCardMeta> result = [];
+  List<Place> result = [];
+  List<String> history = [];
 
   bool isLoading = false;
 
@@ -157,7 +157,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
-            history.add(result[index].sight.name);
+            history.add(result[index].name);
             Navigator.pushNamed(
               context,
               SightDetailsScreen.routeName,
@@ -177,7 +177,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.network(
-                        result[index].sight.urls.first,
+                        result[index].urls.first,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -196,12 +196,12 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                             const SizedBox(height: 4),
                             _buildTitle(
                               context,
-                              result[index].sight.name,
+                              result[index].name,
                               _tcSearch.text,
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              result[index].sight.placeType,
+                              result[index].placeType,
                               style: Theme.of(context)
                                   .primaryTextTheme
                                   .subtitle1
@@ -249,13 +249,13 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     setState(() {
       isLoading = true;
     });
-    final founded = mocks
-        .where((element) =>
-            element.sight.name.toLowerCase().contains(value.toLowerCase()))
-        .toList();
+    // final founded = mocks
+    //     .where((element) =>
+    //         element.sight.name.toLowerCase().contains(value.toLowerCase()))
+    //     .toList();
     await Future<void>.delayed(const Duration(seconds: 1));
     setState(() {
-      result = founded;
+      // result = founded;
       isLoading = false;
     });
   }

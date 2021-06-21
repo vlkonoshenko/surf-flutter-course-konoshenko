@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/res/themes.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/filters_screen.dart';
@@ -8,12 +9,19 @@ import 'package:places/ui/screen/select_category_screen.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 import 'package:places/ui/screen/sight_search_screen.dart';
 import 'package:places/ui/screen/splash_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const App());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => PlaceInteractor(),
+      child: const App(),
+    ),
+  );
 }
 
 ChangeNotifier themeNotifier = ChangeNotifier();
+
 bool isDarkMode = false;
 
 class App extends StatefulWidget {
@@ -24,8 +32,6 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-
-
   @override
   Widget build(BuildContext context) {
     themeNotifier.addListener(() {
@@ -43,7 +49,8 @@ class _AppState extends State<App> {
         HomeScreen.routeName: (context) => const HomeScreen(),
         FilterScreen.routeName: (context) => const FilterScreen(),
         AddSightScreen.routeName: (context) => const AddSightScreen(),
-        SelectCategoryScreen.routeName: (context) => const SelectCategoryScreen(),
+        SelectCategoryScreen.routeName: (context) =>
+            const SelectCategoryScreen(),
         SightSearchScreen.routeName: (context) => const SightSearchScreen(),
         OnboardingScreen.routeName: (context) => const OnboardingScreen(),
       },

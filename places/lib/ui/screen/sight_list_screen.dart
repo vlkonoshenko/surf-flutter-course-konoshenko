@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
-import 'package:places/mocks.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/components/sight_list_screen/app_header_delegat.dart';
 import 'package:places/ui/components/sight_list_screen/app_header_landscape_delegat.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/sight_card.dart';
+import 'package:provider/provider.dart';
 
 class SightListScreen extends StatefulWidget {
   const SightListScreen({Key key}) : super(key: key);
@@ -30,7 +30,7 @@ class _SightListScreenState extends State<SightListScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: FutureBuilder<List<Place>>(
-          future: PlaceInteractor().getPlaces(10000, []),
+          future: context.read<PlaceInteractor>().getPlaces(10000, []),
           builder: (context, snap) {
             return snap.hasData
                 ? Stack(
@@ -53,9 +53,9 @@ class _SightListScreenState extends State<SightListScreen> {
                                       childAspectRatio: 1.8,
                                     ),
                                     delegate: SliverChildBuilderDelegate(
-                                      (context, index) =>
-                                          SightCard(mocks[index]),
-                                      childCount: mocks.length,
+                                          (context, index) =>
+                                          SightCard(snap.data[index]),
+                                      childCount: snap.data.length,
                                     ),
                                   ),
                                 ],
@@ -70,7 +70,7 @@ class _SightListScreenState extends State<SightListScreen> {
                                   SliverList(
                                     delegate: SliverChildBuilderDelegate(
                                       (context, index) => SightCard(
-                                        SightCardMeta(snap.data[index]),
+                                        snap.data[index],
                                       ),
                                       childCount: snap.data.length,
                                     ),

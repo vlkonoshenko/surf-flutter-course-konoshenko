@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/data/repository/place_repository.dart';
 import 'package:places/service/api_client.dart';
 
-class PlaceInteractor {
+class PlaceInteractor extends ChangeNotifier {
   static final PlaceInteractor _singleton = PlaceInteractor._();
 
   factory PlaceInteractor() {
@@ -11,8 +12,8 @@ class PlaceInteractor {
 
   PlaceInteractor._();
 
-  final favorites = <Place>[];
-  final visit = <Place>[];
+  final favorites = <Place>{};
+  final visit = <Place>{};
 
   final PlaceRepository _placeRepository =
       PlaceRepository(ApiClient().createDio());
@@ -30,10 +31,12 @@ class PlaceInteractor {
 
   Future<void> addToFavorites(Place place) async {
     favorites.add(place);
+    notifyListeners();
   }
 
   Future<void> removeFromFavorites(Place place) async {
     favorites.remove(place);
+    notifyListeners();
   }
 
   Future<void> getVisitPlaces() async {

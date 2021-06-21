@@ -5,33 +5,17 @@ import 'package:places/data/model/place.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 
-class SightCardMeta {
-  SightCardMeta(this.sight, {this.wantVisit = false, this.visited = false});
-
-  Place sight;
-  bool wantVisit;
-  bool visited;
-
-  SightCardMeta copyWith({bool wantVisit, bool visited}) {
-    return SightCardMeta(
-      sight,
-      wantVisit: wantVisit ?? this.wantVisit,
-      visited: visited ?? this.visited,
-    );
-  }
-}
-
 enum SightCardState { drag, simple }
 
 class SightCard extends StatefulWidget {
   const SightCard(
-    this.sightMeta, {
+    this.place, {
     Key key,
     this.onDelete,
     this.sightCardState = SightCardState.simple,
   }) : super(key: key);
 
-  final SightCardMeta sightMeta;
+  final Place place;
   final VoidCallback onDelete;
   final SightCardState sightCardState;
 
@@ -49,21 +33,10 @@ class _SightCardState extends State<SightCard> {
   }
 
   Widget _cardSight(BuildContext context) {
-    final isDismissed = widget.sightMeta.visited || widget.sightMeta.wantVisit;
-
     return Stack(
       children: <Widget>[
         const Positioned.fill(child: _DismissBackground()),
-        isDismissed
-            ? Dismissible(
-                onDismissed: (value) {
-                  widget.onDelete();
-                },
-                direction: DismissDirection.endToStart,
-                key: ObjectKey(widget.sightMeta),
-                child: _cardBody(context),
-              )
-            : _cardBody(context),
+        _cardBody(context),
       ],
     );
   }
@@ -88,15 +61,15 @@ class _SightCardState extends State<SightCard> {
           Positioned.fill(
             child: _cardClickArea(context),
           ),
-          if (widget.sightCardState == SightCardState.simple)
-            Positioned(
-              right: 16,
-              top: 16,
-              child: SightCardTools(
-                widget.sightMeta,
-                onDelete: widget.onDelete,
-              ),
-            ),
+          // if (widget.sightCardState == SightCardState.simple)
+          //   Positioned(
+          //     right: 16,
+          //     top: 16,
+          //     child: SightCardTools(
+          //       widget.place,
+          //       onDelete: widget.onDelete,
+          //     ),
+          //   ),
         ]),
       ),
     );
@@ -116,7 +89,7 @@ class _SightCardState extends State<SightCard> {
             ),
           ),
           isScrollControlled: true,
-          builder: (_) => SightDetailsScreen(sight: widget.sightMeta),
+          builder: (_) => SightDetailsScreen(sight: widget.place),
         ),
       ),
     );
@@ -130,14 +103,14 @@ class _SightCardState extends State<SightCard> {
         children: [
           const SizedBox(height: 16),
           Text(
-            widget.sightMeta.sight.name,
+            widget.place.name,
             maxLines: 2,
             style: Theme.of(context).primaryTextTheme.subtitle1,
           ),
           const SizedBox(height: 4),
-          _buildDetailInfo(context, widget.sightMeta),
-          if (widget.sightMeta.wantVisit || widget.sightMeta.visited)
-            _buildSightStatus(context),
+          _buildDetailInfo(context, widget.place),
+          //if (widget.place.wantVisit || widget.place.visited)
+          //   _buildSightStatus(context),
         ],
       ),
     );
@@ -150,7 +123,7 @@ class _SightCardState extends State<SightCard> {
         fit: StackFit.expand,
         children: [
           Image.network(
-            widget.sightMeta.sight.urls.first,
+            widget.place.urls.isNotEmpty ? widget.place.urls.first : '',
             fit: BoxFit.cover,
             loadingBuilder: (context, child, loadingProgress) {
               if (loadingProgress == null) return child;
@@ -169,7 +142,7 @@ class _SightCardState extends State<SightCard> {
             left: 16,
             top: 16,
             child: Text(
-              widget.sightMeta.sight.placeType,
+              widget.place.placeType ?? '',
               style: Theme.of(context)
                   .textTheme
                   .subtitle2
@@ -203,29 +176,29 @@ class _SightCardState extends State<SightCard> {
     );
   }
 
-  Widget _buildDetailInfo(BuildContext context, SightCardMeta sightMeta) {
-    if (sightMeta.visited) {
-      return Text(
-        'Цель достигнута 12 окт. 2020',
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: Theme.of(context).primaryTextTheme.bodyText1,
-      );
-    }
-    if (sightMeta.wantVisit) {
-      return Text(
-        'Запланировано на 12 окт. 2020',
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: Theme.of(context)
-            .primaryTextTheme
-            .bodyText1
-            .copyWith(color: lmGreenColor),
-      );
-    }
+  Widget _buildDetailInfo(BuildContext context, Place place) {
+    // if (sightMeta.visited) {
+    //   return Text(
+    //     'Цель достигнута 12 окт. 2020',
+    //     maxLines: 1,
+    //     overflow: TextOverflow.ellipsis,
+    //     style: Theme.of(context).primaryTextTheme.bodyText1,
+    //   );
+    // }
+    // if (sightMeta.wantVisit) {
+    //   return Text(
+    //     'Запланировано на 12 окт. 2020',
+    //     maxLines: 1,
+    //     overflow: TextOverflow.ellipsis,
+    //     style: Theme.of(context)
+    //         .primaryTextTheme
+    //         .bodyText1
+    //         .copyWith(color: lmGreenColor),
+    //   );
+    // }
 
     return Text(
-      sightMeta.sight.description,
+      widget.place.description,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: Theme.of(context).primaryTextTheme.bodyText1,
@@ -269,52 +242,52 @@ class _DismissBackground extends StatelessWidget {
   }
 }
 
-class SightCardTools extends StatelessWidget {
-  const SightCardTools(this.sightMeta, {this.onDelete, Key key})
-      : super(key: key);
-
-  final SightCardMeta sightMeta;
-  final VoidCallback onDelete;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        if (sightMeta.visited)
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-            child: _BtnToolIcon(
-              icon: iconShare,
-              onClick: () {
-                //print('on click iconShare');
-              },
-            ),
-          ),
-        if (sightMeta.wantVisit)
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-            child: _BtnToolIcon(
-              icon: iconCalendar,
-              onClick: () {
-                //print('on click iconCalendar');
-              },
-            ),
-          ),
-        Padding(
-          padding: const EdgeInsets.only(left: 16.0),
-          child: (sightMeta.visited || sightMeta.wantVisit)
-              ? _BtnToolIcon(icon: iconClose, onClick: onDelete)
-              : _BtnToolIcon(
-                  icon: iconHeart,
-                  onClick: () {
-                    //print('on click iconShare');
-                  },
-                ),
-        ),
-      ],
-    );
-  }
-}
+// class SightCardTools extends StatelessWidget {
+//   const SightCardTools(this.sightMeta, {this.onDelete, Key key})
+//       : super(key: key);
+//
+//   final SightCardMeta sightMeta;
+//   final VoidCallback onDelete;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: [
+//         if (sightMeta.visited)
+//           Padding(
+//             padding: const EdgeInsets.only(left: 16.0),
+//             child: _BtnToolIcon(
+//               icon: iconShare,
+//               onClick: () {
+//                 //print('on click iconShare');
+//               },
+//             ),
+//           ),
+//         if (sightMeta.wantVisit)
+//           Padding(
+//             padding: const EdgeInsets.only(left: 16.0),
+//             child: _BtnToolIcon(
+//               icon: iconCalendar,
+//               onClick: () {
+//                 //print('on click iconCalendar');
+//               },
+//             ),
+//           ),
+//         Padding(
+//           padding: const EdgeInsets.only(left: 16.0),
+//           child: (sightMeta.visited || sightMeta.wantVisit)
+//               ? _BtnToolIcon(icon: iconClose, onClick: onDelete)
+//               : _BtnToolIcon(
+//                   icon: iconHeart,
+//                   onClick: () {
+//                     //print('on click iconShare');
+//                   },
+//                 ),
+//         ),
+//       ],
+//     );
+//   }
+// }
 
 class _BtnToolIcon extends StatelessWidget {
   final VoidCallback onClick;

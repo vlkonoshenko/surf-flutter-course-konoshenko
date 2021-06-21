@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/domain/sight.dart';
-import 'package:places/mocks.dart';
 import 'package:places/res/colors.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/res/text_style.dart';
@@ -170,15 +169,15 @@ class _FilterScreenState extends State<FilterScreen> {
 
   int countPlaceInRange() {
     int result = 0;
-    for (final element in mocks) {
-      if (arePointsNear(
-        Coordinate(element.sight.lat, element.sight.lng),
-        Coordinate(48.025297, 37.796868),
-        valueSlider,
-      )) {
-        result++;
-      }
-    }
+    // for (final element in mocks) {
+    //   if (arePointsNear(
+    //     Coordinate(element.sight.lat, element.sight.lng),
+    //     Coordinate(48.025297, 37.796868),
+    //     valueSlider,
+    //   )) {
+    //     result++;
+    //   }
+    // }
 
     return result;
   }
