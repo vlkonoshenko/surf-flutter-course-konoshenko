@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:places/data/interactor/setting_interactor.dart';
 import 'package:places/main.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/ui/screen/onboarding_screen.dart';
@@ -40,7 +41,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       .copyWith(fontWeight: FontWeight.w400),
                 ),
                 CupertinoSwitch(
-                  value: isDarkMode,
+                  value: SettingInteractor().isDarkMode,
                   onChanged: (onChanged) {
                     themeNotifier.notifyListeners();
                   },

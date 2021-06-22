@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:places/data/model/place.dart';
+import 'package:places/data/interactor/search_interactor.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/res/res.dart';
 import 'package:places/res/text_style.dart';
@@ -21,8 +21,7 @@ class SightSearchScreen extends StatefulWidget {
 class _SightSearchScreenState extends State<SightSearchScreen> {
   final FocusNode _fnSearch = FocusNode();
   final TextEditingController _tcSearch = TextEditingController();
-  List<Place> result = [];
-  List<String> history = [];
+  final _searchInteractor = SearchInteractor();
 
   bool isLoading = false;
 
@@ -73,7 +72,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                     controller: _tcSearch,
                     focusNode: _fnSearch,
                     onSubmitted: (value) {
-                      history.add(value);
+                      _searchInteractor.history.add(value);
                       FocusManager.instance.primaryFocus.unfocus();
                     },
                     onChanged: _onChangedSearch,
@@ -141,7 +140,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                   ? _buildHistoryState()
                   : isLoading
                       ? const CircularProgressIndicator()
-                      : result.isEmpty
+                      : _searchInteractor.filteredList.isEmpty
                           ? const EmptyState()
                           : _buildResultState(),
             ),
@@ -153,15 +152,16 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
 
   Widget _buildResultState() {
     return ListView.builder(
-      itemCount: result.length,
+      itemCount: _searchInteractor.filteredList.length,
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
-            history.add(result[index].name);
+            _searchInteractor.history
+                .add(_searchInteractor.filteredList[index].name);
             Navigator.pushNamed(
               context,
               SightDetailsScreen.routeName,
-              arguments: result[index],
+              arguments: _searchInteractor.filteredList[index],
             );
           },
           child: Container(
@@ -177,7 +177,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.network(
-                        result[index].urls.first,
+                        _searchInteractor.filteredList[index].urls.first,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -196,12 +196,12 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                             const SizedBox(height: 4),
                             _buildTitle(
                               context,
-                              result[index].name,
+                              _searchInteractor.filteredList[index].name,
                               _tcSearch.text,
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              result[index].placeType,
+                              _searchInteractor.filteredList[index].placeType,
                               style: Theme.of(context)
                                   .primaryTextTheme
                                   .subtitle1
@@ -249,13 +249,10 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     setState(() {
       isLoading = true;
     });
-    // final founded = mocks
-    //     .where((element) =>
-    //         element.sight.name.toLowerCase().contains(value.toLowerCase()))
-    //     .toList();
+
     await Future<void>.delayed(const Duration(seconds: 1));
-    setState(() {
-      // result = founded;
+    setState(() async {
+      await _searchInteractor.searchPlaces(value, RangeValues(0, 10000), []);
       isLoading = false;
     });
   }
@@ -271,11 +268,13 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
           children: [
             const SizedBox(height: 24),
             LabelWidget(
-              history.isNotEmpty ? 'Вы искали' : 'История поиска пуста',
+              _searchInteractor.history.isNotEmpty
+                  ? 'Вы искали'
+                  : 'История поиска пуста',
             ),
             const SizedBox(height: 10),
             ListView.builder(
-              itemCount: history.length,
+              itemCount: _searchInteractor.history.length,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
@@ -286,7 +285,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                       children: [
                         Expanded(
                           child: Text(
-                            history[index],
+                            _searchInteractor.history[index],
                             style: Theme.of(context)
                                 .primaryTextTheme
                                 .subtitle1
@@ -304,13 +303,14 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                           ),
                           onPressed: () {
                             setState(() {
-                              history.removeAt(index);
+                              _searchInteractor.history.removeAt(index);
                             });
                           },
                         ),
                       ],
                     ),
-                    if (index != history.length - 1) const Divider(),
+                    if (index != _searchInteractor.history.length - 1)
+                      const Divider(),
                   ],
                 );
               },
@@ -319,10 +319,10 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
             InkWell(
               onTap: () {
                 setState(() {
-                  history.clear();
+                  _searchInteractor.history.clear();
                 });
               },
-              child: history.isNotEmpty
+              child: _searchInteractor.history.isNotEmpty
                   ? Text(
                       'Очистить историю',
                       style: textMedium.copyWith(color: lmGreenColor),
