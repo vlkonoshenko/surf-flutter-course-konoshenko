@@ -8,7 +8,6 @@ import 'package:places/ui/components/sight_list_screen/app_header_delegat.dart';
 import 'package:places/ui/components/sight_list_screen/app_header_landscape_delegat.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/sight_card.dart';
-import 'package:provider/provider.dart';
 
 class SightListScreen extends StatefulWidget {
   const SightListScreen({Key key}) : super(key: key);
@@ -30,7 +29,7 @@ class _SightListScreenState extends State<SightListScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: FutureBuilder<List<Place>>(
-          future: context.read<PlaceInteractor>().getPlaces(10000, []),
+          future: PlaceInteractor().getPlaces(RangeValues(0, 10000), []),
           builder: (context, snap) {
             return snap.hasData
                 ? Stack(

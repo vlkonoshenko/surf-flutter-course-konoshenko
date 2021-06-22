@@ -6,7 +6,6 @@ import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/ui/components/overscroll_glow_absorber.dart';
 import 'package:places/ui/screen/sight_card.dart';
-import 'package:provider/provider.dart';
 
 class VisitingScreen extends StatefulWidget {
   const VisitingScreen({Key key}) : super(key: key);
@@ -82,7 +81,7 @@ class ListVisited extends StatefulWidget {
 }
 
 class _ListVisitedState extends State<ListVisited> {
-  List<Place> list = [];
+  final interactor = PlaceInteractor();
 
   @override
   Widget build(BuildContext context) {
@@ -91,28 +90,28 @@ class _ListVisitedState extends State<ListVisited> {
         physics: Platform.isAndroid
             ? const ClampingScrollPhysics()
             : const BouncingScrollPhysics(),
-        itemCount: list.length,
+        itemCount: interactor.visit.length,
         itemBuilder: (context, index) => DragTarget<Place>(
           onWillAccept: (data) {
             return true;
           },
           onAccept: (data) {
             setState(() {
-              final newPos = list.indexOf(list[index]);
-              final dragIndex = list.indexOf(data);
-              final tmp = list[index];
-              list[newPos] = data;
-              list[dragIndex] = tmp;
+              final newPos = interactor.visit.indexOf(interactor.visit[index]);
+              final dragIndex = interactor.visit.indexOf(data);
+              final tmp = interactor.visit[index];
+              interactor.visit[newPos] = data;
+              interactor.visit[dragIndex] = tmp;
             });
           },
           builder: (context, candidate, rejected) {
             return Draggable<Place>(
-              data: list[index],
+              data: interactor.visit[index],
               childWhenDragging: SizedBox(
                 height: 240,
                 width: MediaQuery.of(context).size.width - 16,
                 child: SightCard(
-                  list[index],
+                  interactor.visit[index],
                   sightCardState: SightCardState.drag,
                 ),
               ),
@@ -120,12 +119,12 @@ class _ListVisitedState extends State<ListVisited> {
                 height: 240,
                 width: MediaQuery.of(context).size.width - 16,
                 child: SightCard(
-                  list[index],
+                  interactor.visit[index],
                   sightCardState: SightCardState.drag,
                 ),
               ),
               child: SightCard(
-                list[index],
+                interactor.visit[index],
                 key: ValueKey(index),
               ),
             );
@@ -148,32 +147,29 @@ class ListWantVisit extends StatefulWidget {
 class _ListWantVisitState extends State<ListWantVisit> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<PlaceInteractor>(
-      builder: (context, interactor, child) {
-        return OverscrollGlowAbsorber(
-          child: ListView.builder(
-            physics: Platform.isAndroid
-                ? const ClampingScrollPhysics()
-                : const BouncingScrollPhysics(),
-            itemCount: interactor.favorites.length,
-            itemBuilder: (context, index) {
-              return Container(
-                width: 120,
-                height: 120,
-                child: SightCard(
-                  interactor.favorites.elementAt(index),
-                  key: ObjectKey(interactor.favorites.elementAt(index)),
-                  onDelete: () {
-                    interactor.favorites
-                        .remove(interactor.favorites.elementAt(index));
-                    setState(() {});
-                  },
-                ),
-              );
-            },
-          ),
-        );
-      },
+    final interactor = PlaceInteractor();
+    return OverscrollGlowAbsorber(
+      child: ListView.builder(
+        physics: Platform.isAndroid
+            ? const ClampingScrollPhysics()
+            : const BouncingScrollPhysics(),
+        itemCount: interactor.favorites.length,
+        itemBuilder: (context, index) {
+          return SizedBox(
+            width: 120,
+            height: 120,
+            child: SightCard(
+              interactor.favorites.elementAt(index),
+              key: ObjectKey(interactor.favorites.elementAt(index)),
+              onDelete: () {
+                interactor.favorites
+                    .remove(interactor.favorites.elementAt(index));
+                setState(() {});
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }

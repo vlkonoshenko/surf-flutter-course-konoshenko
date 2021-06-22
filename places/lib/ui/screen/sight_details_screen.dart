@@ -8,7 +8,6 @@ import 'package:places/data/model/place.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/components/components.dart';
-import 'package:provider/provider.dart';
 
 class SightDetailsScreen extends StatefulWidget {
   const SightDetailsScreen({this.sight, Key key}) : super(key: key);
@@ -183,15 +182,10 @@ class __BottomControlPanelState extends State<_BottomControlPanel> {
         Expanded(
           child: TextButton(
             onPressed: () {
-              if (context
-                  .read<PlaceInteractor>()
-                  .favorites
-                  .contains(widget.sight)) {
-                context
-                    .read<PlaceInteractor>()
-                    .removeFromFavorites(widget.sight);
+              if (PlaceInteractor().favorites.contains(widget.sight)) {
+                PlaceInteractor().removeFromFavorites(widget.sight);
               } else {
-                context.read<PlaceInteractor>().addToFavorites(widget.sight);
+                PlaceInteractor().addToFavorites(widget.sight);
               }
 
               Navigator.pop(context);
@@ -200,10 +194,7 @@ class __BottomControlPanelState extends State<_BottomControlPanel> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SvgPicture.asset(
-                  context
-                          .read<PlaceInteractor>()
-                          .favorites
-                          .contains(widget.sight)
+                  PlaceInteractor().favorites.contains(widget.sight)
                       ? iconHeartFull
                       : iconHeart,
                   color: lmSecondary2Color.withOpacity(0.56),

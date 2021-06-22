@@ -1,9 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:places/domain/sight.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/res/colors.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/res/text_style.dart';
@@ -155,10 +154,21 @@ class _FilterScreenState extends State<FilterScreen> {
               onPressed: () {
                 //print('on click iconGo');
               },
-              child: Text(
-                'Показать (${countPlaceInRange()})'.toUpperCase(),
-                style: textButtonElevation,
-              ),
+              child: FutureBuilder<List<Place>>(
+                  future: PlaceInteractor().getPlaces(
+                      valueSlider, filters.map((e) => e.title).toList()),
+                  builder: (context, snap) {
+                    if (snap.hasData) {
+                      return Text(
+                        'Показать (${snap.data.length})'.toUpperCase(),
+                        style: textButtonElevation,
+                      );
+                    }
+                    return Text(
+                      'Показать'.toUpperCase(),
+                      style: textButtonElevation,
+                    );
+                  }),
             ),
           ),
           const SizedBox(height: 8),
@@ -169,35 +179,11 @@ class _FilterScreenState extends State<FilterScreen> {
 
   int countPlaceInRange() {
     int result = 0;
-    // for (final element in mocks) {
-    //   if (arePointsNear(
-    //     Coordinate(element.sight.lat, element.sight.lng),
-    //     Coordinate(48.025297, 37.796868),
-    //     valueSlider,
-    //   )) {
-    //     result++;
-    //   }
-    // }
 
     return result;
   }
 
-  bool arePointsNear(
-    Coordinate checkPoint,
-    Coordinate centerPoint,
-    RangeValues range,
-  ) {
-    final kmH = range.end / 1000;
-    final kmL = range.start / 1000;
-    const ky = 40000 / 360;
-    final kx = cos(pi * centerPoint.lat / 180.0) * ky;
-    final dx = (centerPoint.lng - checkPoint.lng).abs() * kx;
-    final dy = (centerPoint.lat - checkPoint.lat).abs() * ky;
-    final distance = sqrt(dx * dx + dy * dy);
-    final result = distance <= kmH && distance >= kmL;
 
-    return result;
-  }
 }
 
 class FilterContent extends StatefulWidget {
