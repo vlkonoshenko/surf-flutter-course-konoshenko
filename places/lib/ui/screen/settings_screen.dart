@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:places/data/interactor/setting_interactor.dart';
 import 'package:places/main.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/ui/screen/onboarding_screen.dart';
@@ -40,10 +41,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       .copyWith(fontWeight: FontWeight.w400),
                 ),
                 CupertinoSwitch(
-                    value: isDarkMode,
-                    onChanged: (onChanged) {
-                      themeNotifier.notifyListeners();
-                    })
+                  value: SettingInteractor().isDarkMode,
+                  onChanged: (onChanged) {
+                    themeNotifier.notifyListeners();
+                  },
+                ),
               ],
             ),
             const Divider(),
@@ -63,11 +65,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         .copyWith(fontWeight: FontWeight.w400),
                   ),
                   IconButton(
-                      icon: SvgPicture.asset(
-                        iconInfo,
-                        color: Theme.of(context).accentColor,
-                      ),
-                      onPressed: () {})
+                    icon: SvgPicture.asset(
+                      iconInfo,
+                      color: Theme.of(context).accentColor,
+                    ),
+                    onPressed: () async {
+                      // final data =
+                      //     await PlaceRepository(ApiClient().createDio())
+                      //         .getPlaceList();
+                      // print(data);
+                    },
+                  ),
                 ],
               ),
             ),

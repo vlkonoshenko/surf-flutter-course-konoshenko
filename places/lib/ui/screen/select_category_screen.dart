@@ -56,33 +56,35 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
                     ),
                   );
                 },
-                separatorBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Divider(
-                      height: 0.5,
-                      color: Theme.of(context).dividerColor.withOpacity(0.1),
-                      thickness: 0.5,
-                    ),
-                  );
-                },
-                itemCount: SightCategory.values.length),
+            separatorBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Divider(
+                  height: 0.5,
+                  color: Theme.of(context).dividerColor.withOpacity(0.1),
+                  thickness: 0.5,
+                ),
+              );
+            },
+            itemCount: SightCategory.values.length,
           ),
+        ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               onPressed: selectedCategory != null
-                  ? () {
-                      Navigator.pop<SightCategory>(context, selectedCategory);
-                    }
-                  : null,
-              child: Text(
-                'Сохранить'.toUpperCase(),
-                style: textButtonElevation,
-              ),
+                ? () {
+                    Navigator.pop<SightCategory>(context, selectedCategory);
+                  }
+                : null,
+            child: Text(
+              'Сохранить'.toUpperCase(),
+              style: textButtonElevation,
             ),
           ),
-        ]));
+        ),
+      ]),
+    );
   }
 }
 

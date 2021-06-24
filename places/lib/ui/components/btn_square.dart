@@ -15,22 +15,23 @@ class BtnWhiteSquare extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
           color: Theme.of(context).canvasColor,
-          shape: BoxShape.circle
-        ),
+        shape: BoxShape.circle,
+      ),
 
         height: 40,
         width: 40,
         child: InkWell(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: SvgPicture.asset(
-              iconClose,
-              color: Theme.of(context).primaryColor,
-            ),
+        onTap: () {
+          Navigator.of(context).pop();
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: SvgPicture.asset(
+            iconClose,
+            color: Theme.of(context).primaryColor,
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

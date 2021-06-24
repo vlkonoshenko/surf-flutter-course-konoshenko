@@ -3,30 +3,29 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:places/domain/sight.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/components/components.dart';
-import 'package:places/ui/screen/select_category_screen.dart';
-import 'package:places/ui/screen/sight_card.dart';
 
 class SightDetailsScreen extends StatefulWidget {
   const SightDetailsScreen({this.sight, Key key}) : super(key: key);
   static const String routeName = '/sight_details_screen';
-  final SightCardMeta sight;
+  final Place sight;
 
   @override
   _SightDetailsScreenState createState() => _SightDetailsScreenState();
 }
 
 class _SightDetailsScreenState extends State<SightDetailsScreen> {
-  SightCardMeta sight;
+  Place sight;
 
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context).settings.arguments;
-    sight = args != null && args is SightCardMeta
-        ? ModalRoute.of(context).settings.arguments as SightCardMeta
+    sight = args != null && args is Place
+        ? ModalRoute.of(context).settings.arguments as Place
         : widget.sight;
 
     return DraggableScrollableSheet(
@@ -55,10 +54,10 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                 ],
                 expandedHeight: 300,
                 automaticallyImplyLeading: false,
-                flexibleSpace: _GalleryView(sight.sight.url),
+                flexibleSpace: _GalleryView(sight.urls),
               ),
               SliverToBoxAdapter(
-                child: _BodyContent(sight.sight),
+                child: _BodyContent(sight),
               ),
             ],
           ),
@@ -71,7 +70,7 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
 class _BodyContent extends StatelessWidget {
   const _BodyContent(this.sight, {Key key}) : super(key: key);
 
-  final Sight sight;
+  final Place sight;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +94,7 @@ class _BodyContent extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    sight.type.toText(),
+                    sight.placeType,
                     style: Theme.of(context)
                         .primaryTextTheme
                         .subtitle2
@@ -110,14 +109,14 @@ class _BodyContent extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                sight.details,
+                sight.description,
                 style: Theme.of(context).primaryTextTheme.bodyText1,
               ),
             ],
           ),
           const SizedBox(height: 24),
           ElevatedButton(
-            onPressed: (){},
+            onPressed: () {},
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -137,7 +136,7 @@ class _BodyContent extends StatelessWidget {
           const SizedBox(height: 24),
           const Divider(),
           const SizedBox(height: 8),
-          const _BottomControlPanel(),
+          _BottomControlPanel(sight),
         ],
       ),
     );
@@ -145,7 +144,9 @@ class _BodyContent extends StatelessWidget {
 }
 
 class _BottomControlPanel extends StatefulWidget {
-  const _BottomControlPanel({Key key}) : super(key: key);
+  final Place sight;
+
+  const _BottomControlPanel(this.sight, {Key key}) : super(key: key);
 
   @override
   __BottomControlPanelState createState() => __BottomControlPanelState();
@@ -180,12 +181,22 @@ class __BottomControlPanelState extends State<_BottomControlPanel> {
         ),
         Expanded(
           child: TextButton(
-            onPressed: null,
+            onPressed: () {
+              if (PlaceInteractor().favorites.contains(widget.sight)) {
+                PlaceInteractor().removeFromFavorites(widget.sight);
+              } else {
+                PlaceInteractor().addToFavorites(widget.sight);
+              }
+
+              Navigator.pop(context);
+            },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SvgPicture.asset(
-                  iconHeart,
+                  PlaceInteractor().favorites.contains(widget.sight)
+                      ? iconHeartFull
+                      : iconHeart,
                   color: lmSecondary2Color.withOpacity(0.56),
                 ),
                 const SizedBox(width: 8),
@@ -217,7 +228,7 @@ class __BottomControlPanelState extends State<_BottomControlPanel> {
                 height: 200,
                 child: CupertinoDatePicker(
                   initialDateTime: DateTime.now(),
-                  onDateTimeChanged: (value){},
+                  onDateTimeChanged: (value) {},
                 ),
               ),
             ],

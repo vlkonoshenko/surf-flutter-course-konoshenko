@@ -24,22 +24,25 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: <Color>[Color(0xffFCDD3D), Color(0xff4CAF50)],
-          ),
+        gradient: LinearGradient(
+          colors: <Color>[Color(0xffFCDD3D), Color(0xff4CAF50)],
         ),
-        child: Center(
-          child: SvgPicture.asset(
-            iconSplash,
-            height: 180,
-            width: 180,
-          ),
-        ));
+      ),
+      child: Center(
+        child: SvgPicture.asset(
+          iconSplash,
+          height: 180,
+          width: 180,
+        ),
+      ),
+    );
   }
 
   void _navigateToNext() {
     isInitialized = Future<void>.delayed(const Duration(seconds: 2));
     isInitialized.then(
-        (dynamic result) => Navigator.pushReplacementNamed(context, HomeScreen.routeName));
+      (dynamic result) =>
+          Navigator.pushReplacementNamed(context, HomeScreen.routeName),
+    );
   }
 }

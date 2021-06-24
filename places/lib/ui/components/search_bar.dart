@@ -34,8 +34,9 @@ class _SearchBarState extends State<SearchBar> {
                       isDense: true,
                       hintText: 'Поиск',
                       hintStyle: TextStyle(
-                          fontSize: 16,
-                          color: const Color(0xff7C7E92).withOpacity(0.54)),
+                        fontSize: 16,
+                        color: const Color(0xff7C7E92).withOpacity(0.54),
+                      ),
                       prefixIcon: Padding(
                         padding: const EdgeInsets.all(6),
                         child: SvgPicture.asset(
@@ -56,11 +57,14 @@ class _SearchBarState extends State<SearchBar> {
                   ),
                 ),
                 IconButton(
-                    icon: SvgPicture.asset(iconFilter,
-                        color: Theme.of(context).accentColor),
-                    onPressed: () {
-                      Navigator.pushNamed(context, FilterScreen.routeName);
-                    })
+                  icon: SvgPicture.asset(
+                    iconFilter,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, FilterScreen.routeName);
+                  },
+                ),
               ],
             ),
           ),

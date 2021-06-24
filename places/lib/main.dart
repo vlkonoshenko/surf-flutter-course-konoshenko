@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/setting_interactor.dart';
 import 'package:places/res/themes.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/filters_screen.dart';
@@ -10,11 +11,12 @@ import 'package:places/ui/screen/sight_search_screen.dart';
 import 'package:places/ui/screen/splash_screen.dart';
 
 void main() {
-  runApp(const App());
+  runApp(
+    const App(),
+  );
 }
 
 ChangeNotifier themeNotifier = ChangeNotifier();
-bool isDarkMode = false;
 
 class App extends StatefulWidget {
   const App({Key key}) : super(key: key);
@@ -28,19 +30,21 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     themeNotifier.addListener(() {
       setState(() {
-        isDarkMode = !isDarkMode;
+        SettingInteractor().changeTheme();
       });
     });
+
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: isDarkMode ? darkTheme : lightTheme,
+      theme: SettingInteractor().isDarkMode ? darkTheme : lightTheme,
       routes: {
         '/': (context) => const SplashScreen(),
         SightDetailsScreen.routeName: (context) => const SightDetailsScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
         FilterScreen.routeName: (context) => const FilterScreen(),
         AddSightScreen.routeName: (context) => const AddSightScreen(),
-        SelectCategoryScreen.routeName: (context) => const SelectCategoryScreen(),
+        SelectCategoryScreen.routeName: (context) =>
+            const SelectCategoryScreen(),
         SightSearchScreen.routeName: (context) => const SightSearchScreen(),
         OnboardingScreen.routeName: (context) => const OnboardingScreen(),
       },

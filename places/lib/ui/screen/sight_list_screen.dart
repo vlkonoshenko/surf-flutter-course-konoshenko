@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:places/mocks.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/components/sight_list_screen/app_header_delegat.dart';
 import 'package:places/ui/components/sight_list_screen/app_header_landscape_delegat.dart';
@@ -18,59 +19,74 @@ class SightListScreen extends StatefulWidget {
 
 class _SightListScreenState extends State<SightListScreen> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Stack(
-          children: [
-            OrientationBuilder(builder: (context, orientation) {
-              return orientation == Orientation.landscape
-                  ? CustomScrollView(
-                      slivers: [
-                        SliverPersistentHeader(
-                          pinned: true,
-                          floating: true,
-                          delegate: AppHeaderLandscape(),
-                        ),
-                        SliverGrid(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 10.0,
-                            crossAxisSpacing: 10.0,
-                            childAspectRatio: 1.8,
-                          ),
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) => SightCard(mocks[index]),
-                            childCount: mocks.length,
-                          ),
-                        ),
-                      ],
-                    )
-                  : CustomScrollView(
-                      slivers: [
-                        SliverPersistentHeader(
-                          pinned: true,
-                          floating: true,
-                          delegate: AppHeader(),
-                        ),
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) => SightCard(mocks[index]),
-                            childCount: mocks.length,
-                          ),
-                        ),
-                      ],
-                    );
-            }),
-            const Positioned(
-              bottom: 16,
-              left: 0,
-              right: 0,
-              child: AddSightBtn(),
-            ),
-          ],
+        body: FutureBuilder<List<Place>>(
+          future: PlaceInteractor().getPlaces(RangeValues(0, 10000), []),
+          builder: (context, snap) {
+            return snap.hasData
+                ? Stack(
+                    children: [
+                      OrientationBuilder(builder: (context, orientation) {
+                        return orientation == Orientation.landscape
+                            ? CustomScrollView(
+                                slivers: [
+                                  SliverPersistentHeader(
+                                    pinned: true,
+                                    floating: true,
+                                    delegate: AppHeaderLandscape(),
+                                  ),
+                                  SliverGrid(
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 10.0,
+                                      crossAxisSpacing: 10.0,
+                                      childAspectRatio: 1.8,
+                                    ),
+                                    delegate: SliverChildBuilderDelegate(
+                                          (context, index) =>
+                                          SightCard(snap.data[index]),
+                                      childCount: snap.data.length,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : CustomScrollView(
+                                slivers: [
+                                  SliverPersistentHeader(
+                                    pinned: true,
+                                    floating: true,
+                                    delegate: AppHeader(),
+                                  ),
+                                  SliverList(
+                                    delegate: SliverChildBuilderDelegate(
+                                      (context, index) => SightCard(
+                                        snap.data[index],
+                                      ),
+                                      childCount: snap.data.length,
+                                    ),
+                                  ),
+                                ],
+                              );
+                      }),
+                      const Positioned(
+                        bottom: 16,
+                        left: 0,
+                        right: 0,
+                        child: AddSightBtn(),
+                      ),
+                    ],
+                  )
+                : const Center(child: CircularProgressIndicator());
+          },
         ),
       ),
     );
