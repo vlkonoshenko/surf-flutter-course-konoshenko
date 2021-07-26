@@ -11,14 +11,22 @@ import 'package:places/ui/components/label_text_widget.dart';
 import 'package:places/ui/screen/select_category_screen.dart';
 
 class AddSightScreen extends StatefulWidget {
-  const AddSightScreen({Key? key}) : super(key: key);
   static const String routeName = '/add_sight_screen';
+
+  const AddSightScreen({Key? key}) : super(key: key);
 
   @override
   _AddSightScreenState createState() => _AddSightScreenState();
 }
 
 class _AddSightScreenState extends State<AddSightScreen> {
+  final images = [
+    'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
+    'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
+    'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
+    'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
+  ];
+
   final TextEditingController _tcTitle = TextEditingController();
   final TextEditingController _tcDescription = TextEditingController();
   final TextEditingController _tcLat = TextEditingController();
@@ -30,13 +38,6 @@ class _AddSightScreenState extends State<AddSightScreen> {
   final FocusNode _fnLon = FocusNode();
 
   SightCategory? selectedCategory;
-
-  final images = [
-    'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
-    'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
-    'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
-    'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
-  ];
 
   @override
   void initState() {
@@ -51,18 +52,18 @@ class _AddSightScreenState extends State<AddSightScreen> {
         child: ElevatedButton(
           onPressed: _isBtnValid()
               ? () {
-                  // mocks.add(SightCardMeta(Sight(
-                  //   _tcTitle.text,
-                  //   [],
-                  //   Coordinate(
-                  //     double.tryParse(_tcLat.text),
-                  //     double.tryParse(_tcLon.text),
-                  //   ),
-                  //   _tcDescription.text,
-                  //   selectedCategory,
-                  // )));
-                  Navigator.pop(context);
-                }
+            // mocks.add(SightCardMeta(Sight(
+            //   _tcTitle.text,
+            //   [],
+            //   Coordinate(
+            //     double.tryParse(_tcLat.text),
+            //     double.tryParse(_tcLon.text),
+            //   ),
+            //   _tcDescription.text,
+            //   selectedCategory,
+            // )));
+            Navigator.pop(context);
+          }
               : null,
           child: Text(
             'Создать'.toUpperCase(),
@@ -187,7 +188,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                           decoration: InputDecoration(
                             hintText: 'введите текст',
                             suffixIconConstraints:
-                                const BoxConstraints(maxHeight: 40),
+                            const BoxConstraints(maxHeight: 40),
                             suffixIcon: AnimatedSwitcher(
                               duration: const Duration(milliseconds: 300),
                               child: _fnLat.hasFocus
@@ -261,7 +262,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                         horizontal: 16,
                       ),
                       suffixIconConstraints:
-                          const BoxConstraints(maxHeight: 40, minWidth: 40),
+                      const BoxConstraints(maxHeight: 40, minWidth: 40),
                       suffixIcon: AnimatedSwitcher(
                         duration: const Duration(milliseconds: 300),
                         child: _fnDescription.hasFocus

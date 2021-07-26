@@ -37,7 +37,7 @@ class _SightCardState extends State<SightCard> {
             clipBehavior: Clip.hardEdge,
             borderRadius: BorderRadius.circular(16),
             child: Card(
-              margin: const EdgeInsets.all(0),
+              margin: EdgeInsets.zero,
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16.0),

@@ -4,8 +4,9 @@ import 'package:places/res/res.dart';
 import 'package:places/ui/screen/home_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({Key? key}) : super(key: key);
   static const String routeName = '/onboarding_screen';
+
+  const OnboardingScreen({Key? key}) : super(key: key);
 
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
@@ -15,31 +16,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   static const _kDuration = Duration(milliseconds: 300);
   static const _kCurve = Curves.ease;
 
-  late PageController _pageController;
   int currentIndex = 0;
+
+  late PageController _pageController;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  bool isLastPage() {
-    return currentIndex == 2;
-  }
-
-  void nextFunction() {
-    _pageController.nextPage(duration: _kDuration, curve: _kCurve);
-  }
-
-  void previousFunction() {
-    _pageController.previousPage(duration: _kDuration, curve: _kCurve);
   }
 
   @override
@@ -135,19 +119,37 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  bool isLastPage() {
+    return currentIndex == 2;
+  }
+
+  void nextFunction() {
+    _pageController.nextPage(duration: _kDuration, curve: _kCurve);
+  }
+
+  void previousFunction() {
+    _pageController.previousPage(duration: _kDuration, curve: _kCurve);
+  }
 }
 
 class OnboardingPage extends StatelessWidget {
+  final String title;
+  final String body;
+  final String image;
+
   const OnboardingPage({
     required this.title,
     required this.body,
     required this.image,
     Key? key,
   }) : super(key: key);
-
-  final String title;
-  final String body;
-  final String image;
 
   @override
   Widget build(BuildContext context) {
@@ -178,12 +180,14 @@ class OnboardingPage extends StatelessWidget {
 }
 
 class Indicator extends StatelessWidget {
+  final int positionIndex;
+  final int currentIndex;
+
   const Indicator({
     required this.currentIndex,
     required this.positionIndex,
     Key? key,
   }) : super(key: key);
-  final int positionIndex, currentIndex;
 
   @override
   Widget build(BuildContext context) {

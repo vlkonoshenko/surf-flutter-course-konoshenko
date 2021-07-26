@@ -5,9 +5,9 @@ import 'package:places/res/icons.dart';
 import 'package:places/res/text_style.dart';
 
 class SelectCategoryScreen extends StatefulWidget {
-  const SelectCategoryScreen({Key? key}) : super(key: key);
-
   static const String routeName = '/select_category_screen';
+
+  const SelectCategoryScreen({Key? key}) : super(key: key);
 
   @override
   _SelectCategoryScreenState createState() => _SelectCategoryScreenState();

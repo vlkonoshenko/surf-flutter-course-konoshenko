@@ -363,15 +363,15 @@ class __ImageIndicatorState extends State<_ImageIndicator> {
                           : Colors.transparent,
                       borderRadius: BorderRadius.only(
                         topLeft:
-                            i == 0 ? Radius.circular(0) : Radius.circular(12),
+                            i == 0 ? Radius.zero : const Radius.circular(12),
                         topRight: i == widget.images.length - 1
-                            ? Radius.circular(0)
-                            : Radius.circular(12),
+                            ? Radius.zero
+                            : const Radius.circular(12),
                         bottomRight: i == widget.images.length - 1
-                            ? Radius.circular(0)
-                            : Radius.circular(12),
+                            ? Radius.zero
+                            : const Radius.circular(12),
                         bottomLeft:
-                            i == 0 ? Radius.circular(0) : Radius.circular(12),
+                            i == 0 ? Radius.zero : const Radius.circular(12),
                       ),
                     ),
                   ),

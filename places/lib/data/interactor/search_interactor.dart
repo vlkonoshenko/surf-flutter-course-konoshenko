@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:places/data/model/coordinate.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/data/repository/place_repository.dart';
-import 'package:places/domain/sight.dart';
 import 'package:places/service/api_client.dart';
 
 class SearchInteractor {
@@ -28,8 +28,8 @@ class SearchInteractor {
     filteredList.clear();
     for (final element in listResult) {
       if (_arePointsNear(
-            Coordinate(element.lat, element.lng),
-            Coordinate(60.01693, 30.61895),
+        Coordinate(element.lat, element.lng),
+            const Coordinate(60.01693, 30.61895),
             radius,
           ) &&
           element.name.toLowerCase().contains(text.toLowerCase())) {

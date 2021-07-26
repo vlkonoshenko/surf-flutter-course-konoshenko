@@ -3,15 +3,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/res/icons.dart';
 
 class BtnAddPhoto extends StatelessWidget {
+  final VoidCallback onAddClick;
+  final BuildContext context;
+
   const BtnAddPhoto({
-    Key? key,
     required this.onAddClick,
     required this.context,
+    Key? key,
   }) : super(key: key);
-
-  final VoidCallback onAddClick;
-
-  final BuildContext context;
 
   @override
   Widget build(BuildContext context) {

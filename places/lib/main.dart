@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:places/data/interactor/setting_interactor.dart';
 import 'package:places/res/themes.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
-import 'package:places/ui/screen/filters_screen.dart';
+import 'package:places/ui/screen/filter_screen/filters_screen.dart';
 import 'package:places/ui/screen/home_screen.dart';
 import 'package:places/ui/screen/onboarding_screen.dart';
 import 'package:places/ui/screen/select_category_screen.dart';

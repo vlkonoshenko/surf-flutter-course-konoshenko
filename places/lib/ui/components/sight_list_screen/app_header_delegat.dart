@@ -3,13 +3,19 @@ import 'package:places/ui/components/search_bar.dart';
 
 class AppHeader extends SliverPersistentHeaderDelegate {
   @override
+  double get maxExtent => 230.0;
+
+  @override
+  double get minExtent => 30.0;
+
+  @override
   Widget build(
     BuildContext context,
     double shrinkOffset,
     bool overlapsContent,
   ) {
     return LayoutBuilder(builder: (context, constraints) {
-      final double percentage =
+      final percentage =
           (constraints.maxHeight - minExtent) / (maxExtent - minExtent);
 
       return Container(
@@ -24,36 +30,36 @@ class AppHeader extends SliverPersistentHeaderDelegate {
               reverseDuration: const Duration(milliseconds: 100),
               child: percentage < 0.4
                   ? Text(
-                      'Список интересных мест',
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .subtitle1!
-                          .copyWith(fontSize: 14),
-                    )
+                'Список интересных мест',
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .subtitle1!
+                    .copyWith(fontSize: 14),
+              )
                   : const SizedBox(),
             ),
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 100),
               child: percentage > 0.95
                   ? Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      alignment: Alignment.centerLeft,
-                      child: Column(
-                        children: [
-                          Text(
-                            'Список \nинтересных мест',
-                            style: Theme.of(context)
-                                .primaryTextTheme
-                                .subtitle1!
-                                .copyWith(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                            textAlign: TextAlign.start,
-                          ),
-                        ],
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  children: [
+                    Text(
+                      'Список \nинтересных мест',
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .subtitle1!
+                          .copyWith(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w700,
                       ),
-                    )
+                      textAlign: TextAlign.start,
+                    ),
+                  ],
+                ),
+              )
                   : const SizedBox(),
             ),
             AnimatedSwitcher(
@@ -65,12 +71,6 @@ class AppHeader extends SliverPersistentHeaderDelegate {
       );
     });
   }
-
-  @override
-  double get maxExtent => 230.0;
-
-  @override
-  double get minExtent => 30.0;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {

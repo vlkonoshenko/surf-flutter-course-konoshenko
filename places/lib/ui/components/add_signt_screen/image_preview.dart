@@ -3,14 +3,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/res/icons.dart';
 
 class ImagePreview extends StatelessWidget {
-  const ImagePreview({
-    Key? key,
-    required this.url,
-    required this.onDelete,
-  }) : super(key: key);
-
   final String url;
   final VoidCallback onDelete;
+
+  const ImagePreview({
+    required this.url,
+    required this.onDelete,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

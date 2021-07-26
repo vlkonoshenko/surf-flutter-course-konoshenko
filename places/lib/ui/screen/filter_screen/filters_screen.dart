@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/data/interactor/place_interactor.dart';
@@ -6,10 +5,13 @@ import 'package:places/data/model/place.dart';
 import 'package:places/res/colors.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/res/text_style.dart';
+import 'package:places/ui/screen/filter_screen/model/filter_model.dart';
+import 'package:places/ui/screen/filter_screen/widgets/filter_content_widget.dart';
 
 class FilterScreen extends StatefulWidget {
-  const FilterScreen({Key? key}) : super(key: key);
   static const String routeName = '/filter_screen';
+
+  const FilterScreen({Key? key}) : super(key: key);
 
   @override
   _FilterScreenState createState() => _FilterScreenState();
@@ -72,33 +74,34 @@ class _FilterScreenState extends State<FilterScreen> {
               ],
             ),
           ),
-          MediaQuery.of(context).size.height < 800
-              ? SizedBox(
-                  height: 120,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: filters
-                        .map((e) => Padding(
-                              padding: const EdgeInsets.only(
-                                left: 8.0,
-                                right: 8,
-                                top: 16,
-                              ),
-                              child: FilterContent(e),
-                            ))
-                        .toList(),
-                  ),
-                )
-              : GridView.count(
-            physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  primary: false,
-                  padding: const EdgeInsets.all(16),
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  crossAxisCount: 3,
-                  children: filters.map((e) => FilterContent(e)).toList(),
-                ),
+          if (MediaQuery.of(context).size.height < 800)
+            SizedBox(
+              height: 120,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: filters
+                    .map((e) => Padding(
+                          padding: const EdgeInsets.only(
+                            left: 8.0,
+                            right: 8,
+                            top: 16,
+                          ),
+                          child: FilterContent(e),
+                        ))
+                    .toList(),
+              ),
+            )
+          else
+            GridView.count(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              primary: false,
+              padding: const EdgeInsets.all(16),
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              crossAxisCount: 3,
+              children: filters.map((e) => FilterContent(e)).toList(),
+            ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -182,93 +185,8 @@ class _FilterScreenState extends State<FilterScreen> {
   }
 
   int countPlaceInRange() {
-    int result = 0;
+    const result = 0;
 
     return result;
   }
-}
-
-class FilterContent extends StatefulWidget {
-  const FilterContent(this.filterModel, {Key? key}) : super(key: key);
-
-  final FilterModel filterModel;
-
-  @override
-  _FilterContentState createState() => _FilterContentState();
-}
-
-class _FilterContentState extends State<FilterContent> {
-  @override
-  Widget build(BuildContext context) => Column(
-        children: [
-          SizedBox(
-            height: 65,
-            width: 65,
-            child: Stack(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              children: [
-                InkWell(
-                  borderRadius: BorderRadius.circular(100.0),
-                  onTap: () {
-                    setState(() {
-                      widget.filterModel.isSelected =
-                          !widget.filterModel.isSelected;
-                    });
-                  },
-                  child: Container(
-                    height: 64,
-                    width: 64,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      color: lmGreenColor.withOpacity(0.16),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: SvgPicture.asset(
-                        widget.filterModel.icon,
-                        color: Theme.of(context).accentColor,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  bottom: 0,
-                  child: AnimatedContainer(
-                    height: widget.filterModel.isSelected ? 16 : 0,
-                    width: widget.filterModel.isSelected ? 16 : 0,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    duration: const Duration(milliseconds: 200),
-                    child: SvgPicture.asset(
-                      iconTick,
-                      color: Theme.of(context).canvasColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            widget.filterModel.title,
-            style: Theme.of(context).primaryTextTheme.caption,
-          ),
-        ],
-      );
-}
-
-class FilterModel {
-  FilterModel(
-    this.icon,
-    this.title, {
-    this.isSelected = false,
-  });
-
-  String icon;
-  String title;
-  bool isSelected;
 }
