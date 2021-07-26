@@ -1,0 +1,98 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:places/data/interactor/search_interactor.dart';
+import 'package:places/res/colors.dart';
+import 'package:places/res/icons.dart';
+import 'package:places/res/text_style.dart';
+import 'package:places/ui/components/label_text_widget.dart';
+
+class HistoreyStateWidget extends StatefulWidget {
+  final SearchInteractor searchInteractor;
+
+  const HistoreyStateWidget(this.searchInteractor, {Key? key})
+      : super(key: key);
+
+  @override
+  _HistoreyStateWidgetState createState() => _HistoreyStateWidgetState();
+}
+
+class _HistoreyStateWidgetState extends State<HistoreyStateWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.topCenter,
+      padding: const EdgeInsets.all(16.0),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 24),
+            LabelWidget(
+              widget.searchInteractor.history.isNotEmpty
+                  ? 'Вы искали'
+                  : 'История поиска пуста',
+            ),
+            const SizedBox(height: 10),
+            ListView.builder(
+              itemCount: widget.searchInteractor.history.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            widget.searchInteractor.history[index],
+                            style: Theme.of(context)
+                                .primaryTextTheme
+                                .subtitle1!
+                                .copyWith(
+                                  fontWeight: FontWeight.w400,
+                                  color: const Color(0xff7C7E92),
+                                ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: SvgPicture.asset(
+                            iconClose,
+                            color: const Color(0xff7C7E92),
+                            width: 20,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              widget.searchInteractor.history.removeAt(index);
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                    if (index != widget.searchInteractor.history.length - 1)
+                      const Divider(),
+                  ],
+                );
+              },
+            ),
+            const SizedBox(height: 24),
+            InkWell(
+              onTap: () {
+                setState(() {
+                  widget.searchInteractor.history.clear();
+                });
+              },
+              child: widget.searchInteractor.history.isNotEmpty
+                  ? Text(
+                      'Очистить историю',
+                      style: textMedium.copyWith(color: lmGreenColor),
+                    )
+                  : const SizedBox.shrink(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
