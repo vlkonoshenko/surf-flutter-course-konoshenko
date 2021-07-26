@@ -73,7 +73,7 @@ class _SightListScreenState extends State<SightListScreen> {
                                   ),
                                   SliverList(
                                     delegate: SliverChildBuilderDelegate(
-                                          (context, index) => SightCard(
+                                      (context, index) => SightCard(
                                         snap.data![index],
                                         onDelete: () {
                                           return;
