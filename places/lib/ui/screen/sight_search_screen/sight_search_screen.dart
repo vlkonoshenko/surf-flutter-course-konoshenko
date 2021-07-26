@@ -5,7 +5,7 @@ import 'package:places/data/interactor/search_interactor.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/screen/filter_screen/filters_screen.dart';
-import 'package:places/ui/screen/sight_details_screen.dart';
+import 'package:places/ui/screen/sight_details_screen/sight_details_screen.dart';
 import 'package:places/ui/screen/sight_search_screen/widgets/history_state.dart';
 import 'package:styled_text/styled_text.dart';
 

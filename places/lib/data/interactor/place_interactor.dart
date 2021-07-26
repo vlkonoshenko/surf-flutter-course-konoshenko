@@ -19,7 +19,6 @@ class PlaceInteractor {
 
   PlaceInteractor._();
 
-
   Future<void> searchPlaces(int radius, List<String> category) async {
     final result = await _placeRepository.getPlaceList();
     searchResult
@@ -31,7 +30,7 @@ class PlaceInteractor {
     RangeValues radius,
     List<String> category,
   ) async {
-    return  _placeRepository.getPlaceList();
+    return _placeRepository.getPlaceList();
   }
 
   Future<Place> getPlaceDetails(int id) => _placeRepository.getPlace(id);
