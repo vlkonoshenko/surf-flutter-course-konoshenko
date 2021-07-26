@@ -28,7 +28,7 @@ class SearchInteractor {
     filteredList.clear();
     for (final element in listResult) {
       if (_arePointsNear(
-        Coordinate(element.lat, element.lng),
+            Coordinate(element.lat, element.lng),
             const Coordinate(60.01693, 30.61895),
             radius,
           ) &&

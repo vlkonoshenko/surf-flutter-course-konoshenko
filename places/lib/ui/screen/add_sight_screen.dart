@@ -52,18 +52,18 @@ class _AddSightScreenState extends State<AddSightScreen> {
         child: ElevatedButton(
           onPressed: _isBtnValid()
               ? () {
-            // mocks.add(SightCardMeta(Sight(
-            //   _tcTitle.text,
-            //   [],
-            //   Coordinate(
-            //     double.tryParse(_tcLat.text),
-            //     double.tryParse(_tcLon.text),
-            //   ),
-            //   _tcDescription.text,
-            //   selectedCategory,
-            // )));
-            Navigator.pop(context);
-          }
+                  // mocks.add(SightCardMeta(Sight(
+                  //   _tcTitle.text,
+                  //   [],
+                  //   Coordinate(
+                  //     double.tryParse(_tcLat.text),
+                  //     double.tryParse(_tcLon.text),
+                  //   ),
+                  //   _tcDescription.text,
+                  //   selectedCategory,
+                  // )));
+                  Navigator.pop(context);
+                }
               : null,
           child: Text(
             'Создать'.toUpperCase(),
@@ -188,7 +188,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                           decoration: InputDecoration(
                             hintText: 'введите текст',
                             suffixIconConstraints:
-                            const BoxConstraints(maxHeight: 40),
+                                const BoxConstraints(maxHeight: 40),
                             suffixIcon: AnimatedSwitcher(
                               duration: const Duration(milliseconds: 300),
                               child: _fnLat.hasFocus
@@ -262,7 +262,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                         horizontal: 16,
                       ),
                       suffixIconConstraints:
-                      const BoxConstraints(maxHeight: 40, minWidth: 40),
+                          const BoxConstraints(maxHeight: 40, minWidth: 40),
                       suffixIcon: AnimatedSwitcher(
                         duration: const Duration(milliseconds: 300),
                         child: _fnDescription.hasFocus

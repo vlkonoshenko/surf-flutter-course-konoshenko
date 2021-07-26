@@ -30,36 +30,36 @@ class AppHeaderLandscape extends SliverPersistentHeaderDelegate {
               reverseDuration: const Duration(milliseconds: 100),
               child: percentage < 0.9
                   ? Text(
-                'Список интересных мест',
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .subtitle1!
-                    .copyWith(fontSize: 14),
-              )
+                      'Список интересных мест',
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .subtitle1!
+                          .copyWith(fontSize: 14),
+                    )
                   : const SizedBox(),
             ),
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 100),
               child: percentage > 0.9
                   ? Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                alignment: Alignment.centerLeft,
-                child: Column(
-                  children: [
-                    Text(
-                      'Список интересных мест',
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .subtitle1!
-                          .copyWith(
-                        fontSize: 32,
-                        fontWeight: FontWeight.w700,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      alignment: Alignment.centerLeft,
+                      child: Column(
+                        children: [
+                          Text(
+                            'Список интересных мест',
+                            style: Theme.of(context)
+                                .primaryTextTheme
+                                .subtitle1!
+                                .copyWith(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                            textAlign: TextAlign.start,
+                          ),
+                        ],
                       ),
-                      textAlign: TextAlign.start,
-                    ),
-                  ],
-                ),
-              )
+                    )
                   : const SizedBox(),
             ),
             AnimatedSwitcher(
