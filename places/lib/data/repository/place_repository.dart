@@ -28,8 +28,8 @@ class PlaceRepository {
       );
 
       if (response.data != null) {
-        return ((response.data)! as List<Map<String, dynamic>>)
-            .map((e) => Place.fromJson(e))
+        return ((response.data)!)
+            .map((dynamic e) => Place.fromJson(e as Map<String, dynamic>))
             .toList();
       } else {
         return [];

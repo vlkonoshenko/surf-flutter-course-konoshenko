@@ -1,13 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
-import 'package:places/res/res.dart';
 import 'package:places/ui/components/sight_list_screen/app_header_delegat.dart';
 import 'package:places/ui/components/sight_list_screen/app_header_landscape_delegat.dart';
-import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/sight_card.dart';
+import 'package:places/ui/screen/sight_list_screen/widgets/add_sight_btn.dart';
 
 class SightListScreen extends StatefulWidget {
   static const String routeName = '/sight_list_screen';
@@ -19,18 +19,23 @@ class SightListScreen extends StatefulWidget {
 }
 
 class _SightListScreenState extends State<SightListScreen> {
+  final _controller = StreamController<List<Place>>();
+
   @override
   void initState() {
     super.initState();
+
+    _fetchData();
   }
 
   @override
   Widget build(BuildContext context) {
+    _fetchData();
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: FutureBuilder<List<Place>>(
-          future: PlaceInteractor().getPlaces(const RangeValues(0, 10000), []),
+        body: StreamBuilder<List<Place>>(
+          stream: _controller.stream,
           builder: (context, snap) {
             return snap.hasData
                 ? Stack(
@@ -99,64 +104,17 @@ class _SightListScreenState extends State<SightListScreen> {
       ),
     );
   }
-}
-
-class AddSightBtn extends StatelessWidget {
-  const AddSightBtn({
-    Key? key,
-  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: () {
-            Navigator.pushNamed(context, AddSightScreen.routeName);
-          },
-          child: Container(
-            height: 48,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 22,
-              vertical: 15,
-            ),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xffFCDD3D), Color(0xff4CAF50)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(26),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black12,
-                  offset: Offset(5, 5),
-                  blurRadius: 10,
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 24,
-                  width: 24,
-                  child: SvgPicture.asset(
-                    iconPlus,
-                    width: 40,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Text(
-                  'Новое место'.toUpperCase(),
-                  style: textButtonElevation.copyWith(color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
+  void dispose() {
+    _controller.close();
+
+    super.dispose();
+  }
+
+  void _fetchData() {
+    PlaceInteractor().getPlaces(const RangeValues(0, 10000), []).then(
+      _controller.add,
     );
   }
 }
