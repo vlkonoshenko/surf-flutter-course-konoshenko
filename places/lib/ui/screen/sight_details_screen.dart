@@ -10,22 +10,24 @@ import 'package:places/res/res.dart';
 import 'package:places/ui/components/components.dart';
 
 class SightDetailsScreen extends StatefulWidget {
-  const SightDetailsScreen({this.sight, Key key}) : super(key: key);
   static const String routeName = '/sight_details_screen';
+
   final Place sight;
+
+  const SightDetailsScreen({required this.sight, Key? key}) : super(key: key);
 
   @override
   _SightDetailsScreenState createState() => _SightDetailsScreenState();
 }
 
 class _SightDetailsScreenState extends State<SightDetailsScreen> {
-  Place sight;
+  late Place sight;
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context).settings.arguments;
+    final args = ModalRoute.of(context)!.settings.arguments;
     sight = args != null && args is Place
-        ? ModalRoute.of(context).settings.arguments as Place
+        ? ModalRoute.of(context)!.settings.arguments as Place
         : widget.sight;
 
     return DraggableScrollableSheet(
@@ -68,9 +70,9 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
 }
 
 class _BodyContent extends StatelessWidget {
-  const _BodyContent(this.sight, {Key key}) : super(key: key);
-
   final Place sight;
+
+  const _BodyContent(this.sight, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +99,7 @@ class _BodyContent extends StatelessWidget {
                     sight.placeType,
                     style: Theme.of(context)
                         .primaryTextTheme
-                        .subtitle2
+                        .subtitle2!
                         .copyWith(color: const Color(0xff7C7E92)),
                   ),
                   const SizedBox(width: 16),
@@ -116,7 +118,9 @@ class _BodyContent extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              return;
+            },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -146,7 +150,7 @@ class _BodyContent extends StatelessWidget {
 class _BottomControlPanel extends StatefulWidget {
   final Place sight;
 
-  const _BottomControlPanel(this.sight, {Key key}) : super(key: key);
+  const _BottomControlPanel(this.sight, {Key? key}) : super(key: key);
 
   @override
   __BottomControlPanelState createState() => __BottomControlPanelState();
@@ -170,7 +174,7 @@ class __BottomControlPanelState extends State<_BottomControlPanel> {
                 const SizedBox(width: 8),
                 Text(
                   'Запланировать',
-                  style: Theme.of(context).primaryTextTheme.subtitle2.copyWith(
+                  style: Theme.of(context).primaryTextTheme.subtitle2!.copyWith(
                         fontWeight: FontWeight.w400,
                         color: lmSecondary2Color.withOpacity(0.56),
                       ),
@@ -204,7 +208,7 @@ class __BottomControlPanelState extends State<_BottomControlPanel> {
                   'В Избранное',
                   style: Theme.of(context)
                       .primaryTextTheme
-                      .subtitle2
+                      .subtitle2!
                       .copyWith(fontWeight: FontWeight.w400),
                 ),
               ],
@@ -248,8 +252,9 @@ class __BottomControlPanelState extends State<_BottomControlPanel> {
 }
 
 class _GalleryView extends StatefulWidget {
-  const _GalleryView(this.images, {Key key}) : super(key: key);
   final List<String> images;
+
+  const _GalleryView(this.images, {Key? key}) : super(key: key);
 
   @override
   _GalleryViewState createState() => _GalleryViewState();
@@ -281,8 +286,8 @@ class _GalleryViewState extends State<_GalleryView> {
                   child: CupertinoActivityIndicator.partiallyRevealed(
                     progress: loadingProgress.expectedTotalBytes != null
                         ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes
-                        : null,
+                            loadingProgress.expectedTotalBytes!
+                        : 0.0,
                   ),
                 );
               },
@@ -320,14 +325,14 @@ class _GalleryViewState extends State<_GalleryView> {
 }
 
 class _ImageIndicator extends StatefulWidget {
-  const _ImageIndicator({
-    @required this.images,
-    @required this.currentPageValue,
-    Key key,
-  }) : super(key: key);
-
   final List<String> images;
   final int currentPageValue;
+
+  const _ImageIndicator({
+    required this.images,
+    required this.currentPageValue,
+    Key? key,
+  }) : super(key: key);
 
   @override
   __ImageIndicatorState createState() => __ImageIndicatorState();
@@ -357,18 +362,16 @@ class __ImageIndicatorState extends State<_ImageIndicator> {
                           ? lmMainColor
                           : Colors.transparent,
                       borderRadius: BorderRadius.only(
-                        topLeft: i == 0
-                            ? const Radius.circular(0)
-                            : const Radius.circular(12),
+                        topLeft:
+                            i == 0 ? Radius.circular(0) : Radius.circular(12),
                         topRight: i == widget.images.length - 1
-                            ? const Radius.circular(0)
-                            : const Radius.circular(12),
+                            ? Radius.circular(0)
+                            : Radius.circular(12),
                         bottomRight: i == widget.images.length - 1
-                            ? const Radius.circular(0)
-                            : const Radius.circular(12),
-                        bottomLeft: i == 0
-                            ? const Radius.circular(0)
-                            : const Radius.circular(12),
+                            ? Radius.circular(0)
+                            : Radius.circular(12),
+                        bottomLeft:
+                            i == 0 ? Radius.circular(0) : Radius.circular(12),
                       ),
                     ),
                   ),

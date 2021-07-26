@@ -10,8 +10,9 @@ import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
 class SightListScreen extends StatefulWidget {
-  const SightListScreen({Key key}) : super(key: key);
   static const String routeName = '/sight_list_screen';
+
+  const SightListScreen({Key? key}) : super(key: key);
 
   @override
   _SightListScreenState createState() => _SightListScreenState();
@@ -29,7 +30,7 @@ class _SightListScreenState extends State<SightListScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: FutureBuilder<List<Place>>(
-          future: PlaceInteractor().getPlaces(RangeValues(0, 10000), []),
+          future: PlaceInteractor().getPlaces(const RangeValues(0, 10000), []),
           builder: (context, snap) {
             return snap.hasData
                 ? Stack(
@@ -52,9 +53,13 @@ class _SightListScreenState extends State<SightListScreen> {
                                       childAspectRatio: 1.8,
                                     ),
                                     delegate: SliverChildBuilderDelegate(
-                                          (context, index) =>
-                                          SightCard(snap.data[index]),
-                                      childCount: snap.data.length,
+                                      (context, index) => SightCard(
+                                        snap.data![index],
+                                        onDelete: () {
+                                          return;
+                                        },
+                                      ),
+                                      childCount: snap.data!.length,
                                     ),
                                   ),
                                 ],
@@ -68,10 +73,13 @@ class _SightListScreenState extends State<SightListScreen> {
                                   ),
                                   SliverList(
                                     delegate: SliverChildBuilderDelegate(
-                                      (context, index) => SightCard(
-                                        snap.data[index],
+                                          (context, index) => SightCard(
+                                        snap.data![index],
+                                        onDelete: () {
+                                          return;
+                                        },
                                       ),
-                                      childCount: snap.data.length,
+                                      childCount: snap.data!.length,
                                     ),
                                   ),
                                 ],
@@ -95,7 +103,7 @@ class _SightListScreenState extends State<SightListScreen> {
 
 class AddSightBtn extends StatelessWidget {
   const AddSightBtn({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

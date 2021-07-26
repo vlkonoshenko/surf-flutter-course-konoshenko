@@ -1,6 +1,13 @@
 import 'package:places/ui/screen/select_category_screen.dart';
 
 class Sight {
+  String name;
+  List<String> url;
+  Coordinate coordinate;
+  String details;
+
+  SightCategory type;
+
   Sight(
     this.name,
     this.url,
@@ -8,13 +15,6 @@ class Sight {
     this.details,
     this.type,
   );
-
-  String name;
-  List<String> url;
-  Coordinate coordinate;
-  String details;
-
-  SightCategory type;
 }
 
 class Coordinate {

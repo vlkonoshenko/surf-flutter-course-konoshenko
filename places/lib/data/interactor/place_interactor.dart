@@ -6,25 +6,27 @@ import 'package:places/service/api_client.dart';
 class PlaceInteractor {
   static final PlaceInteractor _singleton = PlaceInteractor._();
 
+  final favorites = <Place>[];
+  final visit = <Place>[];
+  final searchResult = <Place>[];
+  final PlaceRepository _placeRepository =
+      PlaceRepository(ApiClient().createDio());
+
   factory PlaceInteractor() => _singleton;
 
   PlaceInteractor._();
 
-  final favorites = <Place>[];
-  final visit = <Place>[];
-  final searchResult = <Place>[];
-
-  final PlaceRepository _placeRepository =
-      PlaceRepository(ApiClient().createDio());
-
   Future<void> searchPlaces(int radius, List<String> category) async {
     final result = await _placeRepository.getPlaceList();
-    searchResult.clear();
-    searchResult.addAll(result);
+    searchResult
+      ..clear()
+      ..addAll(result);
   }
 
   Future<List<Place>> getPlaces(
-      RangeValues radius, List<String> category) async {
+    RangeValues radius,
+    List<String> category,
+  ) async {
     return _placeRepository.getPlaceList();
   }
 
@@ -32,7 +34,7 @@ class PlaceInteractor {
 
   Future<void> addNewPlace(Place place) => _placeRepository.createPlace(place);
 
-  Future<void> getFavoritesPlace() async {
+  Future<List<Place>> getFavoritesPlace() async {
     return favorites;
   }
 
@@ -44,7 +46,7 @@ class PlaceInteractor {
     favorites.remove(place);
   }
 
-  Future<void> getVisitPlaces() async {
+  Future<List<Place>> getVisitPlaces() async {
     return visit;
   }
 

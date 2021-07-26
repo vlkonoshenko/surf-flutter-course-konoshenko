@@ -4,9 +4,9 @@ import 'package:places/res/icons.dart';
 
 class ImagePreview extends StatelessWidget {
   const ImagePreview({
-    @required this.url,
-    @required this.onDelete,
-    Key key,
+    Key? key,
+    required this.url,
+    required this.onDelete,
   }) : super(key: key);
 
   final String url;
@@ -19,21 +19,21 @@ class ImagePreview extends StatelessWidget {
       onDismissed: (direction) => onDelete(),
       direction: DismissDirection.up,
       child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 24),
-          child: Stack(
-            children: [
-              AspectRatio(
-                aspectRatio: 1,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12.0),
-                  child: Image.network(
-                    'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
-                    fit: BoxFit.cover,
-                  ),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 24),
+        child: Stack(
+          children: [
+            AspectRatio(
+              aspectRatio: 1,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12.0),
+                child: Image.network(
+                  'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
+                  fit: BoxFit.cover,
                 ),
               ),
-              Positioned(
-                right: 0,
+            ),
+            Positioned(
+              right: 0,
               child: Padding(
                 padding: const EdgeInsets.all(6.0),
                 child: GestureDetector(

@@ -5,15 +5,13 @@ import 'package:places/res/res.dart';
 import 'package:places/ui/screen/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key key}) : super(key: key);
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Future isInitialized;
-
   @override
   void initState() {
     super.initState();
@@ -23,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: const BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: <Color>[Color(0xffFCDD3D), Color(0xff4CAF50)],
         ),
@@ -39,10 +37,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _navigateToNext() {
-    isInitialized = Future<void>.delayed(const Duration(seconds: 2));
-    isInitialized.then(
-      (dynamic result) =>
-          Navigator.pushReplacementNamed(context, HomeScreen.routeName),
+    Future<void>.delayed(const Duration(seconds: 2)).then(
+      (result) => Navigator.pushReplacementNamed(context, HomeScreen.routeName),
     );
   }
 }

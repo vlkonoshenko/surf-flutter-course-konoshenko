@@ -27,7 +27,7 @@ class AppHeaderLandscape extends SliverPersistentHeaderDelegate {
                       'Список интересных мест',
                       style: Theme.of(context)
                           .primaryTextTheme
-                          .subtitle1
+                          .subtitle1!
                           .copyWith(fontSize: 14),
                     )
                   : const SizedBox(),
@@ -44,7 +44,7 @@ class AppHeaderLandscape extends SliverPersistentHeaderDelegate {
                             'Список интересных мест',
                             style: Theme.of(context)
                                 .primaryTextTheme
-                                .subtitle1
+                                .subtitle1!
                                 .copyWith(
                                   fontSize: 32,
                                   fontWeight: FontWeight.w700,

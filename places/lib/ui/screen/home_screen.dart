@@ -6,24 +6,28 @@ import 'package:places/ui/screen/sight_list_screen.dart';
 import 'package:places/ui/screen/visiting_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-
-  const HomeScreen({Key key}) :super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
   static const String routeName = '/home_screen';
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  late TabController _tabController;
 
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
-    _tabController.addListener(() {
-      setState(() {});
-    });
+    _tabController.addListener(_listener);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabController.removeListener(_listener);
+    super.dispose();
   }
 
   @override
@@ -69,5 +73,9 @@ class _HomeScreenState extends State<HomeScreen>
         ],
       ),
     );
+  }
+
+  void _listener() {
+    setState(() {});
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:places/res/res.dart';
 
 class LabelWidget extends StatelessWidget {
-  const LabelWidget(this.text,{Key key}):super(key: key);
+  const LabelWidget(this.text, {Key? key}) : super(key: key);
 
   final String text;
 

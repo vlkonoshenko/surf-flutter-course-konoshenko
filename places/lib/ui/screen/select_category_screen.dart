@@ -5,7 +5,7 @@ import 'package:places/res/icons.dart';
 import 'package:places/res/text_style.dart';
 
 class SelectCategoryScreen extends StatefulWidget {
-  const SelectCategoryScreen({Key key}) : super(key: key);
+  const SelectCategoryScreen({Key? key}) : super(key: key);
 
   static const String routeName = '/select_category_screen';
 
@@ -14,48 +14,48 @@ class SelectCategoryScreen extends StatefulWidget {
 }
 
 class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
-  SightCategory selectedCategory;
+  SightCategory? selectedCategory;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.chevron_right),
-            onPressed: () => Navigator.pop(context),
-          ),
-          title: Text(
-            'Категория',
-            style: Theme.of(context)
-                .primaryTextTheme
-                .subtitle1
-                .copyWith(fontSize: 18),
-          ),
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_right),
+          onPressed: () => Navigator.pop(context),
         ),
-        body: Column(children: [
-          Expanded(
-            child: ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      setState(() {
-                        selectedCategory = SightCategory.values[index];
-                      });
-                    },
-                    child: ListTile(
-                      title: Text(SightCategory.values[index].toText()),
-                      trailing: selectedCategory == SightCategory.values[index]
-                          ? SvgPicture.asset(
-                              iconTick,
-                              color: Colors.green,
-                            )
-                          : const SizedBox.shrink(),
-                    ),
-                  );
+        title: Text(
+          'Категория',
+          style: Theme.of(context)
+              .primaryTextTheme
+              .subtitle1!
+              .copyWith(fontSize: 18),
+        ),
+      ),
+      body: Column(children: [
+        Expanded(
+          child: ListView.separated(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: () {
+                  setState(() {
+                    selectedCategory = SightCategory.values[index];
+                  });
                 },
+                child: ListTile(
+                  title: Text(SightCategory.values[index].toText()),
+                  trailing: selectedCategory == SightCategory.values[index]
+                      ? SvgPicture.asset(
+                          iconTick,
+                          color: Colors.green,
+                        )
+                      : const SizedBox.shrink(),
+                ),
+              );
+            },
             separatorBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -69,10 +69,10 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
             itemCount: SightCategory.values.length,
           ),
         ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: selectedCategory != null
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ElevatedButton(
+            onPressed: selectedCategory != null
                 ? () {
                     Navigator.pop<SightCategory>(context, selectedCategory);
                   }
@@ -102,22 +102,17 @@ extension SightCategoryExt on SightCategory {
     switch (this) {
       case SightCategory.hotel:
         return 'Отель';
-        break;
+
       case SightCategory.restaurant:
         return 'Ресторан';
-        break;
       case SightCategory.specialPlace:
         return 'Особое место';
-        break;
       case SightCategory.park:
         return 'Парк';
-        break;
       case SightCategory.museum:
         return 'Музей';
-        break;
       case SightCategory.cafe:
         return 'Кафе';
-        break;
       default:
         return '';
     }

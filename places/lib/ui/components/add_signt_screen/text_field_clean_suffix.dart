@@ -6,7 +6,7 @@ import 'package:places/res/icons.dart';
 class TextFieldCleanSuffix extends StatelessWidget {
   const TextFieldCleanSuffix(
     this.textEditingController, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   final TextEditingController textEditingController;

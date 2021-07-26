@@ -1,8 +1,2 @@
 include: package:surf_lint_rules/analysis_options.yaml
 
-linter:
-  rules:
-    avoid_types_on_closure_parameters: false
-dart_code_metrics:
-  rules:
-    avoid-returning-widgets: false

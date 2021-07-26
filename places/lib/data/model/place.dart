@@ -1,34 +1,36 @@
-class Place {
-  int id;
-  double lat;
-  double lng;
-  String name;
-  List<String> urls;
-  String placeType;
-  String description;
+import 'package:flutter/material.dart';
 
-  Place({
-    this.id,
-    this.lat,
-    this.lng,
-    this.name,
-    this.urls,
-    this.placeType,
-    this.description,
+@immutable
+class Place {
+  final int id;
+  final double lat;
+  final double lng;
+  final String name;
+  final List<String> urls;
+  final String placeType;
+  final String description;
+
+  const Place({
+    required this.id,
+    required this.lat,
+    required this.lng,
+    required this.name,
+    required this.urls,
+    required this.placeType,
+    required this.description,
   });
 
-  Place.fromJson(Map<String, dynamic> json) {
-    id = json['id'] as int;
-    lat = json['lat'] as double;
-    lng = json['lng'] as double;
-    name = json['name'] as String;
-    urls = (json['urls'] as List<dynamic>).cast<String>();
-    placeType = json['placeType'] as String;
-    description = json['description'] as String;
-  }
+  Place.fromJson(Map<String, dynamic> json)
+      : id = json['id'] as int,
+        lat = json['lat'] as double,
+        lng = json['lng'] as double,
+        name = json['name'] as String,
+        urls = (json['urls'] as List<dynamic>).cast<String>(),
+        placeType = json['placeType'] as String,
+        description = json['description'] as String;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final data = <String, dynamic>{};
     data['id'] = id;
     data['lat'] = lat;
     data['lng'] = lng;

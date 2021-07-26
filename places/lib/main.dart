@@ -6,8 +6,7 @@ import 'package:places/ui/screen/filters_screen.dart';
 import 'package:places/ui/screen/home_screen.dart';
 import 'package:places/ui/screen/onboarding_screen.dart';
 import 'package:places/ui/screen/select_category_screen.dart';
-import 'package:places/ui/screen/sight_details_screen.dart';
-import 'package:places/ui/screen/sight_search_screen.dart';
+import 'package:places/ui/screen/sight_search_screen/sight_search_screen.dart';
 import 'package:places/ui/screen/splash_screen.dart';
 
 void main() {
@@ -19,7 +18,7 @@ void main() {
 ChangeNotifier themeNotifier = ChangeNotifier();
 
 class App extends StatefulWidget {
-  const App({Key key}) : super(key: key);
+  const App({Key? key}) : super(key: key);
 
   @override
   _AppState createState() => _AppState();
@@ -39,7 +38,6 @@ class _AppState extends State<App> {
       theme: SettingInteractor().isDarkMode ? darkTheme : lightTheme,
       routes: {
         '/': (context) => const SplashScreen(),
-        SightDetailsScreen.routeName: (context) => const SightDetailsScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
         FilterScreen.routeName: (context) => const FilterScreen(),
         AddSightScreen.routeName: (context) => const AddSightScreen(),

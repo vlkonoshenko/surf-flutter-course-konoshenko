@@ -8,7 +8,7 @@ import 'package:places/res/icons.dart';
 import 'package:places/res/text_style.dart';
 
 class FilterScreen extends StatefulWidget {
-  const FilterScreen({Key key}) : super(key: key);
+  const FilterScreen({Key? key}) : super(key: key);
   static const String routeName = '/filter_screen';
 
   @override
@@ -17,12 +17,12 @@ class FilterScreen extends StatefulWidget {
 
 class _FilterScreenState extends State<FilterScreen> {
   List<FilterModel> filters = [
-    FilterModel(iconHotel, 'Отель', isSelected: false),
-    FilterModel(iconRestourant, 'Ресторан', isSelected: false),
-    FilterModel(iconParticularPlace, 'Особое место', isSelected: false),
-    FilterModel(iconPark, 'Парк', isSelected: false),
-    FilterModel(iconMuseum, 'Музей', isSelected: false),
-    FilterModel(iconCafe, 'Кафе', isSelected: false),
+    FilterModel(iconHotel, 'Отель'),
+    FilterModel(iconRestourant, 'Ресторан'),
+    FilterModel(iconParticularPlace, 'Особое место'),
+    FilterModel(iconPark, 'Парк'),
+    FilterModel(iconMuseum, 'Музей'),
+    FilterModel(iconCafe, 'Кафе'),
   ];
 
   RangeValues valueSlider = const RangeValues(100, 10000);
@@ -33,7 +33,7 @@ class _FilterScreenState extends State<FilterScreen> {
       appBar: AppBar(
         actions: [
           TextButton(
-              onPressed: () {
+            onPressed: () {
               setState(() {
                 for (final element in filters) {
                   element.isSelected = false;
@@ -111,7 +111,7 @@ class _FilterScreenState extends State<FilterScreen> {
                         'Расстояние',
                         style: Theme.of(context)
                             .primaryTextTheme
-                            .subtitle1
+                            .subtitle1!
                             .copyWith(fontWeight: FontWeight.w400),
                       ),
                       Text(
@@ -152,23 +152,27 @@ class _FilterScreenState extends State<FilterScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: ElevatedButton(
               onPressed: () {
-                //print('on click iconGo');
+                debugPrint('on click iconGo');
               },
               child: FutureBuilder<List<Place>>(
-                  future: PlaceInteractor().getPlaces(
-                      valueSlider, filters.map((e) => e.title).toList()),
-                  builder: (context, snap) {
-                    if (snap.hasData) {
-                      return Text(
-                        'Показать (${snap.data.length})'.toUpperCase(),
-                        style: textButtonElevation,
-                      );
-                    }
+                future: PlaceInteractor().getPlaces(
+                  valueSlider,
+                  filters.map((e) => e.title).toList(),
+                ),
+                builder: (context, snap) {
+                  if (snap.hasData) {
                     return Text(
-                      'Показать'.toUpperCase(),
+                      'Показать (${snap.data!.length})'.toUpperCase(),
                       style: textButtonElevation,
                     );
-                  }),
+                  }
+
+                  return Text(
+                    'Показать'.toUpperCase(),
+                    style: textButtonElevation,
+                  );
+                },
+              ),
             ),
           ),
           const SizedBox(height: 8),
@@ -182,12 +186,10 @@ class _FilterScreenState extends State<FilterScreen> {
 
     return result;
   }
-
-
 }
 
 class FilterContent extends StatefulWidget {
-  const FilterContent(this.filterModel, {Key key}) : super(key: key);
+  const FilterContent(this.filterModel, {Key? key}) : super(key: key);
 
   final FilterModel filterModel;
 
@@ -260,7 +262,11 @@ class _FilterContentState extends State<FilterContent> {
 }
 
 class FilterModel {
-  FilterModel(this.icon, this.title, {this.isSelected});
+  FilterModel(
+    this.icon,
+    this.title, {
+    this.isSelected = false,
+  });
 
   String icon;
   String title;

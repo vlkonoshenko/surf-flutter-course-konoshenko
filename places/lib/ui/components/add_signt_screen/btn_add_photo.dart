@@ -4,9 +4,9 @@ import 'package:places/res/icons.dart';
 
 class BtnAddPhoto extends StatelessWidget {
   const BtnAddPhoto({
-    @required this.onAddClick,
-    @required this.context,
-    Key key,
+    Key? key,
+    required this.onAddClick,
+    required this.context,
   }) : super(key: key);
 
   final VoidCallback onAddClick;

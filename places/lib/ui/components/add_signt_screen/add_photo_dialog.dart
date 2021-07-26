@@ -5,14 +5,14 @@ import 'package:places/res/icons.dart';
 import 'package:places/res/text_style.dart';
 
 class AddPhotoDialog extends StatefulWidget {
-  const AddPhotoDialog({Key key}) : super(key: key);
+  const AddPhotoDialog({Key? key}) : super(key: key);
 
   @override
   _AddPhotoDialogState createState() => _AddPhotoDialogState();
 }
 
 class _AddPhotoDialogState extends State<AddPhotoDialog> {
-  String imagePath;
+  String imagePath = '';
 
   @override
   Widget build(BuildContext context) {

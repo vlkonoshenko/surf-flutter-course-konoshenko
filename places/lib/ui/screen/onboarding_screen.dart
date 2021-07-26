@@ -4,7 +4,7 @@ import 'package:places/res/res.dart';
 import 'package:places/ui/screen/home_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({Key key}) : super(key: key);
+  const OnboardingScreen({Key? key}) : super(key: key);
   static const String routeName = '/onboarding_screen';
 
   @override
@@ -15,7 +15,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   static const _kDuration = Duration(milliseconds: 300);
   static const _kCurve = Curves.ease;
 
-  PageController _pageController;
+  late PageController _pageController;
   int currentIndex = 0;
 
   @override
@@ -139,10 +139,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({
-    this.title,
-    this.body,
-    this.image,
-    Key key,
+    required this.title,
+    required this.body,
+    required this.image,
+    Key? key,
   }) : super(key: key);
 
   final String title;
@@ -178,8 +178,11 @@ class OnboardingPage extends StatelessWidget {
 }
 
 class Indicator extends StatelessWidget {
-  const Indicator({this.currentIndex, this.positionIndex, Key key})
-      : super(key: key);
+  const Indicator({
+    required this.currentIndex,
+    required this.positionIndex,
+    Key? key,
+  }) : super(key: key);
   final int positionIndex, currentIndex;
 
   @override

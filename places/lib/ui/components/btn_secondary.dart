@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class BtnSecondary extends StatelessWidget {
   const BtnSecondary({
-    @required this.title,
-    Key key,
+    required this.title,
+    Key? key,
   }) : super(key: key);
 
   final String title;
@@ -23,7 +23,7 @@ class BtnSecondary extends StatelessWidget {
           title,
           style: Theme.of(context)
               .primaryTextTheme
-              .subtitle2
+              .subtitle2!
               .copyWith(fontWeight: FontWeight.w400),
         ),
       ],
