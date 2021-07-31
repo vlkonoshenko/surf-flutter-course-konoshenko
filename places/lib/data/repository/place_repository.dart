@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/service/network_exception.dart';
 
 class PlaceRepository {
   final Dio dio;
@@ -34,45 +35,62 @@ class PlaceRepository {
       } else {
         return [];
       }
-    } on Exception catch (_) {
-      rethrow;
+    } on DioError catch (error) {
+      throw NetworkException.fromDioError(error);
     }
   }
 
   Future<Place> getPlace(int id) async {
-    final params = <String, dynamic>{'id': id};
-    final response = await dio.get<dynamic>('/place', queryParameters: params);
+    try {
+      final params = <String, dynamic>{'id': id};
+      final response =
+          await dio.get<dynamic>('/place', queryParameters: params);
 
-    return Place.fromJson(response as Map<String, dynamic>);
+      return Place.fromJson(response as Map<String, dynamic>);
+    } on DioError catch (error) {
+      throw NetworkException.fromDioError(error);
+    }
   }
 
   Future<Place> deletePlace(int id) async {
-    final params = <String, dynamic>{'id': id};
-    final response =
-        await dio.delete<dynamic>('/place', queryParameters: params);
+    try {
+      final params = <String, dynamic>{'id': id};
+      final response =
+          await dio.delete<dynamic>('/place', queryParameters: params);
 
-    return Place.fromJson(response as Map<String, dynamic>);
+      return Place.fromJson(response as Map<String, dynamic>);
+    } on DioError catch (error) {
+      throw NetworkException.fromDioError(error);
+    }
   }
 
   Future<Place> updatePlace(int id, Place place) async {
-    final params = <String, dynamic>{'id': id};
-    final body = place.toJson();
-    final response = await dio.put<dynamic>(
-      '/place',
-      queryParameters: params,
-      data: body,
-    );
+    try {
+      final params = <String, dynamic>{'id': id};
+      final body = place.toJson();
+      final response = await dio.put<dynamic>(
+        '/place',
+        queryParameters: params,
+        data: body,
+      );
 
-    return Place.fromJson(response as Map<String, dynamic>);
+      return Place.fromJson(response as Map<String, dynamic>);
+    } on DioError catch (error) {
+      throw NetworkException.fromDioError(error);
+    }
   }
 
   Future<Place> createPlace(Place place) async {
-    final body = place.toJson();
-    final response = await dio.put<dynamic>(
-      '/place',
-      data: body,
-    );
+    try {
+      final body = place.toJson();
+      final response = await dio.put<dynamic>(
+        '/place',
+        data: body,
+      );
 
-    return Place.fromJson(response as Map<String, dynamic>);
+      return Place.fromJson(response as Map<String, dynamic>);
+    } on DioError catch (error) {
+      throw NetworkException.fromDioError(error);
+    }
   }
 }
