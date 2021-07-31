@@ -110,7 +110,11 @@ class _FilterScreenState extends State<FilterScreen> {
                   .map((e) => FilterContent(
                         filterModel: e,
                         onFilterClick: () {
-                          selectedFilers.add(e);
+                          setState(() {
+                            selectedFilers.contains(e)
+                                ? selectedFilers.remove(e)
+                                : selectedFilers.add(e);
+                          });
                         },
                         isSelected: selectedFilers.contains(e),
                       ))
