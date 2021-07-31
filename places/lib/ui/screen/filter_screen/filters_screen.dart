@@ -106,13 +106,15 @@ class _FilterScreenState extends State<FilterScreen> {
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
               crossAxisCount: 3,
-              children: filters.map((e) => FilterContent(
-                filterModel: e,
-                onFilterClick: () {
-                  selectedFilers.add(e);
-                },
-                isSelected: selectedFilers.contains(e),
-              )).toList(),
+              children: filters
+                  .map((e) => FilterContent(
+                        filterModel: e,
+                        onFilterClick: () {
+                          selectedFilers.add(e);
+                        },
+                        isSelected: selectedFilers.contains(e),
+                      ))
+                  .toList(),
             ),
           Expanded(
             child: Padding(
