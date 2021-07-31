@@ -38,6 +38,7 @@ String iconView = '$_iconPath/view.svg';
 String iconWayArrowForward = '$_iconPath/way_arrow_1.svg';
 String iconWayArrowLeft = '$_iconPath/way_arrow_2.svg';
 String iconWayArrowRight = '$_iconPath/way_arrow_3.svg';
+String iconError = '$_iconPath/ic_error.svg';
 
 //Catalog
 String _iconCatalogPath = 'assets/catalog';

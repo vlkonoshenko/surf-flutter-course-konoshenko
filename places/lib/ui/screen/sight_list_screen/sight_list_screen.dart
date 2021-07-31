@@ -8,6 +8,7 @@ import 'package:places/ui/components/sight_list_screen/app_header_delegat.dart';
 import 'package:places/ui/components/sight_list_screen/app_header_landscape_delegat.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/screen/sight_list_screen/widgets/add_sight_btn.dart';
+import 'package:places/ui/screen/sight_list_screen/widgets/sight_list_error_widget.dart';
 
 class SightListScreen extends StatefulWidget {
   static const String routeName = '/sight_list_screen';
@@ -30,13 +31,18 @@ class _SightListScreenState extends State<SightListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _fetchData();
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: StreamBuilder<List<Place>>(
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: StreamBuilder<List<Place>>(
           stream: _controller.stream,
           builder: (context, snap) {
+            if (snap.hasError) {
+              return SightListErrorWidget(
+                title: 'Ошибка',
+                subtitle: snap.error.toString(),
+              );
+            }
             return snap.hasData
                 ? Stack(
                     children: [
@@ -113,8 +119,9 @@ class _SightListScreenState extends State<SightListScreen> {
   }
 
   void _fetchData() {
-    PlaceInteractor().getPlaces(const RangeValues(0, 10000), []).then(
-      _controller.add,
-    );
+    PlaceInteractor()
+        .getPlaces(const RangeValues(0, 10000), [])
+        .then(_controller.add)
+        .catchError(_controller.addError);
   }
 }
