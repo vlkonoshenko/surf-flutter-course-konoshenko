@@ -7,12 +7,12 @@ class PlaceRepository {
   PlaceRepository(this.dio);
 
   Future<List<Place>> getPlaceList({
-    int count,
-    int offset,
-    String pageBy,
-    String pageAfter,
-    String pagePrior,
-    List<String> sortBy,
+    int? count,
+    int? offset,
+    String? pageBy,
+    String? pageAfter,
+    String? pagePrior,
+    List<String>? sortBy,
   }) async {
     try {
       final params = <String, dynamic>{};
@@ -27,10 +27,14 @@ class PlaceRepository {
         queryParameters: params,
       );
 
-      return (response.data)
-          .map((dynamic e) => Place.fromJson(e as Map<String, dynamic>))
-          .toList();
-    } catch (err) {
+      if (response.data != null) {
+        return ((response.data)!)
+            .map((dynamic e) => Place.fromJson(e as Map<String, dynamic>))
+            .toList();
+      } else {
+        return [];
+      }
+    } on Exception catch (_) {
       rethrow;
     }
   }

@@ -8,7 +8,7 @@ import 'package:places/ui/components/overscroll_glow_absorber.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
 class VisitingScreen extends StatefulWidget {
-  const VisitingScreen({Key key}) : super(key: key);
+  const VisitingScreen({Key? key}) : super(key: key);
 
   @override
   _VisitingScreenState createState() => _VisitingScreenState();
@@ -25,7 +25,7 @@ class _VisitingScreenState extends State<VisitingScreen> {
             'Избранное',
             style: Theme.of(context)
                 .primaryTextTheme
-                .subtitle1
+                .subtitle1!
                 .copyWith(fontSize: 18),
           ),
         ),
@@ -48,7 +48,7 @@ class _VisitingScreenState extends State<VisitingScreen> {
 }
 
 class _TabBarScreen extends StatelessWidget {
-  const _TabBarScreen({Key key}) : super(key: key);
+  const _TabBarScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class _TabBarScreen extends StatelessWidget {
 
 class ListVisited extends StatefulWidget {
   const ListVisited({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -113,6 +113,9 @@ class _ListVisitedState extends State<ListVisited> {
                 child: SightCard(
                   interactor.visit[index],
                   sightCardState: SightCardState.drag,
+                  onDelete: () {
+                    return;
+                  },
                 ),
               ),
               feedback: SizedBox(
@@ -121,11 +124,17 @@ class _ListVisitedState extends State<ListVisited> {
                 child: SightCard(
                   interactor.visit[index],
                   sightCardState: SightCardState.drag,
+                  onDelete: () {
+                    return;
+                  },
                 ),
               ),
               child: SightCard(
                 interactor.visit[index],
                 key: ValueKey(index),
+                onDelete: () {
+                  return;
+                },
               ),
             );
           },
@@ -137,7 +146,7 @@ class _ListVisitedState extends State<ListVisited> {
 
 class ListWantVisit extends StatefulWidget {
   const ListWantVisit({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -148,6 +157,7 @@ class _ListWantVisitState extends State<ListWantVisit> {
   @override
   Widget build(BuildContext context) {
     final interactor = PlaceInteractor();
+
     return OverscrollGlowAbsorber(
       child: ListView.builder(
         physics: Platform.isAndroid
@@ -162,9 +172,10 @@ class _ListWantVisitState extends State<ListWantVisit> {
               interactor.favorites.elementAt(index),
               key: ObjectKey(interactor.favorites.elementAt(index)),
               onDelete: () {
-                interactor.favorites
-                    .remove(interactor.favorites.elementAt(index));
-                setState(() {});
+                setState(() {
+                  interactor.favorites
+                      .remove(interactor.favorites.elementAt(index));
+                });
               },
             ),
           );

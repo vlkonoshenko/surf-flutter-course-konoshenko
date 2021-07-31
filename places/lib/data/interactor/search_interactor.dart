@@ -1,17 +1,13 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:places/data/model/coordinate.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/data/repository/place_repository.dart';
-import 'package:places/domain/sight.dart';
 import 'package:places/service/api_client.dart';
 
 class SearchInteractor {
   static final SearchInteractor _singleton = SearchInteractor._();
-
-  factory SearchInteractor() => _singleton;
-
-  SearchInteractor._();
 
   final history = <String>[];
   final filteredList = <Place>[];
@@ -19,14 +15,21 @@ class SearchInteractor {
   final PlaceRepository _placeRepository =
       PlaceRepository(ApiClient().createDio());
 
+  factory SearchInteractor() => _singleton;
+
+  SearchInteractor._();
+
   Future<List<Place>> searchPlaces(
-      String text, RangeValues radius, List<String> category) async {
+    String text,
+    RangeValues radius,
+    List<String> category,
+  ) async {
     final listResult = await _placeRepository.getPlaceList();
     filteredList.clear();
     for (final element in listResult) {
       if (_arePointsNear(
             Coordinate(element.lat, element.lng),
-            Coordinate(60.01693, 30.61895),
+            const Coordinate(60.01693, 30.61895),
             radius,
           ) &&
           element.name.toLowerCase().contains(text.toLowerCase())) {

@@ -3,13 +3,19 @@ import 'package:places/ui/components/search_bar.dart';
 
 class AppHeader extends SliverPersistentHeaderDelegate {
   @override
+  double get maxExtent => 230.0;
+
+  @override
+  double get minExtent => 30.0;
+
+  @override
   Widget build(
     BuildContext context,
     double shrinkOffset,
     bool overlapsContent,
   ) {
     return LayoutBuilder(builder: (context, constraints) {
-      final double percentage =
+      final percentage =
           (constraints.maxHeight - minExtent) / (maxExtent - minExtent);
 
       return Container(
@@ -27,7 +33,7 @@ class AppHeader extends SliverPersistentHeaderDelegate {
                       'Список интересных мест',
                       style: Theme.of(context)
                           .primaryTextTheme
-                          .subtitle1
+                          .subtitle1!
                           .copyWith(fontSize: 14),
                     )
                   : const SizedBox(),
@@ -44,7 +50,7 @@ class AppHeader extends SliverPersistentHeaderDelegate {
                             'Список \nинтересных мест',
                             style: Theme.of(context)
                                 .primaryTextTheme
-                                .subtitle1
+                                .subtitle1!
                                 .copyWith(
                                   fontSize: 32,
                                   fontWeight: FontWeight.w700,
@@ -65,12 +71,6 @@ class AppHeader extends SliverPersistentHeaderDelegate {
       );
     });
   }
-
-  @override
-  double get maxExtent => 230.0;
-
-  @override
-  double get minExtent => 30.0;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {

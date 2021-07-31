@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:places/res/res.dart';
 
 class LabelWidget extends StatelessWidget {
-  const LabelWidget(this.text,{Key key}):super(key: key);
-
   final String text;
+
+  const LabelWidget(this.text, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

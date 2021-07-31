@@ -2,12 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/data/interactor/setting_interactor.dart';
-import 'package:places/main.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/ui/screen/onboarding_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({Key key}) : super(key: key);
+  const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -22,7 +21,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           'Настройки',
           style: Theme.of(context)
               .primaryTextTheme
-              .subtitle1
+              .subtitle1!
               .copyWith(fontSize: 18),
         ),
       ),
@@ -37,13 +36,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   'Тёмная тема',
                   style: Theme.of(context)
                       .primaryTextTheme
-                      .subtitle1
+                      .subtitle1!
                       .copyWith(fontWeight: FontWeight.w400),
                 ),
                 CupertinoSwitch(
                   value: SettingInteractor().isDarkMode,
                   onChanged: (onChanged) {
-                    themeNotifier.notifyListeners();
+                    setState(() {});
                   },
                 ),
               ],
@@ -61,7 +60,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     'Смотреть туториал',
                     style: Theme.of(context)
                         .primaryTextTheme
-                        .subtitle1
+                        .subtitle1!
                         .copyWith(fontWeight: FontWeight.w400),
                   ),
                   IconButton(
@@ -74,6 +73,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       //     await PlaceRepository(ApiClient().createDio())
                       //         .getPlaceList();
                       // print(data);
+                      return;
                     },
                   ),
                 ],

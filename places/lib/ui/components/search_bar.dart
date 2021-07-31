@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/res/res.dart';
-import 'package:places/ui/screen/filters_screen.dart';
-import 'package:places/ui/screen/sight_search_screen.dart';
+import 'package:places/ui/screen/filter_screen/filters_screen.dart';
+import 'package:places/ui/screen/sight_search_screen/sight_search_screen.dart';
 
 class SearchBar extends StatefulWidget {
-  const SearchBar({Key key}) : super(key: key);
+  const SearchBar({Key? key}) : super(key: key);
 
   @override
   _SearchBarState createState() => _SearchBarState();
@@ -19,7 +19,7 @@ class _SearchBarState extends State<SearchBar> {
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
             child: Stack(
               alignment: Alignment.centerRight,
-              children: <Widget>[
+              children: [
                 SizedBox(
                   height: 40,
                   child: TextFormField(

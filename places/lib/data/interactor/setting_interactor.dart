@@ -1,13 +1,14 @@
 class SettingInteractor {
   static final SettingInteractor _singleton = SettingInteractor._();
 
+  bool get isDarkMode => _isDarkMode;
+  bool _isDarkMode = false;
+
   factory SettingInteractor() => _singleton;
 
   SettingInteractor._();
 
-  var isDarkMode = false;
-
   void changeTheme() {
-    isDarkMode = !isDarkMode;
+    _isDarkMode = !_isDarkMode;
   }
 }
