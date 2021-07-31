@@ -46,12 +46,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           children: [
             Expanded(
               child: Stack(
-                children: <Widget>[
+                children: [
                   PageView(
                     onPageChanged: (value) =>
                         setState(() => currentIndex = value),
                     controller: _pageController,
-                    children: <Widget>[
+                    children: [
                       OnboardingPage(
                         title: 'Добро пожаловать\n в Путеводитель',
                         body: 'Ищи новые локации и сохраняй\n самые любимые. ',
@@ -77,7 +77,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     right: 0,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
+                      children: [
                         Indicator(
                           positionIndex: 0,
                           currentIndex: currentIndex,

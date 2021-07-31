@@ -9,6 +9,8 @@ import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/res/res.dart';
 
+const _marginDay = 100;
+
 class BottomControlPanel extends StatefulWidget {
   final Place sight;
 
@@ -58,10 +60,9 @@ class BottomControlPanelState extends State<BottomControlPanel> {
           child: StreamBuilder<bool>(
             stream: _isFavorite.stream,
             builder: (context, snap) {
-              final isFavorite = snap.data ?? false;
-              return TextButton(
-                onPressed: () {
-                  if (isFavorite) {
+              return FavoriteBtn(
+                onClick: () {
+                  if (snap.data ?? false) {
                     PlaceInteractor().removeFromFavorites(widget.sight);
                   } else {
                     PlaceInteractor().addToFavorites(widget.sight);
@@ -69,23 +70,7 @@ class BottomControlPanelState extends State<BottomControlPanel> {
 
                   Navigator.pop(context);
                 },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      isFavorite ? iconHeartFull : iconHeart,
-                      color: lmSecondary2Color.withOpacity(0.56),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'В Избранное',
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .subtitle2!
-                          .copyWith(fontWeight: FontWeight.w400),
-                    ),
-                  ],
-                ),
+                isFavorite: snap.data ?? false,
               );
             },
           ),
@@ -124,10 +109,45 @@ class BottomControlPanelState extends State<BottomControlPanel> {
       showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime.now().subtract(const Duration(days: 100)),
-        lastDate: DateTime.now().add(const Duration(days: 100)),
+        firstDate: DateTime.now().subtract(const Duration(days: _marginDay)),
+        lastDate: DateTime.now().add(const Duration(days: _marginDay)),
       ).then((value) =>
           showTimePicker(context: context, initialTime: TimeOfDay.now()));
     }
+  }
+}
+
+class FavoriteBtn extends StatelessWidget {
+  final bool isFavorite;
+  final VoidCallback onClick;
+
+  const FavoriteBtn({
+    required this.isFavorite,
+    required this.onClick,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: onClick,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            isFavorite ? iconHeartFull : iconHeart,
+            color: lmSecondary2Color.withOpacity(0.56),
+          ),
+          const SizedBox(width: 8),
+          Text(
+            'В Избранное',
+            style: Theme.of(context)
+                .primaryTextTheme
+                .subtitle2!
+                .copyWith(fontWeight: FontWeight.w400),
+          ),
+        ],
+      ),
+    );
   }
 }

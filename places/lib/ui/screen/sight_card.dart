@@ -29,7 +29,7 @@ class _SightCardState extends State<SightCard> {
     return Container(
       margin: const EdgeInsets.all(16),
       child: Stack(
-        children: <Widget>[
+        children: [
           const Positioned.fill(
             child: _DismissBackground(),
           ),

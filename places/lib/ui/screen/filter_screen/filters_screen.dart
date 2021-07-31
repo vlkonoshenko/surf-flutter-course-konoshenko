@@ -27,6 +27,8 @@ class _FilterScreenState extends State<FilterScreen> {
     FilterModel(iconCafe, 'Кафе'),
   ];
 
+  List<FilterModel> selectedFilers = [];
+
   RangeValues valueSlider = const RangeValues(100, 10000);
 
   @override
@@ -37,9 +39,7 @@ class _FilterScreenState extends State<FilterScreen> {
           TextButton(
             onPressed: () {
               setState(() {
-                for (final element in filters) {
-                  element.isSelected = false;
-                }
+                selectedFilers.clear();
                 valueSlider = const RangeValues(100, 10000);
               });
             },
@@ -82,11 +82,17 @@ class _FilterScreenState extends State<FilterScreen> {
                 children: filters
                     .map((e) => Padding(
                           padding: const EdgeInsets.only(
-                            left: 8.0,
+                            left: 8,
                             right: 8,
                             top: 16,
                           ),
-                          child: FilterContent(e),
+                          child: FilterContent(
+                            filterModel: e,
+                            onFilterClick: () {
+                              selectedFilers.add(e);
+                            },
+                            isSelected: selectedFilers.contains(e),
+                          ),
                         ))
                     .toList(),
               ),
@@ -100,7 +106,13 @@ class _FilterScreenState extends State<FilterScreen> {
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
               crossAxisCount: 3,
-              children: filters.map((e) => FilterContent(e)).toList(),
+              children: filters.map((e) => FilterContent(
+                filterModel: e,
+                onFilterClick: () {
+                  selectedFilers.add(e);
+                },
+                isSelected: selectedFilers.contains(e),
+              )).toList(),
             ),
           Expanded(
             child: Padding(

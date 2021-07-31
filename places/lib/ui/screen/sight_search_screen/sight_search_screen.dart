@@ -68,7 +68,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Stack(
               alignment: Alignment.centerRight,
-              children: <Widget>[
+              children: [
                 SizedBox(
                   height: 40,
                   child: TextField(

@@ -5,8 +5,15 @@ import 'package:places/ui/screen/filter_screen/model/filter_model.dart';
 
 class FilterContent extends StatefulWidget {
   final FilterModel filterModel;
+  final VoidCallback onFilterClick;
+  final bool isSelected;
 
-  const FilterContent(this.filterModel, {Key? key}) : super(key: key);
+  const FilterContent({
+    required this.filterModel,
+    required this.onFilterClick,
+    required this.isSelected,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _FilterContentState createState() => _FilterContentState();
@@ -25,10 +32,7 @@ class _FilterContentState extends State<FilterContent> {
                 InkWell(
                   borderRadius: BorderRadius.circular(100.0),
                   onTap: () {
-                    setState(() {
-                      widget.filterModel.isSelected =
-                          !widget.filterModel.isSelected;
-                    });
+                    widget.onFilterClick();
                   },
                   child: Container(
                     height: 64,
@@ -51,8 +55,8 @@ class _FilterContentState extends State<FilterContent> {
                   right: 0,
                   bottom: 0,
                   child: AnimatedContainer(
-                    height: widget.filterModel.isSelected ? 16 : 0,
-                    width: widget.filterModel.isSelected ? 16 : 0,
+                    height: widget.isSelected ? 16 : 0,
+                    width: widget.isSelected ? 16 : 0,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Theme.of(context).primaryColor,

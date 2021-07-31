@@ -19,7 +19,7 @@ class _SearchBarState extends State<SearchBar> {
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
             child: Stack(
               alignment: Alignment.centerRight,
-              children: <Widget>[
+              children: [
                 SizedBox(
                   height: 40,
                   child: TextFormField(

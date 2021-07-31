@@ -21,10 +21,10 @@ class ImageIndicatorState extends State<ImageIndicator> {
   Widget build(BuildContext context) {
     return Stack(
       alignment: AlignmentDirectional.bottomCenter,
-      children: <Widget>[
+      children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: [
             for (int i = 0; i < widget.images.length; i++)
               Expanded(
                 child: SizedBox(

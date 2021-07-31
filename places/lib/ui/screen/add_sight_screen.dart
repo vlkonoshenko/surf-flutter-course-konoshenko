@@ -10,6 +10,14 @@ import 'package:places/ui/components/add_signt_screen/components.dart';
 import 'package:places/ui/components/label_text_widget.dart';
 import 'package:places/ui/screen/select_category_screen.dart';
 
+
+const _images = [
+  'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
+  'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
+  'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
+  'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
+];
+
 class AddSightScreen extends StatefulWidget {
   static const String routeName = '/add_sight_screen';
 
@@ -20,12 +28,7 @@ class AddSightScreen extends StatefulWidget {
 }
 
 class _AddSightScreenState extends State<AddSightScreen> {
-  final images = [
-    'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
-    'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
-    'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
-    'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
-  ];
+
 
   final TextEditingController _tcTitle = TextEditingController();
   final TextEditingController _tcDescription = TextEditingController();
@@ -108,7 +111,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              PhotoGallery(images),
+              const PhotoGallery(_images),
               Column(
                 children: [
                   const LabelWidget('категория'),
@@ -129,9 +132,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          selectedCategory != null
-                              ? selectedCategory!.toText()
-                              : 'Не выбрано',
+                          selectedCategory?.toText()?? 'Не выбрано',
                           style: Theme.of(context)
                               .primaryTextTheme
                               .subtitle2!
