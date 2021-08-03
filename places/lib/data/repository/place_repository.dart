@@ -42,7 +42,7 @@ class PlaceRepository {
 
   Future<Place> getPlace(int id) async {
     try {
-      final params = <String, dynamic>{'id': id};
+      final params = {'id': id};
       final response =
           await dio.get<dynamic>('/place', queryParameters: params);
 
@@ -54,7 +54,7 @@ class PlaceRepository {
 
   Future<Place> deletePlace(int id) async {
     try {
-      final params = <String, dynamic>{'id': id};
+      final params = {'id': id};
       final response =
           await dio.delete<dynamic>('/place', queryParameters: params);
 
@@ -66,7 +66,7 @@ class PlaceRepository {
 
   Future<Place> updatePlace(int id, Place place) async {
     try {
-      final params = <String, dynamic>{'id': id};
+      final params = {'id': id};
       final body = place.toJson();
       final response = await dio.put<dynamic>(
         '/place',
