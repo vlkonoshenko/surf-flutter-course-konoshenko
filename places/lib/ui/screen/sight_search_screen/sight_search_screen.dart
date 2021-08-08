@@ -6,6 +6,7 @@ import 'package:places/res/icons.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/screen/filter_screen/filters_screen.dart';
 import 'package:places/ui/screen/sight_details_screen/sight_details_screen.dart';
+import 'package:places/ui/screen/sight_search_screen/widgets/highlighted_text.dart';
 import 'package:places/ui/screen/sight_search_screen/widgets/history_state.dart';
 import 'package:provider/provider.dart';
 
@@ -203,11 +204,15 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     const SizedBox(height: 4),
-                                                    TitleWidget(
-                                                      _searchInteractor
+                                                    HighlightedText(
+                                                      text: _searchInteractor
                                                           .filteredList[index]
                                                           .name,
-                                                      _tcSearch.text,
+                                                      matcher: _tcSearch.text,
+                                                      style:
+                                                          matSubtitle1.copyWith(
+                                                        color: Colors.black,
+                                                      ),
                                                     ),
                                                     const SizedBox(height: 8),
                                                     Text(
@@ -294,19 +299,5 @@ class EmptyState extends StatelessWidget {
         ),
       ],
     );
-  }
-}
-
-class TitleWidget extends StatelessWidget {
-  final String part;
-  final String word;
-
-  const TitleWidget(this.word, this.part, {Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final resultStr = word.replaceAll(part, '<bold>$part</bold>');
-
-    return Text(resultStr);
   }
 }
