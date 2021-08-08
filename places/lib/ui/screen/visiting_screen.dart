@@ -6,6 +6,7 @@ import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/ui/components/overscroll_glow_absorber.dart';
 import 'package:places/ui/screen/sight_card.dart';
+import 'package:provider/provider.dart';
 
 class VisitingScreen extends StatefulWidget {
   const VisitingScreen({Key? key}) : super(key: key);
@@ -81,7 +82,7 @@ class ListVisited extends StatefulWidget {
 }
 
 class _ListVisitedState extends State<ListVisited> {
-  final interactor = PlaceInteractor();
+  late final PlaceInteractor interactor;
 
   @override
   Widget build(BuildContext context) {
@@ -142,6 +143,12 @@ class _ListVisitedState extends State<ListVisited> {
       ),
     );
   }
+
+  @override
+  void initState() {
+    super.initState();
+    interactor = context.read<PlaceInteractor>();
+  }
 }
 
 class ListWantVisit extends StatefulWidget {
@@ -154,10 +161,10 @@ class ListWantVisit extends StatefulWidget {
 }
 
 class _ListWantVisitState extends State<ListWantVisit> {
+  late final PlaceInteractor interactor;
+
   @override
   Widget build(BuildContext context) {
-    final interactor = PlaceInteractor();
-
     return OverscrollGlowAbsorber(
       child: ListView.builder(
         physics: Platform.isAndroid
@@ -182,5 +189,11 @@ class _ListWantVisitState extends State<ListWantVisit> {
         },
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    interactor = context.read<PlaceInteractor>();
   }
 }

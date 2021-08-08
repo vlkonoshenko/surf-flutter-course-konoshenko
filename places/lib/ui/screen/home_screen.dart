@@ -77,6 +77,8 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _listener() {
-    setState(() {});
+    setState(() {
+      return;
+    });
   }
 }

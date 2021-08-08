@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/data/model/search_model.dart';
 import 'package:places/data/repository/place_repository.dart';
 import 'package:places/service/api_client.dart';
 
@@ -19,18 +19,15 @@ class PlaceInteractor {
 
   PlaceInteractor._();
 
-  Future<void> searchPlaces(int radius, List<String> category) async {
-    final result = await _placeRepository.getPlaceList();
+  Future<void> searchPlaces() async {
+    final result = await _placeRepository.getPlaceList(SearchModel());
     searchResult
       ..clear()
       ..addAll(result);
   }
 
-  Future<List<Place>> getPlaces(
-    RangeValues radius,
-    List<String> category,
-  ) async {
-    return _placeRepository.getPlaceList();
+  Future<List<Place>> getPlaces() async {
+    return _placeRepository.getPlaceList(SearchModel());
   }
 
   Future<Place> getPlaceDetails(int id) => _placeRepository.getPlace(id);

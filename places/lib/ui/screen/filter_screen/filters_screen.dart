@@ -7,6 +7,7 @@ import 'package:places/res/icons.dart';
 import 'package:places/res/text_style.dart';
 import 'package:places/ui/screen/filter_screen/model/filter_model.dart';
 import 'package:places/ui/screen/filter_screen/widgets/filter_content_widget.dart';
+import 'package:provider/provider.dart';
 
 class FilterScreen extends StatefulWidget {
   static const String routeName = '/filter_screen';
@@ -176,10 +177,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 debugPrint('on click iconGo');
               },
               child: FutureBuilder<List<Place>>(
-                future: PlaceInteractor().getPlaces(
-                  valueSlider,
-                  filters.map((e) => e.title).toList(),
-                ),
+                future: context.read<PlaceInteractor>().getPlaces(),
                 builder: (context, snap) {
                   if (snap.hasData) {
                     return Text(

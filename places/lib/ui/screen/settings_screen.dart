@@ -42,7 +42,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 CupertinoSwitch(
                   value: SettingInteractor().isDarkMode,
                   onChanged: (onChanged) {
-                    setState(() {});
+                    setState(() {
+                      return;
+                    });
                   },
                 ),
               ],

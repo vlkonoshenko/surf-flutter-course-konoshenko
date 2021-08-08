@@ -103,182 +103,182 @@ class _AddSightScreenState extends State<AddSightScreen> {
           ],
         ),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const PhotoGallery(_images),
-              Column(
-                children: [
-                  const LabelWidget('категория'),
-                  const SizedBox(height: 16),
-                  InkWell(
-                    onTap: () async {
-                      final result = await Navigator.pushNamed<SightCategory>(
-                        context,
-                        SelectCategoryScreen.routeName,
-                      );
-                      if (result != null) {
-                        setState(() {
-                          selectedCategory = result;
-                        });
-                      }
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          selectedCategory?.toText() ?? 'Не выбрано',
-                          style: Theme.of(context)
-                              .primaryTextTheme
-                              .subtitle2!
-                              .copyWith(fontWeight: FontWeight.w300),
-                        ),
-                        const Icon(Icons.chevron_right),
-                      ],
-                    ),
-                  ),
-                  const Divider(),
-                ],
-              ),
-              const SizedBox(height: 24),
-              const LabelWidget('название'),
-              const SizedBox(height: 16),
-              TextField(
-                focusNode: _fnTitle,
-                controller: _tcTitle,
-                decoration: InputDecoration(
-                  hintText: 'Название места',
-                  suffixIconConstraints: const BoxConstraints(
-                    maxHeight: 40,
-                    minWidth: 40,
-                  ),
-                  suffixIcon: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 300),
-                    child: _fnTitle.hasFocus
-                        ? TextFieldCleanSuffix(_tcTitle)
-                        : const SizedBox.shrink(),
+        child: Column(
+          children: [
+            const PhotoGallery(_images),
+            Column(
+              children: [
+                const LabelWidget('категория'),
+                const SizedBox(height: 16),
+                InkWell(
+                  onTap: () async {
+                    final result = await Navigator.pushNamed<SightCategory>(
+                      context,
+                      SelectCategoryScreen.routeName,
+                    );
+                    if (result != null) {
+                      setState(() {
+                        selectedCategory = result;
+                      });
+                    }
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        selectedCategory?.toText() ?? 'Не выбрано',
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .subtitle2!
+                            .copyWith(fontWeight: FontWeight.w300),
+                      ),
+                      const Icon(Icons.chevron_right),
+                    ],
                   ),
                 ),
-                onSubmitted: (value) => _fnLat.requestFocus(),
-                cursorHeight: 24,
-                cursorWidth: 1,
-                cursorColor: lmMainColor,
+                const Divider(),
+              ],
+            ),
+            const SizedBox(height: 24),
+            const LabelWidget('название'),
+            const SizedBox(height: 16),
+            TextField(
+              focusNode: _fnTitle,
+              controller: _tcTitle,
+              decoration: InputDecoration(
+                hintText: 'Название места',
+                suffixIconConstraints: const BoxConstraints(
+                  maxHeight: 40,
+                  minWidth: 40,
+                ),
+                suffixIcon: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  child: _fnTitle.hasFocus
+                      ? TextFieldCleanSuffix(_tcTitle)
+                      : const SizedBox.shrink(),
+                ),
               ),
-              const SizedBox(height: 24),
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        const LabelWidget('широта'),
-                        const SizedBox(height: 16),
-                        TextField(
-                          focusNode: _fnLat,
-                          controller: _tcLat,
-                          onChanged: (value) {},
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
-                          keyboardType: TextInputType.number,
-                          onSubmitted: (value) => _fnLon.requestFocus(),
-                          decoration: InputDecoration(
-                            hintText: 'введите текст',
-                            suffixIconConstraints:
-                                const BoxConstraints(maxHeight: 40),
-                            suffixIcon: AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 300),
-                              child: _fnLat.hasFocus
-                                  ? TextFieldCleanSuffix(_tcLat)
-                                  : const SizedBox.shrink(),
-                            ),
+              onSubmitted: (value) => _fnLat.requestFocus(),
+              cursorHeight: 24,
+              cursorWidth: 1,
+              cursorColor: lmMainColor,
+            ),
+            const SizedBox(height: 24),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      const LabelWidget('широта'),
+                      const SizedBox(height: 16),
+                      TextField(
+                        focusNode: _fnLat,
+                        controller: _tcLat,
+                        onChanged: (value) {
+                          return;
+                        },
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                        keyboardType: TextInputType.number,
+                        onSubmitted: (value) => _fnLon.requestFocus(),
+                        decoration: InputDecoration(
+                          hintText: 'введите текст',
+                          suffixIconConstraints:
+                              const BoxConstraints(maxHeight: 40),
+                          suffixIcon: AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 300),
+                            child: _fnLat.hasFocus
+                                ? TextFieldCleanSuffix(_tcLat)
+                                : const SizedBox.shrink(),
                           ),
-                          cursorHeight: 24,
-                          cursorWidth: 1,
-                          cursorColor: lmMainColor,
                         ),
-                      ],
-                    ),
+                        cursorHeight: 24,
+                        cursorWidth: 1,
+                        cursorColor: lmMainColor,
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        const LabelWidget('долгота'),
-                        const SizedBox(height: 16),
-                        TextField(
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
-                          onSubmitted: (value) => _fnDescription.requestFocus(),
-                          focusNode: _fnLon,
-                          controller: _tcLon,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: 'введите текст',
-                            suffixIconConstraints: const BoxConstraints(
-                              maxHeight: 40,
-                              minWidth: 40,
-                            ),
-                            suffixIcon: AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 300),
-                              child: _fnLon.hasFocus
-                                  ? TextFieldCleanSuffix(_tcLon)
-                                  : const SizedBox.shrink(),
-                            ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    children: [
+                      const LabelWidget('долгота'),
+                      const SizedBox(height: 16),
+                      TextField(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                        onSubmitted: (value) => _fnDescription.requestFocus(),
+                        focusNode: _fnLon,
+                        controller: _tcLon,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintText: 'введите текст',
+                          suffixIconConstraints: const BoxConstraints(
+                            maxHeight: 40,
+                            minWidth: 40,
                           ),
-                          cursorHeight: 24,
-                          cursorWidth: 1,
-                          cursorColor: lmMainColor,
+                          suffixIcon: AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 300),
+                            child: _fnLon.hasFocus
+                                ? TextFieldCleanSuffix(_tcLon)
+                                : const SizedBox.shrink(),
+                          ),
                         ),
-                      ],
+                        cursorHeight: 24,
+                        cursorWidth: 1,
+                        cursorColor: lmMainColor,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Указать на карте',
+              style: textMedium.copyWith(color: lmGreenColor),
+            ),
+            const SizedBox(height: 24),
+            Column(
+              children: [
+                const LabelWidget('описание'),
+                const SizedBox(height: 16),
+                TextField(
+                  focusNode: _fnDescription,
+                  controller: _tcDescription,
+                  maxLines: null,
+                  textInputAction: TextInputAction.done,
+                  minLines: 3,
+                  decoration: InputDecoration(
+                    hintText: 'введите текст',
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 16,
+                      horizontal: 16,
+                    ),
+                    suffixIconConstraints:
+                        const BoxConstraints(maxHeight: 40, minWidth: 40),
+                    suffixIcon: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      child: _fnDescription.hasFocus
+                          ? TextFieldCleanSuffix(_tcDescription)
+                          : const SizedBox.shrink(),
                     ),
                   ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'Указать на карте',
-                style: textMedium.copyWith(color: lmGreenColor),
-              ),
-              const SizedBox(height: 24),
-              Column(
-                children: [
-                  const LabelWidget('описание'),
-                  const SizedBox(height: 16),
-                  TextField(
-                    focusNode: _fnDescription,
-                    controller: _tcDescription,
-                    maxLines: null,
-                    textInputAction: TextInputAction.done,
-                    minLines: 3,
-                    decoration: InputDecoration(
-                      hintText: 'введите текст',
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 16,
-                        horizontal: 16,
-                      ),
-                      suffixIconConstraints:
-                          const BoxConstraints(maxHeight: 40, minWidth: 40),
-                      suffixIcon: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 300),
-                        child: _fnDescription.hasFocus
-                            ? TextFieldCleanSuffix(_tcDescription)
-                            : const SizedBox.shrink(),
-                      ),
-                    ),
-                    cursorHeight: 24,
-                    cursorWidth: 1,
-                    onSubmitted: (value) =>
-                        FocusManager.instance.primaryFocus!.unfocus(),
-                    cursorColor: lmMainColor,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-            ],
-          ),
+                  cursorHeight: 24,
+                  cursorWidth: 1,
+                  onSubmitted: (value) =>
+                      FocusManager.instance.primaryFocus!.unfocus(),
+                  cursorColor: lmMainColor,
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+          ],
         ),
       ),
     );
@@ -320,8 +320,9 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                 .map((e) => ImagePreview(
                       url: e,
                       onDelete: () {
-                        widget.images.remove(e);
-                        setState(() {});
+                        setState(() {
+                          widget.images.remove(e);
+                        });
                       },
                     ))
                 .toList(),

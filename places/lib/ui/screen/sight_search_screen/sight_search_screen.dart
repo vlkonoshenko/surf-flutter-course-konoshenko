@@ -7,7 +7,7 @@ import 'package:places/res/res.dart';
 import 'package:places/ui/screen/filter_screen/filters_screen.dart';
 import 'package:places/ui/screen/sight_details_screen/sight_details_screen.dart';
 import 'package:places/ui/screen/sight_search_screen/widgets/history_state.dart';
-import 'package:styled_text/styled_text.dart';
+import 'package:provider/provider.dart';
 
 class SightSearchScreen extends StatefulWidget {
   static const String routeName = '/sight_search_screen';
@@ -21,13 +21,15 @@ class SightSearchScreen extends StatefulWidget {
 class _SightSearchScreenState extends State<SightSearchScreen> {
   final FocusNode _fnSearch = FocusNode();
   final TextEditingController _tcSearch = TextEditingController();
-  final _searchInteractor = SearchInteractor();
+  late final SearchInteractor _searchInteractor;
 
   bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
+
+    _searchInteractor = context.read<SearchInteractor>();
 
     _fnSearch.addListener(_listener);
   }
@@ -256,9 +258,8 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     });
 
     await Future<void>.delayed(const Duration(seconds: 1));
-    setState(() async {
-      await _searchInteractor
-          .searchPlaces(value, const RangeValues(0, 10000), []);
+    await _searchInteractor.searchPlaces(value, const RangeValues(0, 10000));
+    setState(() {
       isLoading = false;
     });
   }
@@ -306,19 +307,6 @@ class TitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final resultStr = word.replaceAll(part, '<bold>$part</bold>');
 
-    final tag = StyledTextTag(
-      style: Theme.of(context)
-          .primaryTextTheme
-          .subtitle1!
-          .copyWith(fontWeight: FontWeight.bold),
-    );
-
-    return StyledText(
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-      text: resultStr,
-      style: Theme.of(context).primaryTextTheme.subtitle1,
-      tags: {'bold': tag},
-    );
+    return Text(resultStr);
   }
 }
