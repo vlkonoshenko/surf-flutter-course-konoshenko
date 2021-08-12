@@ -62,7 +62,7 @@ class _SearchBarState extends State<SearchBar> {
                     color: Theme.of(context).accentColor,
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, FilterScreen.routeName);
+                    Navigator.pushNamed(context, FiltersScreen.routeName);
                   },
                 ),
               ],

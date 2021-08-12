@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/data/interactor/setting_interactor.dart';
 import 'package:places/res/icons.dart';
-import 'package:places/ui/screen/onboarding_screen.dart';
+import 'package:places/ui/screen/onboarding_screen/onboarding_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);

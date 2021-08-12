@@ -10,6 +10,8 @@ import 'package:places/data/model/place.dart';
 import 'package:places/res/res.dart';
 import 'package:provider/provider.dart';
 
+import 'favorite_btn.dart';
+
 const _marginDay = 100;
 
 class BottomControlPanel extends StatefulWidget {
@@ -118,40 +120,5 @@ class BottomControlPanelState extends State<BottomControlPanel> {
       ).then((value) =>
           showTimePicker(context: context, initialTime: TimeOfDay.now()));
     }
-  }
-}
-
-class FavoriteBtn extends StatelessWidget {
-  final bool isFavorite;
-  final VoidCallback onClick;
-
-  const FavoriteBtn({
-    required this.isFavorite,
-    required this.onClick,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onClick,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            isFavorite ? iconHeartFull : iconHeart,
-            color: lmSecondary2Color.withOpacity(0.56),
-          ),
-          const SizedBox(width: 8),
-          Text(
-            'В Избранное',
-            style: Theme.of(context)
-                .primaryTextTheme
-                .subtitle2!
-                .copyWith(fontWeight: FontWeight.w400),
-          ),
-        ],
-      ),
-    );
   }
 }

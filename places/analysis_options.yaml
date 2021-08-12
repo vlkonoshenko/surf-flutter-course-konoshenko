@@ -1,5 +1,12 @@
 include: package:surf_lint_rules/analysis_options.yaml
 
+analyzer:
+  exclude:
+    - "build/**"
+    - "script/**"
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+
 dart_code_metrics:
   anti-patterns:
     - long-method
@@ -17,8 +24,11 @@ dart_code_metrics:
     - no-empty-block
     - prefer-conditional-expressions
     - prefer-intl-name
+    - prefer-match-file-name:
+        exclude:
+          - test/**
+    - prefer-single-widget-per-file
     - provide-correct-intl-args
-    - prefer-match-file-name
 
 linter:
   rules:

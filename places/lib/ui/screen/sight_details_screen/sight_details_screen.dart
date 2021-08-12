@@ -55,7 +55,7 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
                 flexibleSpace: GalleryView(sight.urls),
               ),
               SliverToBoxAdapter(
-                child: BodyContent(sight),
+                child: BodyContentWidget(sight),
               ),
             ],
           ),

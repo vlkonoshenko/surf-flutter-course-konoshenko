@@ -5,10 +5,10 @@ import 'package:places/data/model/place.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/screen/sight_details_screen/widgets/bottom_control_panel.dart';
 
-class BodyContent extends StatelessWidget {
+class BodyContentWidget extends StatelessWidget {
   final Place sight;
 
-  const BodyContent(this.sight, {Key? key}) : super(key: key);
+  const BodyContentWidget(this.sight, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

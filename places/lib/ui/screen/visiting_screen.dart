@@ -31,13 +31,13 @@ class _VisitingScreenState extends State<VisitingScreen> {
           ),
         ),
         body: Column(
-          children: const [
-            _TabBarScreen(),
+          children:  [
+            const _TabBarScreen(),
             Expanded(
               child: TabBarView(
                 children: [
-                  ListWantVisit(),
-                  ListVisited(),
+                  const ListWantVisit(),
+                  ListVisited(context.read<PlaceInteractor>()),
                 ],
               ),
             ),
@@ -73,7 +73,10 @@ class _TabBarScreen extends StatelessWidget {
 }
 
 class ListVisited extends StatefulWidget {
-  const ListVisited({
+  final PlaceInteractor interactor;
+
+  const ListVisited(
+    this.interactor, {
     Key? key,
   }) : super(key: key);
 
@@ -82,7 +85,6 @@ class ListVisited extends StatefulWidget {
 }
 
 class _ListVisitedState extends State<ListVisited> {
-  late final PlaceInteractor interactor;
 
   @override
   Widget build(BuildContext context) {
@@ -91,28 +93,28 @@ class _ListVisitedState extends State<ListVisited> {
         physics: Platform.isAndroid
             ? const ClampingScrollPhysics()
             : const BouncingScrollPhysics(),
-        itemCount: interactor.visit.length,
+        itemCount: widget.interactor.visit.length,
         itemBuilder: (context, index) => DragTarget<Place>(
           onWillAccept: (data) {
             return true;
           },
           onAccept: (data) {
             setState(() {
-              final newPos = interactor.visit.indexOf(interactor.visit[index]);
-              final dragIndex = interactor.visit.indexOf(data);
-              final tmp = interactor.visit[index];
-              interactor.visit[newPos] = data;
-              interactor.visit[dragIndex] = tmp;
+              final newPos = widget.interactor.visit.indexOf(widget.interactor.visit[index]);
+              final dragIndex = widget.interactor.visit.indexOf(data);
+              final tmp = widget.interactor.visit[index];
+              widget.interactor.visit[newPos] = data;
+              widget.interactor.visit[dragIndex] = tmp;
             });
           },
           builder: (context, candidate, rejected) {
             return Draggable<Place>(
-              data: interactor.visit[index],
+              data: widget.interactor.visit[index],
               childWhenDragging: SizedBox(
                 height: 240,
                 width: MediaQuery.of(context).size.width - 16,
                 child: SightCard(
-                  interactor.visit[index],
+                  widget.interactor.visit[index],
                   sightCardState: SightCardState.drag,
                   onDelete: () {
                     return;
@@ -123,7 +125,7 @@ class _ListVisitedState extends State<ListVisited> {
                 height: 240,
                 width: MediaQuery.of(context).size.width - 16,
                 child: SightCard(
-                  interactor.visit[index],
+                  widget.interactor.visit[index],
                   sightCardState: SightCardState.drag,
                   onDelete: () {
                     return;
@@ -131,7 +133,7 @@ class _ListVisitedState extends State<ListVisited> {
                 ),
               ),
               child: SightCard(
-                interactor.visit[index],
+                widget.interactor.visit[index],
                 key: ValueKey(index),
                 onDelete: () {
                   return;
@@ -142,12 +144,6 @@ class _ListVisitedState extends State<ListVisited> {
         ),
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    interactor = context.read<PlaceInteractor>();
   }
 }
 

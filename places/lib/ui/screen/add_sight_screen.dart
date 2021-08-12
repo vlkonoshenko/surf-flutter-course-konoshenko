@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:places/res/res.dart';
 import 'package:places/res/text_style.dart';
-import 'package:places/ui/components/add_signt_screen/add_photo_dialog.dart';
 import 'package:places/ui/components/add_signt_screen/components.dart';
 import 'package:places/ui/components/label_text_widget.dart';
 import 'package:places/ui/screen/select_category_screen.dart';
+
+import 'sight_search_screen/widgets/photo_gallery.dart';
 
 const _images = [
   'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
@@ -110,7 +111,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
             const PhotoGallery(_images),
             Column(
               children: [
-                const LabelWidget('категория'),
+                const LabelTextWidget('категория'),
                 const SizedBox(height: 16),
                 InkWell(
                   onTap: () async {
@@ -142,7 +143,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
               ],
             ),
             const SizedBox(height: 24),
-            const LabelWidget('название'),
+            const LabelTextWidget('название'),
             const SizedBox(height: 16),
             TextField(
               focusNode: _fnTitle,
@@ -171,7 +172,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 Expanded(
                   child: Column(
                     children: [
-                      const LabelWidget('широта'),
+                      const LabelTextWidget('широта'),
                       const SizedBox(height: 16),
                       TextField(
                         focusNode: _fnLat,
@@ -206,7 +207,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 Expanded(
                   child: Column(
                     children: [
-                      const LabelWidget('долгота'),
+                      const LabelTextWidget('долгота'),
                       const SizedBox(height: 16),
                       TextField(
                         inputFormatters: [
@@ -246,7 +247,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
             const SizedBox(height: 24),
             Column(
               children: [
-                const LabelWidget('описание'),
+                const LabelTextWidget('описание'),
                 const SizedBox(height: 16),
                 TextField(
                   focusNode: _fnDescription,
@@ -256,12 +257,11 @@ class _AddSightScreenState extends State<AddSightScreen> {
                   minLines: 3,
                   decoration: InputDecoration(
                     hintText: 'введите текст',
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 16,
-                      horizontal: 16,
+                    contentPadding: const EdgeInsets.all(16.0),
+                    suffixIconConstraints: const BoxConstraints(
+                      maxHeight: 40,
+                      minWidth: 40,
                     ),
-                    suffixIconConstraints:
-                        const BoxConstraints(maxHeight: 40, minWidth: 40),
                     suffixIcon: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 300),
                       child: _fnDescription.hasFocus
@@ -290,55 +290,5 @@ class _AddSightScreenState extends State<AddSightScreen> {
         _tcLon.text.isNotEmpty &&
         _tcLat.text.isNotEmpty &&
         _tcTitle.text.isNotEmpty;
-  }
-}
-
-class PhotoGallery extends StatefulWidget {
-  final List<String> images;
-
-  const PhotoGallery(this.images, {Key? key}) : super(key: key);
-
-  @override
-  _PhotoGalleryState createState() => _PhotoGalleryState();
-}
-
-class _PhotoGalleryState extends State<PhotoGallery> {
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 120,
-      width: double.maxFinite,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            BtnAddPhoto(
-              context: context,
-              onAddClick: () => _dialogCall(context),
-            ),
-            ...widget.images
-                .map((e) => ImagePreview(
-                      url: e,
-                      onDelete: () {
-                        setState(() {
-                          widget.images.remove(e);
-                        });
-                      },
-                    ))
-                .toList(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Future<void> _dialogCall(BuildContext context) {
-    return showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) {
-        return const AddPhotoDialog();
-      },
-    );
   }
 }

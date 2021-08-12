@@ -55,7 +55,7 @@ class _SightListScreenState extends State<SightListScreen> {
                                   SliverPersistentHeader(
                                     pinned: true,
                                     floating: true,
-                                    delegate: AppHeaderLandscape(),
+                                    delegate: AppHeaderLandscapeDelegat(),
                                   ),
                                   SliverGrid(
                                     gridDelegate:
@@ -82,7 +82,7 @@ class _SightListScreenState extends State<SightListScreen> {
                                   SliverPersistentHeader(
                                     pinned: true,
                                     floating: true,
-                                    delegate: AppHeader(),
+                                    delegate: AppHeaderDelegat(),
                                   ),
                                   SliverList(
                                     delegate: SliverChildBuilderDelegate(

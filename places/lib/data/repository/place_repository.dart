@@ -10,22 +10,24 @@ class PlaceRepository {
 
   Future<List<Place>> getPlaceList(SearchModel model) async {
     try {
-      final params = <String, dynamic>{};
-      if (model.count != null) params['count'] = model.count;
-      if (model.offset != null) params['offset'] = model.offset;
-      if (model.pageBy != null) params['pageBy'] = model.pageBy;
-      if (model.pageAfter != null) params['pageAfter'] = model.pageAfter;
-      if (model.pagePrior != null) params['pagePrior'] = model.pagePrior;
-      if (model.sortBy != null) params['sortBy'] = model.sortBy;
+      final params = <String, dynamic>{
+        if (model.count != null) 'count': model.count,
+        if (model.offset != null) 'offset': model.offset,
+        if (model.pageBy != null) 'pageBy': model.pageBy,
+        if (model.pageAfter != null) 'pageAfter': model.pageAfter,
+        if (model.pagePrior != null) 'pagePrior': model.pagePrior,
+        if (model.sortBy != null) 'sortBy': model.sortBy,
+      };
+
       final response = await dio.get<List<dynamic>>(
         '/place',
         queryParameters: params,
       );
 
-      final result = <Place>[];
-      for (final data in response.data!) {
-        result.add(Place.fromJson(data as Map<String, dynamic>));
-      }
+      final result = <Place>[
+        for (final data in response.data!)
+          Place.fromJson(data as Map<String, dynamic>),
+      ];
 
       return result;
     } on DioError catch (error) {

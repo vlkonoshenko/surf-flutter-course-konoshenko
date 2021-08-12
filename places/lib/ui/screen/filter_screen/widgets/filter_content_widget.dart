@@ -3,12 +3,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/screen/filter_screen/model/filter_model.dart';
 
-class FilterContent extends StatefulWidget {
+class FilterContentWidget extends StatefulWidget {
   final FilterModel filterModel;
   final VoidCallback onFilterClick;
   final bool isSelected;
 
-  const FilterContent({
+  const FilterContentWidget({
     required this.filterModel,
     required this.onFilterClick,
     required this.isSelected,
@@ -16,10 +16,10 @@ class FilterContent extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _FilterContentState createState() => _FilterContentState();
+  _FilterContentWidgetState createState() => _FilterContentWidgetState();
 }
 
-class _FilterContentState extends State<FilterContent> {
+class _FilterContentWidgetState extends State<FilterContentWidget> {
   @override
   Widget build(BuildContext context) => Column(
         children: [

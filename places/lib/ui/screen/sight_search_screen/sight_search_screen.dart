@@ -132,7 +132,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                           onPressed: () {
                             Navigator.pushNamed(
                               context,
-                              FilterScreen.routeName,
+                              FiltersScreen.routeName,
                             );
                           },
                         ),
@@ -144,7 +144,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 400),
               child: _tcSearch.text.isEmpty
-                  ? HistoreyStateWidget(_searchInteractor)
+                  ? HistoryState(_searchInteractor)
                   : isLoading
                       ? const CircularProgressIndicator()
                       : _searchInteractor.filteredList.isEmpty
