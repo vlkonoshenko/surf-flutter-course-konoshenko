@@ -29,6 +29,7 @@ class PlaceRepository {
           Place.fromJson(data as Map<String, dynamic>),
       ];
 
+
       return result;
     } on DioError catch (error) {
       throw NetworkException.fromDioError(error);
