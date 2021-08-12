@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/ui/components/search_bar.dart';
 
-class AppHeaderLandscape extends SliverPersistentHeaderDelegate {
+class AppHeaderLandscapeDelegat extends SliverPersistentHeaderDelegate {
   @override
   double get maxExtent => 160.0;
 

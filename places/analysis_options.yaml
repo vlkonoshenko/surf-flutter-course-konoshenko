@@ -1,2 +1,36 @@
 include: package:surf_lint_rules/analysis_options.yaml
 
+analyzer:
+  exclude:
+    - "build/**"
+    - "script/**"
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+
+dart_code_metrics:
+  anti-patterns:
+    - long-method
+    - long-parameter-list
+  metrics-exclude:
+    - test/**
+  rules:
+    - always-remove-listener
+    - avoid-unused-parameters
+    - avoid-unnecessary-setstate
+    - avoid-wrapping-in-padding
+    - double-literal-format
+    - newline-before-return
+    - no-boolean-literal-compare
+    - no-empty-block
+    - prefer-conditional-expressions
+    - prefer-intl-name
+    - prefer-match-file-name:
+        exclude:
+          - test/**
+    - prefer-single-widget-per-file
+    - provide-correct-intl-args
+
+linter:
+  rules:
+    always_put_required_named_parameters_first: false
+    always_use_package_imports: false

@@ -9,6 +9,7 @@ import 'package:places/ui/components/sight_list_screen/app_header_landscape_dele
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/screen/sight_list_screen/widgets/add_sight_btn.dart';
 import 'package:places/ui/screen/sight_list_screen/widgets/sight_list_error_widget.dart';
+import 'package:provider/provider.dart';
 
 class SightListScreen extends StatefulWidget {
   static const String routeName = '/sight_list_screen';
@@ -43,6 +44,7 @@ class _SightListScreenState extends State<SightListScreen> {
                 subtitle: snap.error.toString(),
               );
             }
+
             return snap.hasData
                 ? Stack(
                     children: [
@@ -53,7 +55,7 @@ class _SightListScreenState extends State<SightListScreen> {
                                   SliverPersistentHeader(
                                     pinned: true,
                                     floating: true,
-                                    delegate: AppHeaderLandscape(),
+                                    delegate: AppHeaderLandscapeDelegat(),
                                   ),
                                   SliverGrid(
                                     gridDelegate:
@@ -80,7 +82,7 @@ class _SightListScreenState extends State<SightListScreen> {
                                   SliverPersistentHeader(
                                     pinned: true,
                                     floating: true,
-                                    delegate: AppHeader(),
+                                    delegate: AppHeaderDelegat(),
                                   ),
                                   SliverList(
                                     delegate: SliverChildBuilderDelegate(
@@ -119,8 +121,9 @@ class _SightListScreenState extends State<SightListScreen> {
   }
 
   void _fetchData() {
-    PlaceInteractor()
-        .getPlaces(const RangeValues(0, 10000), [])
+    context
+        .read<PlaceInteractor>()
+        .getPlaces()
         .then(_controller.add)
         .catchError(_controller.addError);
   }

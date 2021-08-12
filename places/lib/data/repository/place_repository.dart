@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/data/model/search_model.dart';
 import 'package:places/service/network_exception.dart';
 
 class PlaceRepository {
@@ -7,34 +8,28 @@ class PlaceRepository {
 
   PlaceRepository(this.dio);
 
-  Future<List<Place>> getPlaceList({
-    int? count,
-    int? offset,
-    String? pageBy,
-    String? pageAfter,
-    String? pagePrior,
-    List<String>? sortBy,
-  }) async {
+  Future<List<Place>> getPlaceList(SearchModel model) async {
     try {
-      final params = <String, dynamic>{};
-      if (count != null) params['count'] = count;
-      if (offset != null) params['offset'] = offset;
-      if (pageBy != null) params['pageBy'] = pageBy;
-      if (pageAfter != null) params['pageAfter'] = pageAfter;
-      if (pagePrior != null) params['pagePrior'] = pagePrior;
-      if (sortBy != null) params['sortBy'] = sortBy;
+      final params = <String, dynamic>{
+        if (model.count != null) 'count': model.count,
+        if (model.offset != null) 'offset': model.offset,
+        if (model.pageBy != null) 'pageBy': model.pageBy,
+        if (model.pageAfter != null) 'pageAfter': model.pageAfter,
+        if (model.pagePrior != null) 'pagePrior': model.pagePrior,
+        if (model.sortBy != null) 'sortBy': model.sortBy,
+      };
+
       final response = await dio.get<List<dynamic>>(
         '/place',
         queryParameters: params,
       );
 
-      if (response.data != null) {
-        return ((response.data)!)
-            .map((dynamic e) => Place.fromJson(e as Map<String, dynamic>))
-            .toList();
-      } else {
-        return [];
-      }
+      final result = <Place>[
+        for (final data in response.data!)
+          Place.fromJson(data as Map<String, dynamic>),
+      ];
+
+      return result;
     } on DioError catch (error) {
       throw NetworkException.fromDioError(error);
     }

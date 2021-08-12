@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/screen/home_screen.dart';
+import 'package:places/ui/screen/onboarding_screen/widgets/indicator.dart';
+
+import 'onboarding_page.dart';
 
 class OnboardingScreen extends StatefulWidget {
   static const String routeName = '/onboarding_screen';
@@ -78,10 +80,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Indicator(
-                          positionIndex: 0,
-                          currentIndex: currentIndex,
-                        ),
+                        Indicator(positionIndex: 0, currentIndex: currentIndex),
                         const SizedBox(width: 10),
                         Indicator(positionIndex: 1, currentIndex: currentIndex),
                         const SizedBox(width: 10),
@@ -136,69 +135,5 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void previousFunction() {
     _pageController.previousPage(duration: _kDuration, curve: _kCurve);
-  }
-}
-
-class OnboardingPage extends StatelessWidget {
-  final String title;
-  final String body;
-  final String image;
-
-  const OnboardingPage({
-    required this.title,
-    required this.body,
-    required this.image,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SvgPicture.asset(
-            image,
-            color: dmCanvasColor,
-          ),
-          const SizedBox(height: 30),
-          Text(
-            title,
-            style: textButtonElevation.copyWith(fontSize: 24),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            body,
-            style: matBodyText1.copyWith(color: lmSecondary2Color),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class Indicator extends StatelessWidget {
-  final int positionIndex;
-  final int currentIndex;
-
-  const Indicator({
-    required this.currentIndex,
-    required this.positionIndex,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      height: 8,
-      width: positionIndex == currentIndex ? 24 : 8,
-      decoration: BoxDecoration(
-        color: positionIndex == currentIndex ? lmGreenColor : Colors.grey,
-        borderRadius: BorderRadius.circular(100),
-      ),
-      duration: const Duration(milliseconds: 200),
-    );
   }
 }

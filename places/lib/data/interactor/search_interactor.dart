@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:places/data/model/coordinate.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/data/model/search_model.dart';
 import 'package:places/data/repository/place_repository.dart';
 import 'package:places/service/api_client.dart';
 
@@ -22,9 +23,8 @@ class SearchInteractor {
   Future<List<Place>> searchPlaces(
     String text,
     RangeValues radius,
-    List<String> category,
   ) async {
-    final listResult = await _placeRepository.getPlaceList();
+    final listResult = await _placeRepository.getPlaceList(SearchModel());
     filteredList.clear();
     for (final element in listResult) {
       if (_arePointsNear(

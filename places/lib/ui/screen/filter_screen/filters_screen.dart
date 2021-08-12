@@ -7,17 +7,18 @@ import 'package:places/res/icons.dart';
 import 'package:places/res/text_style.dart';
 import 'package:places/ui/screen/filter_screen/model/filter_model.dart';
 import 'package:places/ui/screen/filter_screen/widgets/filter_content_widget.dart';
+import 'package:provider/provider.dart';
 
-class FilterScreen extends StatefulWidget {
+class FiltersScreen extends StatefulWidget {
   static const String routeName = '/filter_screen';
 
-  const FilterScreen({Key? key}) : super(key: key);
+  const FiltersScreen({Key? key}) : super(key: key);
 
   @override
-  _FilterScreenState createState() => _FilterScreenState();
+  _FiltersScreenState createState() => _FiltersScreenState();
 }
 
-class _FilterScreenState extends State<FilterScreen> {
+class _FiltersScreenState extends State<FiltersScreen> {
   List<FilterModel> filters = [
     FilterModel(iconHotel, 'Отель'),
     FilterModel(iconRestourant, 'Ресторан'),
@@ -86,7 +87,7 @@ class _FilterScreenState extends State<FilterScreen> {
                             right: 8,
                             top: 16,
                           ),
-                          child: FilterContent(
+                          child: FilterContentWidget(
                             filterModel: e,
                             onFilterClick: () {
                               selectedFilers.add(e);
@@ -107,7 +108,7 @@ class _FilterScreenState extends State<FilterScreen> {
               mainAxisSpacing: 10,
               crossAxisCount: 3,
               children: filters
-                  .map((e) => FilterContent(
+                  .map((e) => FilterContentWidget(
                         filterModel: e,
                         onFilterClick: () {
                           setState(() {
@@ -176,10 +177,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 debugPrint('on click iconGo');
               },
               child: FutureBuilder<List<Place>>(
-                future: PlaceInteractor().getPlaces(
-                  valueSlider,
-                  filters.map((e) => e.title).toList(),
-                ),
+                future: context.read<PlaceInteractor>().getPlaces(),
                 builder: (context, snap) {
                   if (snap.hasData) {
                     return Text(

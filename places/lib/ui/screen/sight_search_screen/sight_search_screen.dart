@@ -6,8 +6,9 @@ import 'package:places/res/icons.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/screen/filter_screen/filters_screen.dart';
 import 'package:places/ui/screen/sight_details_screen/sight_details_screen.dart';
+import 'package:places/ui/screen/sight_search_screen/widgets/highlighted_text.dart';
 import 'package:places/ui/screen/sight_search_screen/widgets/history_state.dart';
-import 'package:styled_text/styled_text.dart';
+import 'package:provider/provider.dart';
 
 class SightSearchScreen extends StatefulWidget {
   static const String routeName = '/sight_search_screen';
@@ -21,13 +22,15 @@ class SightSearchScreen extends StatefulWidget {
 class _SightSearchScreenState extends State<SightSearchScreen> {
   final FocusNode _fnSearch = FocusNode();
   final TextEditingController _tcSearch = TextEditingController();
-  final _searchInteractor = SearchInteractor();
+  late final SearchInteractor _searchInteractor;
 
   bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
+
+    _searchInteractor = context.read<SearchInteractor>();
 
     _fnSearch.addListener(_listener);
   }
@@ -129,7 +132,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                           onPressed: () {
                             Navigator.pushNamed(
                               context,
-                              FilterScreen.routeName,
+                              FiltersScreen.routeName,
                             );
                           },
                         ),
@@ -141,7 +144,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 400),
               child: _tcSearch.text.isEmpty
-                  ? HistoreyStateWidget(_searchInteractor)
+                  ? HistoryState(_searchInteractor)
                   : isLoading
                       ? const CircularProgressIndicator()
                       : _searchInteractor.filteredList.isEmpty
@@ -201,11 +204,15 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     const SizedBox(height: 4),
-                                                    TitleWidget(
-                                                      _searchInteractor
+                                                    HighlightedText(
+                                                      text: _searchInteractor
                                                           .filteredList[index]
                                                           .name,
-                                                      _tcSearch.text,
+                                                      matcher: _tcSearch.text,
+                                                      style:
+                                                          matSubtitle1.copyWith(
+                                                        color: Colors.black,
+                                                      ),
                                                     ),
                                                     const SizedBox(height: 8),
                                                     Text(
@@ -256,9 +263,8 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     });
 
     await Future<void>.delayed(const Duration(seconds: 1));
-    setState(() async {
-      await _searchInteractor
-          .searchPlaces(value, const RangeValues(0, 10000), []);
+    await _searchInteractor.searchPlaces(value, const RangeValues(0, 10000));
+    setState(() {
       isLoading = false;
     });
   }
@@ -292,33 +298,6 @@ class EmptyState extends StatelessWidget {
           style: Theme.of(context).primaryTextTheme.caption,
         ),
       ],
-    );
-  }
-}
-
-class TitleWidget extends StatelessWidget {
-  final String part;
-  final String word;
-
-  const TitleWidget(this.word, this.part, {Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final resultStr = word.replaceAll(part, '<bold>$part</bold>');
-
-    final tag = StyledTextTag(
-      style: Theme.of(context)
-          .primaryTextTheme
-          .subtitle1!
-          .copyWith(fontWeight: FontWeight.bold),
-    );
-
-    return StyledText(
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-      text: resultStr,
-      style: Theme.of(context).primaryTextTheme.subtitle1,
-      tags: {'bold': tag},
     );
   }
 }

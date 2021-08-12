@@ -8,6 +8,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/res/res.dart';
+import 'package:provider/provider.dart';
+
+import 'favorite_btn.dart';
 
 const _marginDay = 100;
 
@@ -26,8 +29,8 @@ class BottomControlPanelState extends State<BottomControlPanel> {
   @override
   void initState() {
     super.initState();
-
-    _isFavorite.add(PlaceInteractor().favorites.contains(widget.sight));
+    final placeInteractor = context.read<PlaceInteractor>();
+    _isFavorite.add(placeInteractor.favorites.contains(widget.sight));
   }
 
   @override
@@ -62,10 +65,11 @@ class BottomControlPanelState extends State<BottomControlPanel> {
             builder: (context, snap) {
               return FavoriteBtn(
                 onClick: () {
+                  final placeInteractor = context.read<PlaceInteractor>();
                   if (snap.data ?? false) {
-                    PlaceInteractor().removeFromFavorites(widget.sight);
+                    placeInteractor.removeFromFavorites(widget.sight);
                   } else {
-                    PlaceInteractor().addToFavorites(widget.sight);
+                    placeInteractor.addToFavorites(widget.sight);
                   }
 
                   Navigator.pop(context);
@@ -98,7 +102,9 @@ class BottomControlPanelState extends State<BottomControlPanel> {
                 height: 200,
                 child: CupertinoDatePicker(
                   initialDateTime: DateTime.now(),
-                  onDateTimeChanged: (value) {},
+                  onDateTimeChanged: (value) {
+                    return;
+                  },
                 ),
               ),
             ],
@@ -114,40 +120,5 @@ class BottomControlPanelState extends State<BottomControlPanel> {
       ).then((value) =>
           showTimePicker(context: context, initialTime: TimeOfDay.now()));
     }
-  }
-}
-
-class FavoriteBtn extends StatelessWidget {
-  final bool isFavorite;
-  final VoidCallback onClick;
-
-  const FavoriteBtn({
-    required this.isFavorite,
-    required this.onClick,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onClick,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            isFavorite ? iconHeartFull : iconHeart,
-            color: lmSecondary2Color.withOpacity(0.56),
-          ),
-          const SizedBox(width: 8),
-          Text(
-            'В Избранное',
-            style: Theme.of(context)
-                .primaryTextTheme
-                .subtitle2!
-                .copyWith(fontWeight: FontWeight.w400),
-          ),
-        ],
-      ),
-    );
   }
 }

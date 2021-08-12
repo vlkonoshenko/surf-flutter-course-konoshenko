@@ -6,17 +6,17 @@ import 'package:places/res/icons.dart';
 import 'package:places/res/text_style.dart';
 import 'package:places/ui/components/label_text_widget.dart';
 
-class HistoreyStateWidget extends StatefulWidget {
+class HistoryState extends StatefulWidget {
   final SearchInteractor searchInteractor;
 
-  const HistoreyStateWidget(this.searchInteractor, {Key? key})
+  const HistoryState(this.searchInteractor, {Key? key})
       : super(key: key);
 
   @override
-  _HistoreyStateWidgetState createState() => _HistoreyStateWidgetState();
+  _HistoryStateState createState() => _HistoryStateState();
 }
 
-class _HistoreyStateWidgetState extends State<HistoreyStateWidget> {
+class _HistoryStateState extends State<HistoryState> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,7 +28,7 @@ class _HistoreyStateWidgetState extends State<HistoreyStateWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 24),
-            LabelWidget(
+            LabelTextWidget(
               widget.searchInteractor.history.isNotEmpty
                   ? 'Вы искали'
                   : 'История поиска пуста',

@@ -6,6 +6,7 @@ import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/ui/components/overscroll_glow_absorber.dart';
 import 'package:places/ui/screen/sight_card.dart';
+import 'package:provider/provider.dart';
 
 class VisitingScreen extends StatefulWidget {
   const VisitingScreen({Key? key}) : super(key: key);
@@ -30,13 +31,13 @@ class _VisitingScreenState extends State<VisitingScreen> {
           ),
         ),
         body: Column(
-          children: const [
-            _TabBarScreen(),
+          children:  [
+            const _TabBarScreen(),
             Expanded(
               child: TabBarView(
                 children: [
-                  ListWantVisit(),
-                  ListVisited(),
+                  const ListWantVisit(),
+                  ListVisited(context.read<PlaceInteractor>()),
                 ],
               ),
             ),
@@ -72,7 +73,10 @@ class _TabBarScreen extends StatelessWidget {
 }
 
 class ListVisited extends StatefulWidget {
-  const ListVisited({
+  final PlaceInteractor interactor;
+
+  const ListVisited(
+    this.interactor, {
     Key? key,
   }) : super(key: key);
 
@@ -81,7 +85,6 @@ class ListVisited extends StatefulWidget {
 }
 
 class _ListVisitedState extends State<ListVisited> {
-  final interactor = PlaceInteractor();
 
   @override
   Widget build(BuildContext context) {
@@ -90,28 +93,28 @@ class _ListVisitedState extends State<ListVisited> {
         physics: Platform.isAndroid
             ? const ClampingScrollPhysics()
             : const BouncingScrollPhysics(),
-        itemCount: interactor.visit.length,
+        itemCount: widget.interactor.visit.length,
         itemBuilder: (context, index) => DragTarget<Place>(
           onWillAccept: (data) {
             return true;
           },
           onAccept: (data) {
             setState(() {
-              final newPos = interactor.visit.indexOf(interactor.visit[index]);
-              final dragIndex = interactor.visit.indexOf(data);
-              final tmp = interactor.visit[index];
-              interactor.visit[newPos] = data;
-              interactor.visit[dragIndex] = tmp;
+              final newPos = widget.interactor.visit.indexOf(widget.interactor.visit[index]);
+              final dragIndex = widget.interactor.visit.indexOf(data);
+              final tmp = widget.interactor.visit[index];
+              widget.interactor.visit[newPos] = data;
+              widget.interactor.visit[dragIndex] = tmp;
             });
           },
           builder: (context, candidate, rejected) {
             return Draggable<Place>(
-              data: interactor.visit[index],
+              data: widget.interactor.visit[index],
               childWhenDragging: SizedBox(
                 height: 240,
                 width: MediaQuery.of(context).size.width - 16,
                 child: SightCard(
-                  interactor.visit[index],
+                  widget.interactor.visit[index],
                   sightCardState: SightCardState.drag,
                   onDelete: () {
                     return;
@@ -122,7 +125,7 @@ class _ListVisitedState extends State<ListVisited> {
                 height: 240,
                 width: MediaQuery.of(context).size.width - 16,
                 child: SightCard(
-                  interactor.visit[index],
+                  widget.interactor.visit[index],
                   sightCardState: SightCardState.drag,
                   onDelete: () {
                     return;
@@ -130,7 +133,7 @@ class _ListVisitedState extends State<ListVisited> {
                 ),
               ),
               child: SightCard(
-                interactor.visit[index],
+                widget.interactor.visit[index],
                 key: ValueKey(index),
                 onDelete: () {
                   return;
@@ -154,10 +157,10 @@ class ListWantVisit extends StatefulWidget {
 }
 
 class _ListWantVisitState extends State<ListWantVisit> {
+  late final PlaceInteractor interactor;
+
   @override
   Widget build(BuildContext context) {
-    final interactor = PlaceInteractor();
-
     return OverscrollGlowAbsorber(
       child: ListView.builder(
         physics: Platform.isAndroid
@@ -182,5 +185,11 @@ class _ListWantVisitState extends State<ListWantVisit> {
         },
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    interactor = context.read<PlaceInteractor>();
   }
 }
