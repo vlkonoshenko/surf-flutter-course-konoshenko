@@ -1,4 +1,0 @@
-io/flutter/plugins/GeneratedPluginRegistrant.java
- io.flutter.plugins.GeneratedPluginRegistrant
-dev/konoshenko/places/BuildConfig.java
- dev.konoshenko.places.BuildConfig
