@@ -12,7 +12,7 @@ class PlaceInteractor {
   final visit = <Place>[];
   final searchResult = <Place>[];
 
-  final PlaceRepository _placeRepository =
+  late final PlaceRepository _placeRepository =
       PlaceRepository(ApiClient().createDio());
 
   factory PlaceInteractor() => _singleton;
@@ -38,13 +38,6 @@ class PlaceInteractor {
     return favorites;
   }
 
-  Future<void> addToFavorites(Place place) async {
-    favorites.add(place);
-  }
-
-  Future<void> removeFromFavorites(Place place) async {
-    favorites.remove(place);
-  }
 
   Future<List<Place>> getVisitPlaces() async {
     return visit;
