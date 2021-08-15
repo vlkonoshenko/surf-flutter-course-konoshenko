@@ -27,7 +27,7 @@ class SightListScreen extends StatefulWidget {
 class _SightListScreenState extends State<SightListScreen> {
   final _controller = StreamController<List<Place>>();
 
-  late PlaceStore _store;
+  late final PlaceStore _store;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _SightListScreenState extends State<SightListScreen> {
       body: SafeArea(
         child: Observer(builder: (context) {
           final future = _store.getPlacesFuture;
-          if (future != null && future.status == FutureStatus.pending) {
+          if (future?.status == FutureStatus.pending) {
             return const Center(child: CircularProgressIndicator());
           } else {
             final placesData = future?.value ?? [];

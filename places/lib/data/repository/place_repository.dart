@@ -19,16 +19,14 @@ class PlaceRepository {
         if (model.sortBy != null) 'sortBy': model.sortBy,
       };
 
-      final response = await dio.get<List<dynamic>>(
+      final response = await dio.get<dynamic>(
         '/place',
         queryParameters: params,
       );
 
       final result = <Place>[
-        for (final data in response.data!)
-          Place.fromJson(data as Map<String, dynamic>),
+        for (Map<String, dynamic> data in response.data!) Place.fromJson(data),
       ];
-
 
       return result;
     } on DioError catch (error) {
