@@ -7,13 +7,13 @@ import 'package:places/data/model/place.dart';
 import 'package:places/data/repository/place_repository.dart';
 
 part 'favorites_list_event.dart';
+
 part 'favorites_list_state.dart';
 
 class FavoritesListBloc extends Bloc<FavoritesListEvent, FavoritesListState> {
-  final PlaceRepository _favoritesRepository;
+  final PlaceRepository _placeRepository;
 
-  FavoritesListBloc(this._favoritesRepository)
-      : super(FavoritesListData(const {}));
+  FavoritesListBloc(this._placeRepository) : super(FavoritesListData(const {}));
 
   @override
   Stream<FavoritesListState> mapEventToState(
@@ -33,18 +33,18 @@ class FavoritesListBloc extends Bloc<FavoritesListEvent, FavoritesListState> {
   Stream<FavoritesListState> _loadFavorites(FavoritesListLoad _) async* {
     yield FavoritesLoading();
     await Future<void>.delayed(const Duration(seconds: 2));
-    yield FavoritesListData(_favoritesRepository.favorites);
+    yield FavoritesListData(_placeRepository.favorites);
   }
 
   Stream<FavoritesListState> _addToFavorites(FavoritesListAdd event) async* {
-    _favoritesRepository.favorites.add(event.place);
-    yield FavoritesListData(_favoritesRepository.favorites);
+    _placeRepository.favorites.add(event.place);
+    yield FavoritesListData(_placeRepository.favorites);
   }
 
   Stream<FavoritesListState> _removeFromFavorites(
     FavoritesListRemove event,
   ) async* {
-    _favoritesRepository.favorites.remove(event.place);
-    yield FavoritesListData(_favoritesRepository.favorites);
+    _placeRepository.favorites.remove(event.place);
+    yield FavoritesListData(_placeRepository.favorites);
   }
 }

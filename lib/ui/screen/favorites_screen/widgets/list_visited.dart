@@ -1,92 +1,72 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:places/data/interactor/place_interactor.dart';
-import 'package:places/data/model/place.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:places/bloc/visited_list/visited_list_bloc.dart';
 import 'package:places/ui/components/overscroll_glow_absorber.dart';
+import 'package:provider/provider.dart';
 
 import '../../sight_card.dart';
 
 class ListVisited extends StatefulWidget {
-  final PlaceInteractor interactor;
-
-  const ListVisited(
-      this.interactor, {
-        Key? key,
-      }) : super(key: key);
+  const ListVisited({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _ListVisitedState createState() => _ListVisitedState();
 }
 
 class _ListVisitedState extends State<ListVisited> {
+  late final VisitedListBloc visitedBloc;
 
   @override
   Widget build(BuildContext context) {
-    return OverscrollGlowAbsorber(
-      child: ListView.builder(
-        physics: Platform.isAndroid
-            ? const ClampingScrollPhysics()
-            : const BouncingScrollPhysics(),
-        itemCount: widget.interactor.visit.length,
-        itemBuilder: (context, index) => DragTarget<Place>(
-          onWillAccept: (data) {
-            return true;
-          },
-          onAccept: (data) {
-            setState(() {
-              final newPos = widget.interactor.visit.indexOf(widget.interactor.visit[index]);
-              final dragIndex = widget.interactor.visit.indexOf(data);
-              final tmp = widget.interactor.visit[index];
-              widget.interactor.visit[newPos] = data;
-              widget.interactor.visit[dragIndex] = tmp;
-            });
-          },
-          builder: (context, candidate, rejected) {
-            return Draggable<Place>(
-              data: widget.interactor.visit[index],
-              childWhenDragging: SizedBox(
-                height: 240,
-                width: MediaQuery.of(context).size.width - 16,
-                child: SightCard(
-                  widget.interactor.visit[index],
-                  sightCardState: SightCardState.drag,
-                  onDelete: () {
-                    return;
-                  },
-                  onVisited: () {
-                    return;
-                  },
-                ),
-              ),
-              feedback: SizedBox(
-                height: 240,
-                width: MediaQuery.of(context).size.width - 16,
-                child: SightCard(
-                  widget.interactor.visit[index],
-                  sightCardState: SightCardState.drag,
-                  onDelete: () {
-                    return;
-                  },
-                  onVisited: () {
-                    return;
-                  },
-                ),
-              ),
-              child: SightCard(
-                widget.interactor.visit[index],
-                key: ValueKey(index),
-                onDelete: () {
-                  return;
-                },
-                onVisited: () {
-                  return;
-                },
-              ),
-            );
-          },
-        ),
-      ),
+    return BlocBuilder<VisitedListBloc, VisitedListState>(
+      bloc: visitedBloc,
+      builder: (context, state) {
+        if (state is VisitedListData) {
+          return OverscrollGlowAbsorber(
+            child: ListView.builder(
+              physics: Platform.isAndroid
+                  ? const ClampingScrollPhysics()
+                  : const BouncingScrollPhysics(),
+              itemCount: state.places.length,
+              itemBuilder: (context, index) {
+                return SizedBox(
+                  width: 120,
+                  height: 200,
+                  child: SightCard(
+                    state.places.elementAt(index),
+                    key: ObjectKey(state.places.elementAt(index)),
+                    onDelete: () {
+                      setState(() {
+                        context.read<VisitedListBloc>().add(
+                              VisitedListRemove(
+                                state.places.elementAt(index),
+                              ),
+                            );
+                      });
+                    },
+                    onVisited: () {
+                      return;
+                    },
+                  ),
+                );
+              },
+            ),
+          );
+        }
+
+        return const Center(child: CircularProgressIndicator());
+      },
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    visitedBloc = context.read<VisitedListBloc>();
+    visitedBloc.add(FavoritesListLoad());
   }
 }

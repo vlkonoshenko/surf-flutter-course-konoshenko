@@ -6,26 +6,26 @@ import 'package:meta/meta.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/data/repository/place_repository.dart';
 
-part 'favorites_list_event.dart';
+part 'visited_list_event.dart';
 
 part 'visited_list_state.dart';
 
-class VisitedListBloc extends Bloc<FavoritesListEvent, VisitedListState> {
-  final PlaceRepository _favoritesRepository;
+class VisitedListBloc extends Bloc<VisitedListEvent, VisitedListState> {
+  final PlaceRepository _placeRepository;
 
-  VisitedListBloc(this._favoritesRepository) : super(VisitedListData(const {}));
+  VisitedListBloc(this._placeRepository) : super(VisitedListData(const {}));
 
   @override
   Stream<VisitedListState> mapEventToState(
-    FavoritesListEvent event,
+    VisitedListEvent event,
   ) async* {
     if (event is FavoritesListLoad) {
       yield* _loadFavorites(event);
     }
-    if (event is FavoritesListAdd) {
+    if (event is VisitedListAdd) {
       yield* _addToVisited(event);
     }
-    if (event is FavoritesListRemove) {
+    if (event is VisitedListRemove) {
       yield* _removeFromVisited(event);
     }
   }
@@ -33,18 +33,18 @@ class VisitedListBloc extends Bloc<FavoritesListEvent, VisitedListState> {
   Stream<VisitedListState> _loadFavorites(FavoritesListLoad _) async* {
     yield VisitedListLoading();
     await Future<void>.delayed(const Duration(seconds: 2));
-    yield VisitedListData(_favoritesRepository.visited);
+    yield VisitedListData(_placeRepository.visited);
   }
 
-  Stream<VisitedListState> _addToVisited(FavoritesListAdd event) async* {
-    _favoritesRepository.favorites.add(event.place);
-    yield VisitedListData(_favoritesRepository.visited);
+  Stream<VisitedListState> _addToVisited(VisitedListAdd event) async* {
+    _placeRepository.favorites.add(event.place);
+    yield VisitedListData(_placeRepository.visited);
   }
 
   Stream<VisitedListData> _removeFromVisited(
-    FavoritesListRemove event,
+    VisitedListRemove event,
   ) async* {
-    _favoritesRepository.favorites.remove(event.place);
-    yield VisitedListData(_favoritesRepository.visited);
+    _placeRepository.favorites.remove(event.place);
+    yield VisitedListData(_placeRepository.visited);
   }
 }

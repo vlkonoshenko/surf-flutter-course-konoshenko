@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:places/bloc/favorites_list/favorites_list_bloc.dart';
+import 'package:places/bloc/visited_list/visited_list_bloc.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/repository/place_repository.dart';
 import 'package:places/ui/screen/favorites_screen/widgets/favorites_list.dart';
@@ -57,7 +58,11 @@ class _VisitingScreenState extends State<VisitingScreen> {
                     create: (context) => FavoritesListBloc(context.read<PlaceRepository>()),
                     child: const FavoritesList(),
                   ),
-                  ListVisited(context.read<PlaceInteractor>()),
+                  BlocProvider<VisitedListBloc>(
+                    create: (context) => VisitedListBloc(context.read<PlaceRepository>()),
+                    child: const ListVisited(),
+                  ),
+
                 ],
               ),
             ),

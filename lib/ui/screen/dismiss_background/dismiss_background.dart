@@ -14,47 +14,26 @@ class DismissBackground extends StatelessWidget {
         color: lmRedColor,
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Row(
-        children: [
-          const SizedBox(width: 16),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                iconBucket,
-                width: 24,
-                height: 24,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Удалить',
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .caption!
-                    .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-          const Spacer(),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                iconBucket,
-                width: 24,
-                height: 24,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Удалить',
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .caption!
-                    .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ],
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              iconBucket,
+              width: 24,
+              height: 24,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Удалить',
+              style: Theme.of(context)
+                  .primaryTextTheme
+                  .caption!
+                  .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
       ),
     );
   }
