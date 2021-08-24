@@ -146,15 +146,6 @@ class _SightCardState extends State<SightCard> {
                       ),
                     ),
                   ),
-                  // if (widget.sightCardState == SightCardState.simple)
-                  //   Positioned(
-                  //     right: 16,
-                  //     top: 16,
-                  //     child: SightCardTools(
-                  //       widget.place,
-                  //       onDelete: widget.onDelete,
-                  //     ),
-                  //   ),
                 ]),
               ),
             ),
@@ -163,55 +154,4 @@ class _SightCardState extends State<SightCard> {
       ),
     );
   }
-
-// Widget _buildSightStatus(BuildContext context) {
-//   return Expanded(
-//     child: Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       mainAxisAlignment: MainAxisAlignment.end,
-//       children: [
-//         const SizedBox(height: 2),
-//         Text(
-//           'закрыто до 09:00',
-//           maxLines: 1,
-//           overflow: TextOverflow.ellipsis,
-//           style: Theme.of(context)
-//               .primaryTextTheme
-//               .bodyText1
-//               .copyWith(color: lmSecondary2Color),
-//         ),
-//         const SizedBox(height: 12),
-//       ],
-//     ),
-//   );
-// }
-
-// Widget _buildDetailInfo(BuildContext context, Place place) {
-//   // if (sightMeta.visited) {
-//   //   return Text(
-//   //     'Цель достигнута 12 окт. 2020',
-//   //     maxLines: 1,
-//   //     overflow: TextOverflow.ellipsis,
-//   //     style: Theme.of(context).primaryTextTheme.bodyText1,
-//   //   );
-//   // }
-//   // if (sightMeta.wantVisit) {
-//   //   return Text(
-//   //     'Запланировано на 12 окт. 2020',
-//   //     maxLines: 1,
-//   //     overflow: TextOverflow.ellipsis,
-//   //     style: Theme.of(context)
-//   //         .primaryTextTheme
-//   //         .bodyText1
-//   //         .copyWith(color: lmGreenColor),
-//   //   );
-//   // }
-//
-//   return Text(
-//     widget.place.description,
-//     maxLines: 1,
-//     overflow: TextOverflow.ellipsis,
-//     style: Theme.of(context).primaryTextTheme.bodyText1,
-//   );
-// }
 }
