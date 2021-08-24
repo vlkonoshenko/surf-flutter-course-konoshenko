@@ -5,6 +5,8 @@ import 'package:places/service/network_exception.dart';
 
 class PlaceRepository {
   final Dio dio;
+  final favorites = <Place>{};
+  final visited = <Place>{};
 
   PlaceRepository(this.dio);
 

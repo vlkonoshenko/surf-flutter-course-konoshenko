@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/data/repository/place_repository.dart';
 import 'package:places/res/res.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +29,7 @@ class BottomControlPanelState extends State<BottomControlPanel> {
   @override
   void initState() {
     super.initState();
-    final placeInteractor = context.read<PlaceInteractor>();
+    final placeInteractor = context.read<PlaceRepository>();
     _isFavorite.add(placeInteractor.favorites.contains(widget.sight));
   }
 
@@ -65,11 +65,16 @@ class BottomControlPanelState extends State<BottomControlPanel> {
             builder: (context, snap) {
               return FavoriteBtn(
                 onClick: () {
-                  final placeInteractor = context.read<PlaceInteractor>();
                   if (snap.data ?? false) {
-                    placeInteractor.removeFromFavorites(widget.sight);
+                    context
+                        .read<PlaceRepository>()
+                        .favorites
+                        .remove(widget.sight);
                   } else {
-                    placeInteractor.addToFavorites(widget.sight);
+                    context
+                        .read<PlaceRepository>()
+                        .favorites
+                        .add(widget.sight);
                   }
 
                   Navigator.pop(context);

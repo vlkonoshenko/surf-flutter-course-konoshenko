@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
-import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/data/repository/place_repository.dart';
 import 'package:places/service/api_client.dart';
@@ -13,7 +12,6 @@ import 'package:places/ui/components/sight_list_screen/app_header_delegat.dart';
 import 'package:places/ui/components/sight_list_screen/app_header_landscape_delegat.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/screen/sight_list_screen/widgets/add_sight_btn.dart';
-import 'package:provider/provider.dart';
 
 class SightListScreen extends StatefulWidget {
   static const String routeName = '/sight_list_screen';
@@ -74,6 +72,9 @@ class _SightListScreenState extends State<SightListScreen> {
                                   onDelete: () {
                                     return;
                                   },
+                                  onVisited: () {
+                                    return;
+                                  },
                                 ),
                                 childCount: placesData.length,
                               ),
@@ -92,6 +93,9 @@ class _SightListScreenState extends State<SightListScreen> {
                                 (context, index) => SightCard(
                                   placesData[index],
                                   onDelete: () {
+                                    return;
+                                  },
+                                  onVisited: () {
                                     return;
                                   },
                                 ),
@@ -120,13 +124,5 @@ class _SightListScreenState extends State<SightListScreen> {
     _controller.close();
 
     super.dispose();
-  }
-
-  void _fetchData() {
-    context
-        .read<PlaceInteractor>()
-        .getPlaces()
-        .then(_controller.add)
-        .catchError(_controller.addError);
   }
 }
