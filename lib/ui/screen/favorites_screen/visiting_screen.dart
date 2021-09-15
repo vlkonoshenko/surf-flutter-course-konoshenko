@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:places/bloc/favorites_list/favorites_list_bloc.dart';
 import 'package:places/bloc/visited_list/visited_list_bloc.dart';
-import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/repository/place_repository.dart';
 import 'package:places/ui/screen/favorites_screen/widgets/favorites_list.dart';
 import 'package:places/ui/screen/favorites_screen/widgets/list_visited.dart';
@@ -17,8 +16,6 @@ class VisitingScreen extends StatefulWidget {
 }
 
 class _VisitingScreenState extends State<VisitingScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -55,14 +52,15 @@ class _VisitingScreenState extends State<VisitingScreen> {
               child: TabBarView(
                 children: [
                   BlocProvider<FavoritesListBloc>(
-                    create: (context) => FavoritesListBloc(context.read<PlaceRepository>()),
+                    create: (context) =>
+                        FavoritesListBloc(context.read<PlaceRepository>()),
                     child: const FavoritesList(),
                   ),
                   BlocProvider<VisitedListBloc>(
-                    create: (context) => VisitedListBloc(context.read<PlaceRepository>()),
+                    create: (context) =>
+                        VisitedListBloc(context.read<PlaceRepository>()),
                     child: const ListVisited(),
                   ),
-
                 ],
               ),
             ),

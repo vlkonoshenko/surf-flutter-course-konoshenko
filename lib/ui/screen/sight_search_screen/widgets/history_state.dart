@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/data/interactor/search_interactor.dart';
+import 'package:places/redux/action/search_action.dart';
+import 'package:places/redux/app_state.dart';
 import 'package:places/res/colors.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/res/text_style.dart';
@@ -9,8 +12,7 @@ import 'package:places/ui/components/label_text_widget.dart';
 class HistoryState extends StatefulWidget {
   final SearchInteractor searchInteractor;
 
-  const HistoryState(this.searchInteractor, {Key? key})
-      : super(key: key);
+  const HistoryState(this.searchInteractor, {Key? key}) : super(key: key);
 
   @override
   _HistoryStateState createState() => _HistoryStateState();
@@ -63,9 +65,8 @@ class _HistoryStateState extends State<HistoryState> {
                             width: 20,
                           ),
                           onPressed: () {
-                            setState(() {
-                              widget.searchInteractor.history.removeAt(index);
-                            });
+                            StoreProvider.of<AppState>(context).dispatch(
+                                RemoveRequestFromHistoryAction(index),);
                           },
                         ),
                       ],
@@ -79,9 +80,8 @@ class _HistoryStateState extends State<HistoryState> {
             const SizedBox(height: 24),
             InkWell(
               onTap: () {
-                setState(() {
-                  widget.searchInteractor.history.clear();
-                });
+                StoreProvider.of<AppState>(context)
+                    .dispatch(ClearHistorySearchAction());
               },
               child: widget.searchInteractor.history.isNotEmpty
                   ? Text(

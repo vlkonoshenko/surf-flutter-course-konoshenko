@@ -42,6 +42,10 @@ class SearchInteractor {
 
   void cleanHistory() => history.clear();
 
+  void removeItem(int index) {
+    history.removeAt(index);
+  }
+
   bool _arePointsNear(
     Coordinate checkPoint,
     Coordinate centerPoint,
