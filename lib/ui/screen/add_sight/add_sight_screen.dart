@@ -1,15 +1,16 @@
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:places/res/res.dart';
 import 'package:places/res/text_style.dart';
 import 'package:places/ui/components/add_signt_screen/components.dart';
 import 'package:places/ui/components/label_text_widget.dart';
-import 'package:places/ui/screen/select_category_screen.dart';
+import 'package:places/ui/screen/add_sight/select_category_screen.dart';
 
-import 'sight_search_screen/widgets/photo_gallery.dart';
+import '../sight_search_screen/widgets/photo_gallery.dart';
 
 const _images = [
   'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
@@ -115,15 +116,13 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 const SizedBox(height: 16),
                 InkWell(
                   onTap: () async {
-                    final result = await Navigator.pushNamed<SightCategory>(
-                      context,
-                      SelectCategoryScreen.routeName,
-                    );
-                    if (result != null) {
-                      setState(() {
-                        selectedCategory = result;
-                      });
-                    }
+                    await Navigator.push<SightCategory?>(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const SelectCategoryScreen()))
+                        .then((value) => setState(() {
+                              selectedCategory = value;
+                            }));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
