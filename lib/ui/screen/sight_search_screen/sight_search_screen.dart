@@ -9,11 +9,10 @@ import 'package:places/redux/state/search_state.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/screen/filter_screen/filters_screen.dart';
-import 'package:places/ui/screen/sight_details_screen/sight_details_screen.dart';
-import 'package:places/ui/screen/sight_search_screen/widgets/highlighted_text.dart';
 import 'package:places/ui/screen/sight_search_screen/widgets/history_state.dart';
 import 'package:provider/provider.dart';
 
+import 'widgets/data_state.dart';
 import 'widgets/empty_state.dart';
 
 class SightSearchScreen extends StatefulWidget {
@@ -159,116 +158,9 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                           ? const CircularProgressIndicator()
                           : _searchInteractor.filteredList.isEmpty
                               ? const EmptyState()
-                              : ListView.builder(
-                                  itemCount:
-                                      _searchInteractor.filteredList.length,
-                                  itemBuilder: (context, index) {
-                                    return InkWell(
-                                      onTap: () {
-                                        _searchInteractor.history.add(
-                                          _searchInteractor
-                                              .filteredList[index].name,
-                                        );
-                                        Navigator.pushNamed(
-                                          context,
-                                          SightDetailsScreen.routeName,
-                                          arguments: _searchInteractor
-                                              .filteredList[index],
-                                        );
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.only(top: 16),
-                                        height: 80,
-                                        child: Row(
-                                          children: [
-                                            const SizedBox(width: 16),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                bottom: 8.0,
-                                              ),
-                                              child: AspectRatio(
-                                                aspectRatio: 1,
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    8.0,
-                                                  ),
-                                                  child: Image.network(
-                                                    _searchInteractor
-                                                        .filteredList[index]
-                                                        .urls
-                                                        .first,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(width: 16),
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Expanded(
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        const SizedBox(
-                                                          height: 4,
-                                                        ),
-                                                        HighlightedText(
-                                                          text:
-                                                              _searchInteractor
-                                                                  .filteredList[
-                                                                      index]
-                                                                  .name,
-                                                          matcher:
-                                                              _tcSearch.text,
-                                                          style: matSubtitle1
-                                                              .copyWith(
-                                                            color: Colors.black,
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 8,
-                                                        ),
-                                                        Text(
-                                                          _searchInteractor
-                                                              .filteredList[
-                                                                  index]
-                                                              .placeType,
-                                                          style: Theme.of(
-                                                            context,
-                                                          )
-                                                              .primaryTextTheme
-                                                              .subtitle1!
-                                                              .copyWith(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color:
-                                                                    const Color(
-                                                                  0xff7C7E92,
-                                                                ),
-                                                              ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  const Divider(height: 1),
-                                                ],
-                                              ),
-                                            ),
-                                            const SizedBox(width: 16),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  },
+                              : DataState(
+                                  searchInteractor: _searchInteractor,
+                                  textEditingController: _tcSearch,
                                 ),
                 ),
               ),
