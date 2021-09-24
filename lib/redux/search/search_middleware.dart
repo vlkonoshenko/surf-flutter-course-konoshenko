@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/data/interactor/search_interactor.dart';
 import 'package:places/data/model/place.dart';
-import 'package:places/redux/action/search_action.dart';
+import 'package:places/redux/search/search_action.dart';
 import 'package:redux/redux.dart';
 
 import '../app_state.dart';

@@ -1,8 +1,10 @@
-import 'package:places/redux/action/search_action.dart';
+import 'package:places/redux/search/search_action.dart';
+import 'package:places/redux/search/search_reducer.dart';
+import 'package:places/redux/setting/setting_action.dart';
 import 'package:redux/redux.dart';
 
-import '../app_state.dart';
-import 'search_reducer.dart';
+import 'app_state.dart';
+import 'setting/setting_reducer.dart';
 
 final reducer = combineReducers<AppState>([
   TypedReducer<AppState, GetSearchResultAction>(getSearchResultReducer),
@@ -13,4 +15,6 @@ final reducer = combineReducers<AppState>([
     removeRequestFromHistoryReducer,
   ),
   TypedReducer<AppState, ClearHistorySearchAction>(clearHistorySearchReducer),
+
+  TypedReducer<AppState, SwitchThemeAction>(getSwitchThemeReducer),
 ]);

@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:places/data/interactor/setting_interactor.dart';
+import 'package:places/app/app_builder.dart';
+import 'package:places/redux/app_state.dart';
+import 'package:places/redux/setting/setting_action.dart';
+import 'package:places/redux/setting/setting_state.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/ui/screen/onboarding_screen/onboarding_screen.dart';
 
@@ -25,65 +29,71 @@ class _SettingsScreenState extends State<SettingsScreen> {
               .copyWith(fontSize: 18),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: StoreConnector<AppState, SettingState>(
+        converter: (store) => store.state.settingState,
+        builder: (context, state) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
               children: [
-                Text(
-                  'Тёмная тема',
-                  style: Theme.of(context)
-                      .primaryTextTheme
-                      .subtitle1!
-                      .copyWith(fontWeight: FontWeight.w400),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Тёмная тема',
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .subtitle1!
+                          .copyWith(fontWeight: FontWeight.w400),
+                    ),
+                    CupertinoSwitch(
+                      value: state.isDarkMode,
+                      onChanged: (onChanged) {
+                        // TODO(krutskikh): Нужно посмотреть это решение
+                        StoreProvider.of<AppState>(context)
+                            .dispatch(SwitchThemeAction());
+                        AppBuilder.of(context).rebuild();
+                      },
+                    ),
+                  ],
                 ),
-                CupertinoSwitch(
-                  value: SettingInteractor().isDarkMode,
-                  onChanged: (onChanged) {
-                    setState(() {
-                      return;
-                    });
+                const Divider(),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(OnboardingScreen.routeName);
                   },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Смотреть туториал',
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .subtitle1!
+                            .copyWith(fontWeight: FontWeight.w400),
+                      ),
+                      IconButton(
+                        icon: SvgPicture.asset(
+                          iconInfo,
+                          color: Theme.of(context).accentColor,
+                        ),
+                        onPressed: () async {
+                          // final data =
+                          //     await PlaceRepository(ApiClient().createDio())
+                          //         .getPlaceList();
+                          // print(data);
+                          return;
+                        },
+                      ),
+                    ],
+                  ),
                 ),
+                const Divider(),
               ],
             ),
-            const Divider(),
-            InkWell(
-              onTap: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(OnboardingScreen.routeName);
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Смотреть туториал',
-                    style: Theme.of(context)
-                        .primaryTextTheme
-                        .subtitle1!
-                        .copyWith(fontWeight: FontWeight.w400),
-                  ),
-                  IconButton(
-                    icon: SvgPicture.asset(
-                      iconInfo,
-                      color: Theme.of(context).accentColor,
-                    ),
-                    onPressed: () async {
-                      // final data =
-                      //     await PlaceRepository(ApiClient().createDio())
-                      //         .getPlaceList();
-                      // print(data);
-                      return;
-                    },
-                  ),
-                ],
-              ),
-            ),
-            const Divider(),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
