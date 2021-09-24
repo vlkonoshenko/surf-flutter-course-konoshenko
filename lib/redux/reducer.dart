@@ -1,3 +1,5 @@
+import 'package:places/redux/places/places_action.dart';
+import 'package:places/redux/places/places_reducer.dart';
 import 'package:places/redux/search/search_action.dart';
 import 'package:places/redux/search/search_reducer.dart';
 import 'package:places/redux/setting/setting_action.dart';
@@ -15,6 +17,9 @@ final reducer = combineReducers<AppState>([
     removeRequestFromHistoryReducer,
   ),
   TypedReducer<AppState, ClearHistorySearchAction>(clearHistorySearchReducer),
-
   TypedReducer<AppState, SwitchThemeAction>(getSwitchThemeReducer),
+  //Places
+  TypedReducer<AppState, LoadedPlacesResultAction>(loadedPlacesResultAction),
+  TypedReducer<AppState, GetPlacesErrorAction>(getPlacesErrorAction),
+  TypedReducer<AppState, GetPlacesAction>(getPlacesAction),
 ]);

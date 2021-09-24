@@ -2,12 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobx/mobx.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:places/data/model/place.dart';
-import 'package:places/data/repository/place_repository.dart';
-import 'package:places/service/api_client.dart';
-import 'package:places/store/place_store.dart';
+import 'package:places/redux/app_state.dart';
+import 'package:places/redux/places/places_action.dart';
+import 'package:places/redux/places/places_state.dart';
 import 'package:places/ui/components/sight_list_screen/app_header_delegat.dart';
 import 'package:places/ui/components/sight_list_screen/app_header_landscape_delegat.dart';
 import 'package:places/ui/screen/sight_card.dart';
@@ -25,96 +24,85 @@ class SightListScreen extends StatefulWidget {
 class _SightListScreenState extends State<SightListScreen> {
   final _controller = StreamController<List<Place>>();
 
-  late final PlaceStore _store;
-
-  @override
-  void initState() {
-    super.initState();
-    _store = PlaceStore(PlaceRepository(ApiClient().createDio()));
-    _store.getPlaces();
-    //_fetchData();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: Observer(builder: (context) {
-          final future = _store.getPlacesFuture;
-          if (future?.status == FutureStatus.pending) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            final placesData = future?.value ?? [];
-
-            return Stack(
-              children: [
-                OrientationBuilder(builder: (context, orientation) {
-                  return orientation == Orientation.landscape
-                      ? CustomScrollView(
-                          slivers: [
-                            SliverPersistentHeader(
-                              pinned: true,
-                              floating: true,
-                              delegate: AppHeaderLandscapeDelegat(),
-                            ),
-                            SliverGrid(
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                mainAxisSpacing: 10.0,
-                                crossAxisSpacing: 10.0,
-                                childAspectRatio: 1.8,
-                              ),
-                              delegate: SliverChildBuilderDelegate(
-                                (context, index) => SightCard(
-                                  placesData[index],
-                                  onDelete: () {
-                                    return;
-                                  },
-                                  onVisited: () {
-                                    return;
-                                  },
-                                ),
-                                childCount: placesData.length,
-                              ),
-                            ),
-                          ],
-                        )
-                      : CustomScrollView(
-                          slivers: [
-                            SliverPersistentHeader(
-                              pinned: true,
-                              floating: true,
-                              delegate: AppHeaderDelegat(),
-                            ),
-                            SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                (context, index) => SightCard(
-                                  placesData[index],
-                                  onDelete: () {
-                                    return;
-                                  },
-                                  onVisited: () {
-                                    return;
-                                  },
-                                ),
-                                childCount: placesData.length,
-                              ),
-                            ),
-                          ],
-                        );
-                }),
-                const Positioned(
-                  bottom: 16,
-                  left: 0,
-                  right: 0,
-                  child: AddSightBtn(),
-                ),
-              ],
-            );
-          }
-        }),
+        child: StoreConnector<AppState, PlacesState>(
+          onInit: (store) => store.dispatch(GetPlacesAction()),
+          converter: (store) => store.state.placesState,
+          builder: (context, state) {
+            return state is PlacesResultState
+                ? Stack(
+                    children: [
+                      OrientationBuilder(builder: (context, orientation) {
+                        return orientation == Orientation.landscape
+                            ? CustomScrollView(
+                                slivers: [
+                                  SliverPersistentHeader(
+                                    pinned: true,
+                                    floating: true,
+                                    delegate: AppHeaderLandscapeDelegat(),
+                                  ),
+                                  SliverGrid(
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 10.0,
+                                      crossAxisSpacing: 10.0,
+                                      childAspectRatio: 1.8,
+                                    ),
+                                    delegate: SliverChildBuilderDelegate(
+                                      (context, index) => SightCard(
+                                        state.result[index],
+                                        onDelete: () {
+                                          return;
+                                        },
+                                        onVisited: () {
+                                          return;
+                                        },
+                                      ),
+                                      childCount: state.result.length,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : CustomScrollView(
+                                slivers: [
+                                  SliverPersistentHeader(
+                                    pinned: true,
+                                    floating: true,
+                                    delegate: AppHeaderDelegat(),
+                                  ),
+                                  SliverList(
+                                    delegate: SliverChildBuilderDelegate(
+                                      (context, index) => SightCard(
+                                        state.result[index],
+                                        onDelete: () {
+                                          return;
+                                        },
+                                        onVisited: () {
+                                          return;
+                                        },
+                                      ),
+                                      childCount: state.result.length,
+                                    ),
+                                  ),
+                                ],
+                              );
+                      }),
+                      const Positioned(
+                        bottom: 16,
+                        left: 0,
+                        right: 0,
+                        child: AddSightBtn(),
+                      ),
+                    ],
+                  )
+                : const CircularProgressIndicator();
+          },
+        ),
       ),
     );
   }
