@@ -1,5 +1,4 @@
 import 'package:places/data/interactor/place_interactor.dart';
-import 'package:places/data/model/place.dart';
 import 'package:redux/redux.dart';
 
 import '../app_state.dart';
@@ -13,13 +12,12 @@ class FavoritesMiddleware implements MiddlewareClass<AppState> {
   @override
   dynamic call(Store<AppState> store, dynamic action, NextDispatcher next) {
     if (action is GetFavoritesAction) {
-      _placesInteractor.getFavoritesPlace().then<List<Place>>(
-        (result) {
-          store.dispatch(LoadedFavoritesResultAction(result));
+      return store.dispatch(LoadedFavoritesResultAction(_placesInteractor.favorites));
+    }
 
-          return result;
-        },
-      );
+    if (action is AddToFavoriteAction) {
+      _placesInteractor.favorites.add(action.place);
+      return store.dispatch(LoadedFavoritesResultAction(_placesInteractor.favorites));
     }
 
     next(action);

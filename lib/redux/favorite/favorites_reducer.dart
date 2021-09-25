@@ -20,3 +20,9 @@ AppState getFavoritesErrorAction(
   GetFavoritesErrorAction _,
 ) =>
     state.copyWith(favoritesState: const FavoritesErrorState());
+
+AppState addToFavoritePlace(
+  AppState state,
+  AddToFavoriteAction _,
+) =>
+    state;

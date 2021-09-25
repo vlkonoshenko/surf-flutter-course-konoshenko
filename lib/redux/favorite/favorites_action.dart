@@ -10,4 +10,10 @@ class LoadedFavoritesResultAction extends FavoritesAction {
 
 class GetFavoritesAction extends FavoritesAction {}
 
+class AddToFavoriteAction extends FavoritesAction {
+  final Place place;
+
+  AddToFavoriteAction(this.place);
+}
+
 class GetFavoritesErrorAction extends FavoritesAction {}

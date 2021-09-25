@@ -1,7 +1,9 @@
 import 'package:places/data/model/place.dart';
 
 abstract class FavoritesState {
-  const FavoritesState();
+  final List<Place> result;
+
+  const FavoritesState({this.result = const []});
 }
 
 class FavoritesInitialState extends FavoritesState {
@@ -17,9 +19,5 @@ class FavoritesErrorState extends FavoritesState {
 }
 
 class FavoritesResultState extends FavoritesState {
-  final List<Place> result;
-
-  const FavoritesResultState(this.result);
+  const FavoritesResultState(List<Place> result) : super(result: result);
 }
-
-

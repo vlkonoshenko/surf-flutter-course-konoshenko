@@ -3,6 +3,8 @@ import 'package:places/redux/places/places_reducer.dart';
 import 'package:places/redux/search/search_action.dart';
 import 'package:places/redux/search/search_reducer.dart';
 import 'package:places/redux/setting/setting_action.dart';
+import 'package:places/redux/visited/visited_action.dart';
+import 'package:places/redux/visited/visited_reducer.dart';
 import 'package:redux/redux.dart';
 
 import 'app_state.dart';
@@ -25,7 +27,15 @@ final reducer = combineReducers<AppState>([
   TypedReducer<AppState, GetPlacesErrorAction>(getPlacesErrorAction),
   TypedReducer<AppState, GetPlacesAction>(getPlacesAction),
   //Favorites
-  TypedReducer<AppState, LoadedFavoritesResultAction>(loadedFavoritesResultAction),
+  TypedReducer<AppState, LoadedFavoritesResultAction>(
+    loadedFavoritesResultAction,
+  ),
   TypedReducer<AppState, GetFavoritesErrorAction>(getFavoritesErrorAction),
   TypedReducer<AppState, GetFavoritesAction>(getFavoritesAction),
+  TypedReducer<AppState, AddToFavoriteAction>(addToFavoritePlace),
+
+  //Visited
+  TypedReducer<AppState, LoadedVisitedResultAction>(loadedVisitedResultAction),
+  TypedReducer<AppState, GetVisitedErrorAction>(getVisitedErrorAction),
+  TypedReducer<AppState, GetVisitedAction>(getVisitedAction),
 ]);

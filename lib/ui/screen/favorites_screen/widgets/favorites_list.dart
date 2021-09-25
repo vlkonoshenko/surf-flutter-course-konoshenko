@@ -25,6 +25,7 @@ class _FavoritesListState extends State<FavoritesList> {
       onInit: (store) => store.dispatch(GetFavoritesAction()),
       converter: (store) => store.state.favoritesState,
       builder: (context, state) {
+
         if (state is FavoritesResultState) {
           return OverscrollGlowAbsorber(
             child: ListView.builder(
