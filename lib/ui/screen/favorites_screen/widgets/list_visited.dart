@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:places/bloc/visited_list/visited_list_bloc.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:places/redux/app_state.dart';
+import 'package:places/redux/visited/visited_action.dart';
+import 'package:places/redux/visited/visited_state.dart';
 import 'package:places/ui/components/overscroll_glow_absorber.dart';
-import 'package:provider/provider.dart';
 
 import '../../sight_card.dart';
 
@@ -18,35 +19,28 @@ class ListVisited extends StatefulWidget {
 }
 
 class _ListVisitedState extends State<ListVisited> {
-  late final VisitedListBloc visitedBloc;
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VisitedListBloc, VisitedListState>(
-      bloc: visitedBloc,
+    return StoreConnector<AppState, VisitedState>(
+      onInit: (store) => store.dispatch(GetVisitedAction()),
+      converter: (store) => store.state.visitedState,
       builder: (context, state) {
-        if (state is VisitedListData) {
+        if (state is VisitedResultState) {
           return OverscrollGlowAbsorber(
             child: ListView.builder(
               physics: Platform.isAndroid
                   ? const ClampingScrollPhysics()
                   : const BouncingScrollPhysics(),
-              itemCount: state.places.length,
+              itemCount: state.result.length,
               itemBuilder: (context, index) {
                 return SizedBox(
                   width: 120,
                   height: 200,
                   child: SightCard(
-                    state.places.elementAt(index),
-                    key: ObjectKey(state.places.elementAt(index)),
+                    state.result.elementAt(index),
+                    key: ObjectKey(state.result.elementAt(index)),
                     onDelete: () {
-                      setState(() {
-                        context.read<VisitedListBloc>().add(
-                              VisitedListRemove(
-                                state.places.elementAt(index),
-                              ),
-                            );
-                      });
+                      //Add remove
                     },
                     onVisited: () {
                       return;
@@ -61,12 +55,5 @@ class _ListVisitedState extends State<ListVisited> {
         return const Center(child: CircularProgressIndicator());
       },
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    visitedBloc = context.read<VisitedListBloc>();
-    visitedBloc.add(FavoritesListLoad());
   }
 }

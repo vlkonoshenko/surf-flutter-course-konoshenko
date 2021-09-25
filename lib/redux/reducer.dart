@@ -6,6 +6,8 @@ import 'package:places/redux/setting/setting_action.dart';
 import 'package:redux/redux.dart';
 
 import 'app_state.dart';
+import 'favorite/favorites_action.dart';
+import 'favorite/favorites_reducer.dart';
 import 'setting/setting_reducer.dart';
 
 final reducer = combineReducers<AppState>([
@@ -22,4 +24,8 @@ final reducer = combineReducers<AppState>([
   TypedReducer<AppState, LoadedPlacesResultAction>(loadedPlacesResultAction),
   TypedReducer<AppState, GetPlacesErrorAction>(getPlacesErrorAction),
   TypedReducer<AppState, GetPlacesAction>(getPlacesAction),
+  //Favorites
+  TypedReducer<AppState, LoadedFavoritesResultAction>(loadedFavoritesResultAction),
+  TypedReducer<AppState, GetFavoritesErrorAction>(getFavoritesErrorAction),
+  TypedReducer<AppState, GetFavoritesAction>(getFavoritesAction),
 ]);

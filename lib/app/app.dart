@@ -12,13 +12,13 @@ import 'package:places/ui/screen/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
-import 'app_builder.dart';
 import '../data/interactor/place_interactor.dart';
 import '../data/interactor/search_interactor.dart';
 import '../data/repository/place_repository.dart';
 import '../res/themes.dart';
 import '../service/api_client.dart';
 import '../ui/screen/add_sight/add_sight_screen/add_sight_screen.dart';
+import 'app_builder.dart';
 
 class App extends StatefulWidget {
   final Store<AppState> store;

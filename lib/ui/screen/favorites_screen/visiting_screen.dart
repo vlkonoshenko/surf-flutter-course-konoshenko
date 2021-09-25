@@ -1,12 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:places/bloc/favorites_list/favorites_list_bloc.dart';
-import 'package:places/bloc/visited_list/visited_list_bloc.dart';
-import 'package:places/data/repository/place_repository.dart';
 import 'package:places/ui/screen/favorites_screen/widgets/favorites_list.dart';
 import 'package:places/ui/screen/favorites_screen/widgets/list_visited.dart';
-import 'package:provider/provider.dart';
 
 class VisitingScreen extends StatefulWidget {
   const VisitingScreen({Key? key}) : super(key: key);
@@ -48,19 +43,11 @@ class _VisitingScreenState extends State<VisitingScreen> {
                 ],
               ),
             ),
-            Expanded(
+            const Expanded(
               child: TabBarView(
                 children: [
-                  BlocProvider<FavoritesListBloc>(
-                    create: (context) =>
-                        FavoritesListBloc(context.read<PlaceRepository>()),
-                    child: const FavoritesList(),
-                  ),
-                  BlocProvider<VisitedListBloc>(
-                    create: (context) =>
-                        VisitedListBloc(context.read<PlaceRepository>()),
-                    child: const ListVisited(),
-                  ),
+                  FavoritesList(),
+                  ListVisited(),
                 ],
               ),
             ),
