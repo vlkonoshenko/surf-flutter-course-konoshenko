@@ -12,12 +12,14 @@ class FavoritesMiddleware implements MiddlewareClass<AppState> {
   @override
   dynamic call(Store<AppState> store, dynamic action, NextDispatcher next) {
     if (action is GetFavoritesAction) {
-      return store.dispatch(LoadedFavoritesResultAction(_placesInteractor.favorites));
+      return store
+          .dispatch(LoadedFavoritesResultAction(_placesInteractor.favorites));
     }
 
     if (action is AddToFavoriteAction) {
       _placesInteractor.favorites.add(action.place);
-      return store.dispatch(LoadedFavoritesResultAction(_placesInteractor.favorites));
+      return store
+          .dispatch(LoadedFavoritesResultAction(_placesInteractor.favorites));
     }
 
     next(action);
