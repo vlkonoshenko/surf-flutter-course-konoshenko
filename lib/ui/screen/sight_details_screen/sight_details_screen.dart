@@ -26,41 +26,32 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
         ? ModalRoute.of(context)!.settings.arguments as Place
         : widget.sight;
 
-    return DraggableScrollableSheet(
-      expand: false,
-      initialChildSize: 0.9,
-      maxChildSize: 0.9,
-      minChildSize: 0.5,
-      builder: (context, controller) {
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: CustomScrollView(
-            controller: controller,
-            slivers: [
-              SliverAppBar(
-                actions: [
-                  Container(
-                    alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.only(left: 16),
-                    child: const BtnWhiteSquare(
-                      icon: Icons.arrow_back_ios_outlined,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                ],
-                expandedHeight: 300,
-                automaticallyImplyLeading: false,
-                flexibleSpace: GalleryView(sight.urls),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            actions: [
+              Container(
+                alignment: Alignment.centerRight,
+                padding: const EdgeInsets.only(left: 16),
+                child: const BtnWhiteSquare(
+                  icon: Icons.arrow_back_ios_outlined,
+                ),
               ),
-              SliverToBoxAdapter(
-                child: BodyContentWidget(sight),
+              const SizedBox(
+                width: 16,
               ),
             ],
+            expandedHeight: 300,
+            automaticallyImplyLeading: false,
+            flexibleSpace: Hero(tag:sight.urls.first,child: GalleryView(sight.urls)),
           ),
-        );
-      },
+          SliverToBoxAdapter(
+            child: BodyContentWidget(sight),
+          ),
+        ],
+      ),
     );
   }
 }

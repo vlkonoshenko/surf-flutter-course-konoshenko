@@ -56,28 +56,32 @@ class _SightCardState extends State<SightCard> {
                         child: Stack(
                           fit: StackFit.expand,
                           children: [
-                            Image.network(
-                              widget.place.urls.isNotEmpty
-                                  ? widget.place.urls.first
-                                  : '',
-                              fit: BoxFit.cover,
-                              loadingBuilder:
-                                  (context, child, loadingProgress) {
-                                if (loadingProgress == null) return child;
+                            Hero(
+                              tag: widget.place.urls.first,
+                              child: Image.network(
+                                widget.place.urls.isNotEmpty
+                                    ? widget.place.urls.first
+                                    : '',
+                                fit: BoxFit.cover,
+                                loadingBuilder:
+                                    (context, child, loadingProgress) {
+                                  if (loadingProgress == null) return child;
 
-                                return Center(
-                                  child: CupertinoActivityIndicator
-                                      .partiallyRevealed(
-                                    progress: loadingProgress
-                                                .expectedTotalBytes !=
-                                            null
-                                        ? loadingProgress
-                                                .cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes!
-                                        : 0.0,
-                                  ),
-                                );
-                              },
+                                  return Center(
+                                    child: CupertinoActivityIndicator
+                                        .partiallyRevealed(
+                                      progress:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : 0.0,
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                             Positioned(
                               left: 16,
@@ -128,18 +132,11 @@ class _SightCardState extends State<SightCard> {
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
-                        onTap: () => showModalBottomSheet<void>(
-                          context: context,
-                          clipBehavior: Clip.antiAlias,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(16),
-                              topRight: Radius.circular(16),
-                            ),
-                          ),
-                          isScrollControlled: true,
-                          builder: (_) =>
-                              SightDetailsScreen(sight: widget.place),
+                        onTap: () => Navigator.push<void>(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) =>
+                                  SightDetailsScreen(sight: widget.place)),
                         ),
                       ),
                     ),
