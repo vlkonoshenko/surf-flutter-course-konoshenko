@@ -113,6 +113,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     : const SizedBox(),
               ),
             ),
+            const SizedBox(height: 16),
           ],
         ),
       ),
