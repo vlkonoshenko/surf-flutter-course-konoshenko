@@ -7,7 +7,7 @@ import 'package:places/redux/favorite/favorites_action.dart';
 import 'package:places/redux/favorite/favorites_state.dart';
 import 'package:places/ui/components/overscroll_glow_absorber.dart';
 
-import '../../sight_card.dart';
+import '../../../components/sight_card/sight_card.dart';
 
 class FavoritesList extends StatefulWidget {
   const FavoritesList({
