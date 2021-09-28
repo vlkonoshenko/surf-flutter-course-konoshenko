@@ -9,7 +9,8 @@ import 'package:places/redux/favorite/favorites_action.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/ui/screen/sight_details_screen/sight_details_screen.dart';
 
-import 'dismiss_background/dismiss_background.dart';
+import '../../screen/dismiss_background/dismiss_background.dart';
+import 'widgets/card_image_preview.dart';
 
 enum SightCardState { drag, simple }
 
@@ -57,49 +58,7 @@ class _SightCardState extends State<SightCard> {
                 child: Stack(children: [
                   Column(
                     children: [
-                      SizedBox(
-                        height: 96,
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            Hero(
-                              tag: widget.place.urls.first,
-                              child: Image.network(
-                                widget.place.urls.isNotEmpty
-                                    ? widget.place.urls.first
-                                    : '',
-                                fit: BoxFit.cover,
-                                frameBuilder: (
-                                    BuildContext context,
-                                  Widget child,
-                                int? frame,
-                                  bool wasSynchronouslyLoaded,
-                                    ) {
-                                        return AnimatedOpacity(
-                                      child: child,
-                                  opacity: frame ==
-                                                  null
-                                              ? 0 : 1,
-                                                  duration: const Duration(seconds: 1),
-                                              curve: Curves.easeOut,
-                                  );
-                                },
-                              ),
-                            ),
-                            Positioned(
-                              left: 16,
-                              top: 16,
-                              child: Text(
-                                widget.place.placeType,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle2!
-                                    .copyWith(color: Colors.white),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      CardImagePreview(place: widget.place),
                       Container(
                         padding: const EdgeInsets.only(
                           left: 16,

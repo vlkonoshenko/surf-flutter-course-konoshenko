@@ -10,7 +10,7 @@ import 'package:places/redux/places/places_state.dart';
 import 'package:places/ui/components/circle_progress_loader.dart';
 import 'package:places/ui/components/sight_list_screen/app_header_delegat.dart';
 import 'package:places/ui/components/sight_list_screen/app_header_landscape_delegat.dart';
-import 'package:places/ui/screen/sight_card.dart';
+import 'package:places/ui/components/sight_card/sight_card.dart';
 import 'package:places/ui/screen/sight_list_screen/widgets/add_sight_btn.dart';
 
 class SightListScreen extends StatefulWidget {

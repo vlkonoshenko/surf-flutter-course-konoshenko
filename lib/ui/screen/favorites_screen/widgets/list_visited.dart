@@ -8,7 +8,7 @@ import 'package:places/redux/visited/visited_state.dart';
 import 'package:places/ui/components/circle_progress_loader.dart';
 import 'package:places/ui/components/overscroll_glow_absorber.dart';
 
-import '../../sight_card.dart';
+import '../../../components/sight_card/sight_card.dart';
 
 class ListVisited extends StatefulWidget {
   const ListVisited({
