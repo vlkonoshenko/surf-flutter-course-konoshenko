@@ -245,9 +245,7 @@ class _AddSightScreenState
                 stream: wm.btnStatus,
                 builder: (context, snapshot) {
                   return ElevatedButton(
-                    onPressed: snapshot.data ?? false
-                        ? wm.onSavePressed
-                        : null,
+                    onPressed: snapshot.data ?? false ? wm.onSavePressed : null,
                     child: Text(
                       AddSightStrings.create,
                       style: textButtonElevation,

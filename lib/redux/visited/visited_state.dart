@@ -21,5 +21,3 @@ class VisitedResultState extends VisitedState {
 
   const VisitedResultState(this.result);
 }
-
-

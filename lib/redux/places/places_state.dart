@@ -21,5 +21,3 @@ class PlacesResultState extends PlacesState {
 
   const PlacesResultState(this.result);
 }
-
-

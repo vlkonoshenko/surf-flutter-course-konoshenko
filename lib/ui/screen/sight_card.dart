@@ -1,6 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/redux/app_state.dart';
+import 'package:places/redux/favorite/favorites_action.dart';
+import 'package:places/res/icons.dart';
 import 'package:places/ui/screen/sight_details_screen/sight_details_screen.dart';
 
 import 'dismiss_background/dismiss_background.dart';
@@ -63,22 +69,19 @@ class _SightCardState extends State<SightCard> {
                                     ? widget.place.urls.first
                                     : '',
                                 fit: BoxFit.cover,
-                                loadingBuilder:
-                                    (context, child, loadingProgress) {
-                                  if (loadingProgress == null) return child;
-
-                                  return Center(
-                                    child: CupertinoActivityIndicator
-                                        .partiallyRevealed(
-                                      progress:
-                                          loadingProgress.expectedTotalBytes !=
+                                frameBuilder: (
+                                    BuildContext context,
+                                  Widget child,
+                                int? frame,
+                                  bool wasSynchronouslyLoaded,
+                                    ) {
+                                        return AnimatedOpacity(
+                                      child: child,
+                                  opacity: frame ==
                                                   null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  loadingProgress
-                                                      .expectedTotalBytes!
-                                              : 0.0,
-                                    ),
+                                              ? 0 : 1,
+                                                  duration: const Duration(seconds: 1),
+                                              curve: Curves.easeOut,
                                   );
                                 },
                               ),
@@ -145,6 +148,35 @@ class _SightCardState extends State<SightCard> {
               ),
             ),
           ),
+          if (widget.sightCardState == SightCardState.simple)
+            Positioned(
+              right: 4,
+              top: 4,
+              child: StoreBuilder<AppState>(
+                builder: (context, store) {
+                  return IconButton(
+                    icon: AnimatedCrossFade(
+                      firstChild: SvgPicture.asset(
+                        iconHeart,
+                        color: Colors.white,
+                      ),
+                      secondChild: SvgPicture.asset(
+                        iconHeartFull,
+                        color: Colors.white,
+                      ),
+                      duration: const Duration(milliseconds: 500),
+                      crossFadeState: store.state.favoritesState.result
+                              .contains(widget.place)
+                          ? CrossFadeState.showSecond
+                          : CrossFadeState.showFirst,
+                    ),
+                    onPressed: () {
+                      store.dispatch(AddToFavoriteAction(widget.place));
+                    },
+                  );
+                },
+              ),
+            ),
         ],
       ),
     );

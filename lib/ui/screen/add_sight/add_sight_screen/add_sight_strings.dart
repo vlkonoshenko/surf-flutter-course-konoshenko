@@ -13,7 +13,6 @@ class AddSightStrings {
   static String categoryTitle = 'категория';
   static String nameTitle = 'название';
 
-
   static String create = 'Создать';
   static String cancel = 'Отмена';
 }
