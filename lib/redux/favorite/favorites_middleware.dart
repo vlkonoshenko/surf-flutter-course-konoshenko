@@ -17,7 +17,12 @@ class FavoritesMiddleware implements MiddlewareClass<AppState> {
     }
 
     if (action is AddToFavoriteAction) {
-      _placesInteractor.favorites.add(action.place);
+      if (_placesInteractor.favorites.contains(action.place)) {
+        _placesInteractor.favorites.remove(action.place);
+      } else {
+        _placesInteractor.favorites.add(action.place);
+      }
+
       return store
           .dispatch(LoadedFavoritesResultAction(_placesInteractor.favorites));
     }

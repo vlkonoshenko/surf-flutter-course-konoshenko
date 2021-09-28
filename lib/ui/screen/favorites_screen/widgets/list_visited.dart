@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:places/redux/app_state.dart';
 import 'package:places/redux/visited/visited_action.dart';
 import 'package:places/redux/visited/visited_state.dart';
+import 'package:places/ui/components/circle_progress_loader.dart';
 import 'package:places/ui/components/overscroll_glow_absorber.dart';
 
 import '../../sight_card.dart';
@@ -52,7 +53,7 @@ class _ListVisitedState extends State<ListVisited> {
           );
         }
 
-        return const Center(child: CircularProgressIndicator());
+        return const Center(child: CircleProgressLoader());
       },
     );
   }
