@@ -1,6 +1,6 @@
-import 'package:places/redux/action/search_action.dart';
 import 'package:places/redux/app_state.dart';
-import 'package:places/redux/state/search_state.dart';
+import 'package:places/redux/search/search_action.dart';
+import 'package:places/redux/search/search_state.dart';
 
 AppState getSearchResultReducer(
   AppState state,

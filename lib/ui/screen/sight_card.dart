@@ -39,9 +39,7 @@ class _SightCardState extends State<SightCard> {
             clipBehavior: Clip.hardEdge,
             borderRadius: BorderRadius.circular(16),
             child: Dismissible(
-              onDismissed: (value) {
-                widget.onDelete();
-              },
+              onDismissed: (value) => widget.onDelete(),
               direction: DismissDirection.endToStart,
               key: ObjectKey(widget.place),
               child: Card(

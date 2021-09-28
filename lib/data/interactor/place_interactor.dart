@@ -7,13 +7,15 @@ import 'package:places/service/api_client.dart';
 
 class PlaceInteractor {
   static final PlaceInteractor _singleton = PlaceInteractor._();
-
-  final favorites = <Place>[];
   final visit = <Place>[];
   final searchResult = <Place>[];
 
+  final _favorites = <Place>[];
+
   late final PlaceRepository _placeRepository =
       PlaceRepository(ApiClient().createDio());
+
+  List<Place> get favorites => _favorites;
 
   factory PlaceInteractor() => _singleton;
 
@@ -33,10 +35,6 @@ class PlaceInteractor {
   Future<Place> getPlaceDetails(int id) => _placeRepository.getPlace(id);
 
   Future<void> addNewPlace(Place place) => _placeRepository.createPlace(place);
-
-  Future<List<Place>> getFavoritesPlace() async {
-    return favorites;
-  }
 
   Future<List<Place>> getVisitPlaces() async {
     return visit;

@@ -4,9 +4,12 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/data/repository/place_repository.dart';
+import 'package:places/redux/app_state.dart';
+import 'package:places/redux/favorite/favorites_action.dart';
 import 'package:places/res/res.dart';
 import 'package:provider/provider.dart';
 
@@ -63,20 +66,17 @@ class BottomControlPanelState extends State<BottomControlPanel> {
           child: StreamBuilder<bool>(
             stream: _isFavorite.stream,
             builder: (context, snap) {
-              return FavoriteBtn(
-                onClick: () {
-                  if (snap.data ?? false) {
-                    context
-                        .read<PlaceRepository>()
-                        .favorites
-                        .remove(widget.sight);
-                  } else {
-                    context.read<PlaceRepository>().favorites.add(widget.sight);
-                  }
-
-                  Navigator.pop(context);
+              return StoreBuilder<AppState>(
+                builder: (context, store) {
+                  return FavoriteBtn(
+                    onClick: () {
+                      store.dispatch(AddToFavoriteAction(widget.sight));
+                      Navigator.pop(context);
+                    },
+                    isFavorite: store.state.favoritesState.result
+                        .contains(widget.sight),
+                  );
                 },
-                isFavorite: snap.data ?? false,
               );
             },
           ),

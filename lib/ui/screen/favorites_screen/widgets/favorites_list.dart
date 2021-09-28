@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:places/bloc/favorites_list/favorites_list_bloc.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:places/redux/app_state.dart';
+import 'package:places/redux/favorite/favorites_action.dart';
+import 'package:places/redux/favorite/favorites_state.dart';
 import 'package:places/ui/components/overscroll_glow_absorber.dart';
-import 'package:provider/provider.dart';
 
 import '../../sight_card.dart';
 
@@ -18,34 +19,30 @@ class FavoritesList extends StatefulWidget {
 }
 
 class _FavoritesListState extends State<FavoritesList> {
-  late final FavoritesListBloc favoriteBloc;
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FavoritesListBloc, FavoritesListState>(
-      bloc: favoriteBloc,
+    return StoreConnector<AppState, FavoritesState>(
+      onInit: (store) => store.dispatch(GetFavoritesAction()),
+      converter: (store) => store.state.favoritesState,
       builder: (context, state) {
-        if (state is FavoritesListData) {
+
+        if (state is FavoritesResultState) {
           return OverscrollGlowAbsorber(
             child: ListView.builder(
               physics: Platform.isAndroid
                   ? const ClampingScrollPhysics()
                   : const BouncingScrollPhysics(),
-              itemCount: state.places.length,
+              itemCount: state.result.length,
               itemBuilder: (context, index) {
                 return SizedBox(
                   width: 120,
                   height: 200,
                   child: SightCard(
-                    state.places.elementAt(index),
-                    key: ObjectKey(state.places.elementAt(index)),
+                    state.result.elementAt(index),
+                    key: ObjectKey(state.result.elementAt(index)),
                     onDelete: () {
                       setState(() {
-                        context.read<FavoritesListBloc>().add(
-                              FavoritesListRemove(
-                                state.places.elementAt(index),
-                              ),
-                            );
+                        // Add remove from favorite list
                       });
                     },
                     onVisited: () {
@@ -61,12 +58,5 @@ class _FavoritesListState extends State<FavoritesList> {
         return const Center(child: CircularProgressIndicator());
       },
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    favoriteBloc = context.read<FavoritesListBloc>();
-    favoriteBloc.add(FavoritesListLoad());
   }
 }

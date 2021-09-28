@@ -46,7 +46,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
             },
             child: Text(
               'Очистить',
-              style: TextStyle(color: Theme.of(context).accentColor),
+              style: TextStyle(color: Theme.of(context).colorScheme.secondary),
             ),
           ),
         ],
