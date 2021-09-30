@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/res/res.dart';
-import 'package:places/ui/screen/filter_screen/model/filter_model.dart';
+
+final _mapIcon = <String, String>{
+  'hotel': iconHotel,
+  'restaurant': iconRestourant,
+  'other': iconPark,
+  'park': iconPark,
+  'museum': iconMuseum,
+  'cafe': iconCafe,
+};
+
+final _mapFilter = <String,String>{
+  'hotel':'Отель',
+  'restaurant':'Ресторан',
+  'other':'Особое',
+  'park':'Парк',
+  'museum':'Музей',
+  'cafe':'Кафе',
+};
 
 class FilterContentWidget extends StatefulWidget {
-  final FilterModel filterModel;
+  final String filterModel;
   final VoidCallback onFilterClick;
   final bool isSelected;
 
@@ -31,9 +48,7 @@ class _FilterContentWidgetState extends State<FilterContentWidget> {
               children: [
                 InkWell(
                   borderRadius: BorderRadius.circular(100.0),
-                  onTap: () {
-                    widget.onFilterClick();
-                  },
+                  onTap: widget.onFilterClick,
                   child: Container(
                     height: 64,
                     width: 64,
@@ -45,7 +60,7 @@ class _FilterContentWidgetState extends State<FilterContentWidget> {
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: SvgPicture.asset(
-                        widget.filterModel.icon,
+                        _mapIcon[widget.filterModel]??'',
                         color: Theme.of(context).accentColor,
                       ),
                     ),
@@ -73,7 +88,7 @@ class _FilterContentWidgetState extends State<FilterContentWidget> {
           ),
           const SizedBox(height: 8),
           Text(
-            widget.filterModel.title,
+            _mapFilter[widget.filterModel]??'',
             style: Theme.of(context).primaryTextTheme.caption,
           ),
         ],

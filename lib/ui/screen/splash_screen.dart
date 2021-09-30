@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/res/res.dart';
+import 'package:places/service/shared_preference.dart';
+import 'package:places/ui/screen/onboarding_screen/onboarding_screen.dart';
 
 import 'home_screen.dart';
 
@@ -55,9 +57,14 @@ class _SplashScreenState extends State<SplashScreen>
     super.dispose();
   }
 
-  void _navigateToNext() {
-    Future<void>.delayed(const Duration(seconds: 2)).then(
-      (result) => Navigator.pushReplacementNamed(context, HomeScreen.routeName),
+  Future<void> _navigateToNext() async {
+    final isFirst = await SharedPreference.getIsFirstStart();
+
+    await Future<void>.delayed(const Duration(seconds: 2)).then(
+      (result) => Navigator.pushReplacementNamed(
+        context,
+        isFirst ? OnboardingScreen.routeName : HomeScreen.routeName,
+      ),
     );
   }
 }

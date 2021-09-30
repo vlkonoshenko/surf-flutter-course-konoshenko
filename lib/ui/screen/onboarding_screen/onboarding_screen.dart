@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/res/res.dart';
+import 'package:places/service/shared_preference.dart';
 import 'package:places/ui/screen/home_screen.dart';
 import 'package:places/ui/screen/onboarding_screen/widgets/indicator.dart';
 
@@ -101,6 +102,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(),
                           onPressed: () {
+
+                            SharedPreference.setIsFirstStart(false);
                             Navigator.of(context)
                                 .pushReplacementNamed(HomeScreen.routeName);
                           },

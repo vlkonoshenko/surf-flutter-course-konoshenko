@@ -7,6 +7,7 @@ import 'package:places/redux/app_state.dart';
 import 'package:places/redux/setting/setting_action.dart';
 import 'package:places/redux/setting/setting_state.dart';
 import 'package:places/res/icons.dart';
+import 'package:places/service/shared_preference.dart';
 import 'package:places/ui/screen/onboarding_screen/onboarding_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -48,11 +49,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     CupertinoSwitch(
                       value: state.isDarkMode,
-                      onChanged: (onChanged) {
-                        // TODO(krutskikh): Нужно посмотреть это решение
-                        StoreProvider.of<AppState>(context)
-                            .dispatch(SwitchThemeAction());
-                        AppBuilder.of(context).rebuild();
+                      onChanged: (onChanged) async{
+                        await SharedPreference.setTheme(onChanged).then((value){
+                          StoreProvider.of<AppState>(context)
+                              .dispatch(SwitchThemeAction(onChanged));
+                          AppBuilder.of(context).rebuild();
+                        });
+
                       },
                     ),
                   ],

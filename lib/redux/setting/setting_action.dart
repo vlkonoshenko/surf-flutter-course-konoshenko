@@ -1,5 +1,9 @@
 abstract class SettingAction {}
 
 class SwitchThemeAction extends SettingAction {
-  SwitchThemeAction();
+  final bool isDartMode;
+
+  SwitchThemeAction(this.isDartMode);
 }
+
+
