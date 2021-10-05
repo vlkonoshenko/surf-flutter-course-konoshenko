@@ -1,13 +1,11 @@
 import 'package:places/redux/places/places_state.dart';
 import 'package:places/redux/setting/setting_state.dart';
-import 'package:places/service/shared_preference.dart';
 
 import 'favorite/favorites_state.dart';
 import 'search/search_state.dart';
 import 'visited/visited_state.dart';
 
 class AppState {
-
   final SearchState searchState;
   final SettingState settingState;
   final PlacesState placesState;

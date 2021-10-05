@@ -54,7 +54,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     onPageChanged: (value) =>
                         setState(() => currentIndex = value),
                     controller: _pageController,
-                    children: [
+                    children: const [
                       OnboardingPage(
                         title: 'Добро пожаловать\n в Путеводитель',
                         body: 'Ищи новые локации и сохраняй\n самые любимые. ',
@@ -102,8 +102,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(),
                           onPressed: () {
-
-                            SharedPreference.setIsFirstStart(false);
+                            SharedPreference.setIsFirstStart(isFirstRun: false);
                             Navigator.of(context)
                                 .pushReplacementNamed(HomeScreen.routeName);
                           },

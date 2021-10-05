@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/res/res.dart';
 
-final _mapIcon = <String, String>{
+const _mapIcon = <String, String>{
   'hotel': iconHotel,
   'restaurant': iconRestourant,
   'other': iconPark,
@@ -11,13 +11,13 @@ final _mapIcon = <String, String>{
   'cafe': iconCafe,
 };
 
-final _mapFilter = <String,String>{
-  'hotel':'Отель',
-  'restaurant':'Ресторан',
-  'other':'Особое',
-  'park':'Парк',
-  'museum':'Музей',
-  'cafe':'Кафе',
+const _mapFilter = <String, String>{
+  'hotel': 'Отель',
+  'restaurant': 'Ресторан',
+  'other': 'Особое',
+  'park': 'Парк',
+  'museum': 'Музей',
+  'cafe': 'Кафе',
 };
 
 class FilterContentWidget extends StatefulWidget {
@@ -60,7 +60,7 @@ class _FilterContentWidgetState extends State<FilterContentWidget> {
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: SvgPicture.asset(
-                        _mapIcon[widget.filterModel]??'',
+                        _mapIcon[widget.filterModel] ?? '',
                         color: Theme.of(context).accentColor,
                       ),
                     ),
@@ -88,7 +88,7 @@ class _FilterContentWidgetState extends State<FilterContentWidget> {
           ),
           const SizedBox(height: 8),
           Text(
-            _mapFilter[widget.filterModel]??'',
+            _mapFilter[widget.filterModel] ?? '',
             style: Theme.of(context).primaryTextTheme.caption,
           ),
         ],

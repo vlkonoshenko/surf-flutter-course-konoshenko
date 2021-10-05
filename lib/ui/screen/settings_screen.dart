@@ -49,13 +49,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     CupertinoSwitch(
                       value: state.isDarkMode,
-                      onChanged: (onChanged) async{
-                        await SharedPreference.setTheme(onChanged).then((value){
-                          StoreProvider.of<AppState>(context)
-                              .dispatch(SwitchThemeAction(onChanged));
+                      onChanged: (onChanged) async {
+                        await SharedPreference.setTheme(isDark: onChanged)
+                            .then((value) {
+                          StoreProvider.of<AppState>(context).dispatch(
+                            SwitchThemeAction(isDartMode: onChanged),
+                          );
                           AppBuilder.of(context).rebuild();
                         });
-
                       },
                     ),
                   ],

@@ -20,13 +20,13 @@ class SharedPreference {
     return prefs.getBool(_keyIsFirstStart) ?? true;
   }
 
-  static Future<void> setTheme(bool isDark) async {
+  static Future<void> setTheme({required bool isDark}) async {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setBool(_keyThemeIsDark, isDark);
   }
 
-  static Future<void> setIsFirstStart(bool isFirstRun) async {
+  static Future<void> setIsFirstStart({required bool isFirstRun}) async {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setBool(_keyIsFirstStart, isFirstRun);

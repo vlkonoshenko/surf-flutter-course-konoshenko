@@ -17,11 +17,7 @@ class AppBuilder extends StatefulWidget {
 
 class AppBuilderState extends State<AppBuilder> {
   @override
-  Widget build(BuildContext context) {
-    return widget.builder(context);
-  }
+  Widget build(BuildContext context) => widget.builder(context);
 
-  void rebuild() {
-    setState(() {});
-  }
+  void rebuild() => setState(() => debugPrint('Rebuild full application'));
 }

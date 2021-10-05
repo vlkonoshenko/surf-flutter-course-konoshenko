@@ -3,12 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:places/data/model/place.dart';
 
 class CardImagePreview extends StatelessWidget {
-  const CardImagePreview({
-    Key? key,
-    required this.place,
-  }) : super(key: key);
-
   final Place place;
+
+  const CardImagePreview({Key? key, required this.place}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +20,10 @@ class CardImagePreview extends StatelessWidget {
               place.urls.isNotEmpty ? place.urls.first : '',
               fit: BoxFit.cover,
               frameBuilder: (
-                BuildContext context,
-                Widget child,
-                int? frame,
-                bool wasSynchronouslyLoaded,
+                context,
+                child,
+                frame,
+                wasSynchronouslyLoaded,
               ) {
                 return AnimatedOpacity(
                   child: child,

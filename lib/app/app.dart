@@ -49,7 +49,9 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
             return FutureBuilder<bool>(
               future: SharedPreference.getTheme(),
               builder: (context, snap) {
-                widget.store.dispatch(SwitchThemeAction(snap.data??false));
+                widget.store.dispatch(
+                  SwitchThemeAction(isDartMode: snap.data ?? false),
+                );
 
                 return MaterialApp(
                   title: 'Flutter Demo',

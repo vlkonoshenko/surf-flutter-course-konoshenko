@@ -10,7 +10,7 @@ import 'package:places/service/shared_preference.dart';
 import 'package:places/ui/screen/filter_screen/widgets/filter_content_widget.dart';
 import 'package:provider/provider.dart';
 
-final _mapFilter = <String, String>{
+const _mapFilter = <String, String>{
   'hotel': 'Отель',
   'restaurant': 'Ресторан',
   'other': 'Особое',
@@ -204,9 +204,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 builder: (context, snap) {
                   if (snap.hasData) {
                     final data = snap.data
-                            ?.where((element) =>
-                                selectedFilers.contains(element.placeType))
-                            .toList();
+                        ?.where((element) =>
+                            selectedFilers.contains(element.placeType))
+                        .toList();
 
                     return Text(
                       'Показать (${data?.length})'.toUpperCase(),
