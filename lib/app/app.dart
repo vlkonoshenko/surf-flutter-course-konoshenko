@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:places/redux/app_state.dart';
+import 'package:places/redux/setting/setting_action.dart';
+import 'package:places/service/shared_preference.dart';
 import 'package:places/ui/screen/add_sight/add_sight_screen/add_sight_screen_wm.dart';
 import 'package:places/ui/screen/add_sight/select_category_screen.dart';
 import 'package:places/ui/screen/filter_screen/filters_screen.dart';
@@ -44,26 +46,33 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
         ],
         child: AppBuilder(
           builder: (context) {
-            return MaterialApp(
-              title: 'Flutter Demo',
-              theme: widget.store.state.settingState.isDarkMode
-                  ? darkTheme
-                  : lightTheme,
-              routes: {
-                '/': (context) => const SplashScreen(),
-                HomeScreen.routeName: (context) => const HomeScreen(),
-                FiltersScreen.routeName: (context) => const FiltersScreen(),
-                AddSightScreen.routeName: (context) => const AddSightScreen(
-                      widgetModelBuilder: createAddSightScreenWM,
-                    ),
-                SelectCategoryScreen.routeName: (context) =>
-                    const SelectCategoryScreen(),
-                SightSearchScreen.routeName: (context) =>
-                    const SightSearchScreen(),
-                OnboardingScreen.routeName: (context) =>
-                    const OnboardingScreen(),
+            return FutureBuilder<bool>(
+              future: SharedPreference.getTheme(),
+              builder: (context, snap) {
+                widget.store.dispatch(
+                  SwitchThemeAction(isDartMode: snap.data ?? false),
+                );
+
+                return MaterialApp(
+                  title: 'Flutter Demo',
+                  theme: snap.data ?? false ? darkTheme : lightTheme,
+                  routes: {
+                    '/': (context) => const SplashScreen(),
+                    HomeScreen.routeName: (context) => const HomeScreen(),
+                    FiltersScreen.routeName: (context) => const FiltersScreen(),
+                    AddSightScreen.routeName: (context) => const AddSightScreen(
+                          widgetModelBuilder: createAddSightScreenWM,
+                        ),
+                    SelectCategoryScreen.routeName: (context) =>
+                        const SelectCategoryScreen(),
+                    SightSearchScreen.routeName: (context) =>
+                        const SightSearchScreen(),
+                    OnboardingScreen.routeName: (context) =>
+                        const OnboardingScreen(),
+                  },
+                  initialRoute: '/',
+                );
               },
-              initialRoute: '/',
             );
           },
         ),

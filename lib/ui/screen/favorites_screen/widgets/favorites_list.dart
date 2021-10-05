@@ -42,6 +42,7 @@ class _FavoritesListState extends State<FavoritesList> {
                     onDelete: () {
                       setState(() {
                         // Add remove from favorite list
+                        debugPrint('Remove from favorite list item $index ');
                       });
                     },
                     onVisited: () {

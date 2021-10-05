@@ -1,5 +1,12 @@
-abstract class SettingAction {}
+import 'package:flutter/foundation.dart';
 
+abstract class SettingAction {
+  const SettingAction();
+}
+
+@immutable
 class SwitchThemeAction extends SettingAction {
-  SwitchThemeAction();
+  final bool isDartMode;
+
+  const SwitchThemeAction({required this.isDartMode}) : super();
 }

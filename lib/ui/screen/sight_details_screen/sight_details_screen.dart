@@ -45,7 +45,8 @@ class _SightDetailsScreenState extends State<SightDetailsScreen> {
             ],
             expandedHeight: 300,
             automaticallyImplyLeading: false,
-            flexibleSpace: Hero(tag:sight.urls.first,child: GalleryView(sight.urls)),
+            flexibleSpace:
+                Hero(tag: sight.urls.first, child: GalleryView(sight.urls)),
           ),
           SliverToBoxAdapter(
             child: BodyContentWidget(sight),

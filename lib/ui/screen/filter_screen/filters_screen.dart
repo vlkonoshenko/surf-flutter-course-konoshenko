@@ -2,12 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/data/model/search_filter.dart';
 import 'package:places/res/colors.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/res/text_style.dart';
-import 'package:places/ui/screen/filter_screen/model/filter_model.dart';
+import 'package:places/service/shared_preference.dart';
 import 'package:places/ui/screen/filter_screen/widgets/filter_content_widget.dart';
 import 'package:provider/provider.dart';
+
+const _mapFilter = <String, String>{
+  'hotel': 'Отель',
+  'restaurant': 'Ресторан',
+  'other': 'Особое',
+  'park': 'Парк',
+  'museum': 'Музей',
+  'cafe': 'Кафе',
+};
 
 class FiltersScreen extends StatefulWidget {
   static const String routeName = '/filter_screen';
@@ -19,18 +29,21 @@ class FiltersScreen extends StatefulWidget {
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
-  List<FilterModel> filters = [
-    FilterModel(iconHotel, 'Отель'),
-    FilterModel(iconRestourant, 'Ресторан'),
-    FilterModel(iconParticularPlace, 'Особое место'),
-    FilterModel(iconPark, 'Парк'),
-    FilterModel(iconMuseum, 'Музей'),
-    FilterModel(iconCafe, 'Кафе'),
-  ];
-
-  List<FilterModel> selectedFilers = [];
+  List<String> selectedFilers = [];
 
   RangeValues valueSlider = const RangeValues(100, 10000);
+
+  @override
+  void initState() {
+    super.initState();
+
+    SharedPreference.getSearchFilter().then((value) {
+      setState(() {
+        valueSlider = RangeValues(value.startPoint, value.endPoint);
+        selectedFilers = value.categories;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,12 +88,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
               ],
             ),
           ),
-          if (MediaQuery.of(context).size.height < 800)
+          if (MediaQuery.of(context).size.height < 600)
             SizedBox(
               height: 120,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: filters
+                children: _mapFilter.keys
                     .map((e) => Padding(
                           padding: const EdgeInsets.only(
                             left: 8,
@@ -90,7 +103,13 @@ class _FiltersScreenState extends State<FiltersScreen> {
                           child: FilterContentWidget(
                             filterModel: e,
                             onFilterClick: () {
-                              selectedFilers.add(e);
+                              setState(() {
+                                if (selectedFilers.contains(e)) {
+                                  selectedFilers.remove(e);
+                                } else {
+                                  selectedFilers.add(e);
+                                }
+                              });
                             },
                             isSelected: selectedFilers.contains(e),
                           ),
@@ -107,7 +126,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
               crossAxisCount: 3,
-              children: filters
+              children: _mapFilter.keys
                   .map((e) => FilterContentWidget(
                         filterModel: e,
                         onFilterClick: () {
@@ -174,14 +193,23 @@ class _FiltersScreenState extends State<FiltersScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: ElevatedButton(
               onPressed: () {
-                debugPrint('on click iconGo');
+                SharedPreference.setSearchFilter(SearchFilter(
+                  selectedFilers,
+                  valueSlider.start,
+                  valueSlider.end,
+                ));
               },
               child: FutureBuilder<List<Place>>(
                 future: context.read<PlaceInteractor>().getPlaces(),
                 builder: (context, snap) {
                   if (snap.hasData) {
+                    final data = snap.data
+                        ?.where((element) =>
+                            selectedFilers.contains(element.placeType))
+                        .toList();
+
                     return Text(
-                      'Показать (${snap.data!.length})'.toUpperCase(),
+                      'Показать (${data?.length})'.toUpperCase(),
                       style: textButtonElevation,
                     );
                   }

@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/svg.dart';
 
 class CircleProgressLoader extends StatefulWidget {
   const CircleProgressLoader({Key? key}) : super(key: key);

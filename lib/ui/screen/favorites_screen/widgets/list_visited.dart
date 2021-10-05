@@ -41,7 +41,7 @@ class _ListVisitedState extends State<ListVisited> {
                     state.result.elementAt(index),
                     key: ObjectKey(state.result.elementAt(index)),
                     onDelete: () {
-                      //Add remove
+                      debugPrint('Remove from favorite list');
                     },
                     onVisited: () {
                       return;

@@ -97,8 +97,9 @@ class _SightCardState extends State<SightCard> {
                         onTap: () => Navigator.push<void>(
                           context,
                           MaterialPageRoute(
-                              builder: (_) =>
-                                  SightDetailsScreen(sight: widget.place)),
+                            builder: (_) =>
+                                SightDetailsScreen(sight: widget.place),
+                          ),
                         ),
                       ),
                     ),
