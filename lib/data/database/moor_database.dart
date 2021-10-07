@@ -4,7 +4,7 @@ import 'package:moor/ffi.dart';
 import 'package:moor/moor.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:places/data/database/utils/converter.dart';
+import 'package:places/data/database/utils/place_converter.dart';
 import 'package:places/data/model/place.dart';
 
 part 'moor_database.g.dart';
@@ -41,6 +41,11 @@ class MoorDatabase extends _$MoorDatabase {
 
   Future<Favorite> getFavoritesItem(int id) =>
       (select(favorites)..where((row) => row.placeId.equals(id))).getSingle();
+
+
+  Future<void> removeRequest() async{
+    delete(searchRequests).go();
+  }
 }
 
 class SearchRequests extends Table {

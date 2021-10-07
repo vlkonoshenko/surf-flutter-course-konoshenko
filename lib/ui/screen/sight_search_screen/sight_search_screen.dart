@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:places/data/database/moor_database.dart';
 import 'package:places/data/interactor/search_interactor.dart';
 import 'package:places/redux/app_state.dart';
 import 'package:places/redux/search/search_action.dart';
@@ -88,6 +89,8 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                         controller: _tcSearch,
                         focusNode: _fnSearch,
                         onSubmitted: (value) {
+                          context.read<MoorDatabase>().addRequest(
+                              SearchRequestsCompanion.insert(request: value),);
                           _searchInteractor.history.add(value);
                           FocusManager.instance.primaryFocus!.unfocus();
                         },

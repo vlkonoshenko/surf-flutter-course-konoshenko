@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:places/data/database/moor_database.dart';
 import 'package:places/redux/app_state.dart';
 import 'package:places/redux/setting/setting_action.dart';
 import 'package:places/service/shared_preference.dart';
@@ -39,6 +40,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
       child: MultiProvider(
         providers: [
           Provider<SearchInteractor>(create: (_) => SearchInteractor()),
+          Provider<MoorDatabase>(create: (_) => MoorDatabase()),
           Provider<PlaceInteractor>(create: (_) => PlaceInteractor()),
           Provider<PlaceRepository>(
             create: (_) => PlaceRepository(ApiClient().createDio()),

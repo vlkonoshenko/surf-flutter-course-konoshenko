@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:places/data/database/moor_database.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/redux/app_state.dart';
 import 'package:places/redux/favorite/favorites_action.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/ui/screen/sight_details_screen/sight_details_screen.dart';
+import 'package:provider/src/provider.dart';
 
 import '../../screen/dismiss_background/dismiss_background.dart';
 import 'widgets/card_image_preview.dart';
@@ -131,6 +133,8 @@ class _SightCardState extends State<SightCard> {
                           : CrossFadeState.showFirst,
                     ),
                     onPressed: () {
+                      context
+                          .read<MoorDatabase>().addToFavorites(widget.place);
                       store.dispatch(AddToFavoriteAction(widget.place));
                     },
                   );
