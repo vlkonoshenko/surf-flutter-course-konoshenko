@@ -61,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen>
     final isFirst = await SharedPreference.getIsFirstStart();
 
     await Future<void>.delayed(const Duration(seconds: 2)).then(
-      (result) => Navigator.pushReplacementNamed(
+          (result) => Navigator.pushReplacementNamed(
         context,
         isFirst ? OnboardingScreen.routeName : HomeScreen.routeName,
       ),

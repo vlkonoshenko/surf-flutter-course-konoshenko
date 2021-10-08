@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:places/data/database/moor_database.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/data/repository/place_repository.dart';
 import 'package:places/redux/app_state.dart';
@@ -70,6 +71,7 @@ class BottomControlPanelState extends State<BottomControlPanel> {
                 builder: (context, store) {
                   return FavoriteBtn(
                     onClick: () {
+                      context.read<MoorDatabase>().addToFavorites(widget.sight);
                       store.dispatch(AddToFavoriteAction(widget.sight));
                       Navigator.pop(context);
                     },
