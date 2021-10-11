@@ -18,11 +18,13 @@ dependencies:
   provider: ^5.0.0
   shared_preferences: ^2.0.8
   redux: ^5.0.0
-  mwwm: ^2.0.0
   moor: ^4.5.0
+  mwwm: ^2.0.0
+  image_picker: ^0.8.4+2
   sqlite3_flutter_libs: ^0.5.0
   path_provider: ^2.0.0
   path: ^1.8.0
+  map_launcher: ^2.1.1
 
 dev_dependencies:
   moor_generator: ^4.5.1

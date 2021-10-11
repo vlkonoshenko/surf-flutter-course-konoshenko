@@ -2,6 +2,7 @@
     package="dev.konoshenko.places">
    <application
         android:label="places"
+        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
