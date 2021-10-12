@@ -5,6 +5,8 @@ import 'package:places/ui/screen/favorites_screen/visiting_screen.dart';
 import 'package:places/ui/screen/settings_screen.dart';
 import 'package:places/ui/screen/sight_list_screen/sight_list_screen.dart';
 
+import 'map_screen/map_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/home_screen';
 
@@ -20,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
     _tabController.addListener(_listener);
     super.initState();
   }
@@ -39,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen>
         controller: _tabController,
         children: const [
           SightListScreen(),
+          MapScreen(),
           VisitingScreen(),
           SettingsScreen(),
         ],
@@ -56,20 +59,28 @@ class _HomeScreenState extends State<HomeScreen>
             label: 'List sight',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              _tabController.index == 1 ? iconHeartFull : iconHeart,
+            icon: Icon(
+              _tabController.index == 1 ? Icons.map_rounded : Icons.map_outlined,
               color:
                   Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
             ),
-            label: '2',
+            label: 'Map',
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
-              _tabController.index == 2 ? iconSettingsFull : iconSettings,
+              _tabController.index == 2 ? iconHeartFull : iconHeart,
               color:
                   Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
             ),
-            label: '2',
+            label: 'Favorites',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              _tabController.index == 3 ? iconSettingsFull : iconSettings,
+              color:
+                  Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+            ),
+            label: 'Settings',
           ),
         ],
       ),
