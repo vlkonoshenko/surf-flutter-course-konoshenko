@@ -6,6 +6,7 @@ import 'package:places/ui/screen/settings_screen.dart';
 import 'package:places/ui/screen/sight_list_screen/sight_list_screen.dart';
 
 import 'map_screen/map_screen.dart';
+import 'map_screen/map_screen_wm.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/home_screen';
@@ -41,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen>
         controller: _tabController,
         children: const [
           SightListScreen(),
-          MapScreen(),
+          MapScreen(createMapScreenWM),
           VisitingScreen(),
           SettingsScreen(),
         ],
@@ -60,7 +61,9 @@ class _HomeScreenState extends State<HomeScreen>
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              _tabController.index == 1 ? Icons.map_rounded : Icons.map_outlined,
+              _tabController.index == 1
+                  ? Icons.map_rounded
+                  : Icons.map_outlined,
               color:
                   Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
             ),
