@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:mwwm/mwwm.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/ui/screen/map_screen/widgets/bottom_panel.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
@@ -53,12 +54,18 @@ class _MapScreenState extends WidgetState<MapScreen, MapScreenWM> {
           bottom: 20,
           left: 0,
           right: 0,
-          child: BottomPanel(
-            onPressedRefresh: () {
-              wm.onRefreshPressed();
-            },
-            onPressedGeolocation: () {
-              wm.onMyLocationPressed();
+          child: ValueListenableBuilder<Place?>(
+            valueListenable: wm.selectedPlace,
+            builder: (context, value, child) {
+              return BottomPanel(
+                place: value,
+                onPressedRefresh: () {
+                  wm.onRefreshPressed();
+                },
+                onPressedGeolocation: () {
+                  wm.onMyLocationPressed();
+                },
+              );
             },
           ),
         )

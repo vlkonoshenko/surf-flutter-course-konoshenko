@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mwwm/mwwm.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/redux/app_state.dart';
 import 'package:redux/redux.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
@@ -10,6 +11,8 @@ import 'data/icon.dart';
 class MapScreenWM extends WidgetModel {
   final BuildContext _context;
   final Store<AppState> store;
+
+   ValueNotifier<Place?> selectedPlace = ValueNotifier(null);
 
   late YandexMapController yandexMapController;
 
@@ -57,7 +60,7 @@ class MapScreenWM extends WidgetModel {
           );
 
           yandexMapController.addPlacemark(_selectedPlacemark);
-
+          selectedPlace.value = place;
 
           // _onTapPlacemark(
           //   controller,

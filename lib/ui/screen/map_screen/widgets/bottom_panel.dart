@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/ui/screen/map_screen/widgets/place_card_map.dart';
 import 'package:places/ui/screen/sight_list_screen/widgets/add_sight_btn.dart';
 
 class BottomPanel extends StatelessWidget {
@@ -26,35 +27,26 @@ class BottomPanel extends StatelessWidget {
             FloatingActionButton.small(
               onPressed: onPressedRefresh,
               backgroundColor: Colors.white,
-              child: const Icon(Icons.sync,color: Colors.black,),
+              child: const Icon(
+                Icons.sync,
+                color: Colors.black,
+              ),
             ),
-
-            if (place == null) AddSightBtn(),
-            // ButtonRounded(
-            //   size: 50,
-            //   radius: 50,
-            //   backgroundColor: UiUtils.setColorForTheme(
-            //     context,
-            //     light: Theme.of(context).colorScheme.white,
-            //     dark: Theme.of(context).colorScheme.secondary,
-            //   ),
-            //   icon: icGeolocation,
-            //   iconColor: Theme.of(context).colorScheme.primary,
-            //   elevation: 2,
-            //   onPressed: onPressedGeolocation,
-            // ),
+            if (place == null)
+              const AddSightBtn()
+            else
+              const Expanded(child: SizedBox()),
             FloatingActionButton.small(
               onPressed: onPressedGeolocation,
               backgroundColor: Colors.white,
-              child: const Icon(Icons.navigation,color: Colors.black,),
+              child: const Icon(
+                Icons.navigation,
+                color: Colors.black,
+              ),
             ),
           ],
         ),
-        if (place != null) Text('asd')
-        // PlaceCardMap(
-        //   place: state.place!,
-        //   cardType: CardType.map,
-        // ),
+        if (place != null) PlaceCardMap(place: place!),
       ],
     );
   }
