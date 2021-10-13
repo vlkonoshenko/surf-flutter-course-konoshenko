@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:places/redux/app_state.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/screen/favorites_screen/visiting_screen.dart';
 import 'package:places/ui/screen/settings_screen.dart';
@@ -23,9 +25,10 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
+    super.initState();
+
     _tabController = TabController(length: 4, vsync: this);
     _tabController.addListener(_listener);
-    super.initState();
   }
 
   @override
@@ -37,16 +40,20 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: TabBarView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: _tabController,
-        children: const [
-          SightListScreen(),
-          MapScreen(createMapScreenWM),
-          VisitingScreen(),
-          SettingsScreen(),
-        ],
-      ),
+      body: Builder(builder: (context) {
+        return TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: _tabController,
+          children: [
+            SightListScreen(),
+            MapScreen(
+                widgetModelBuilder: (_) => createMapScreenWM(
+                    context, StoreProvider.of<AppState>(context))),
+            VisitingScreen(),
+            SettingsScreen(),
+          ],
+        );
+      }),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (value) => _tabController.animateTo(value),
         currentIndex: _tabController.index,
