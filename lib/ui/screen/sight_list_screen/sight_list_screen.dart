@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/environment/environment.dart';
 import 'package:places/redux/app_state.dart';
 import 'package:places/redux/places/places_action.dart';
 import 'package:places/redux/places/places_state.dart';
@@ -28,6 +29,11 @@ class _SightListScreenState extends State<SightListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          Environment.instance().isDebug ? 'Debug сборка приложения' : '',
+        ),
+      ),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: StoreConnector<AppState, PlacesState>(
