@@ -53,3 +53,4 @@ app.*.map.json
 
 #Unnecessary test files
 /test/**/failures
+/android/keystore/keystore
