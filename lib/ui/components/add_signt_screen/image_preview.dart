@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/res/icons.dart';
@@ -19,20 +21,14 @@ class ImagePreview extends StatelessWidget {
       onDismissed: (direction) => onDelete(),
       direction: DismissDirection.up,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 8,
-          vertical: 24,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 24),
         child: Stack(
           children: [
             AspectRatio(
               aspectRatio: 1,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12.0),
-                child: Image.network(
-                  'https://infodon.org.ua/wp-content/uploads/2019/08/Donbass-Arena-1500x916.jpg',
-                  fit: BoxFit.cover,
-                ),
+                child: Image.file(File(url), fit: BoxFit.cover),
               ),
             ),
             Positioned(
@@ -41,10 +37,7 @@ class ImagePreview extends StatelessWidget {
                 padding: const EdgeInsets.all(6.0),
                 child: GestureDetector(
                   onTap: onDelete,
-                  child: SvgPicture.asset(
-                    iconClear,
-                    color: Colors.white,
-                  ),
+                  child: SvgPicture.asset(iconClear, color: Colors.white),
                 ),
               ),
             ),

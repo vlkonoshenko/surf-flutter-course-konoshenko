@@ -55,30 +55,43 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                   SwitchThemeAction(isDartMode: snap.data ?? false),
                 );
 
-                return MaterialApp(
-                  title: 'Flutter Demo',
-                  theme: snap.data ?? false ? darkTheme : lightTheme,
-                  routes: {
-                    '/': (context) => const SplashScreen(),
-                    HomeScreen.routeName: (context) => const HomeScreen(),
-                    FiltersScreen.routeName: (context) => const FiltersScreen(),
-                    AddSightScreen.routeName: (context) => const AddSightScreen(
-                          widgetModelBuilder: createAddSightScreenWM,
-                        ),
-                    SelectCategoryScreen.routeName: (context) =>
-                        const SelectCategoryScreen(),
-                    SightSearchScreen.routeName: (context) =>
-                        const SightSearchScreen(),
-                    OnboardingScreen.routeName: (context) =>
-                        const OnboardingScreen(),
-                  },
-                  initialRoute: '/',
-                );
+                return  PlaceApp(isDarkMode:snap.data??false);
               },
             );
           },
         ),
       ),
+    );
+  }
+}
+
+class PlaceApp extends StatelessWidget {
+  final bool isDarkMode;
+  const PlaceApp({
+    Key? key,
+    required this.isDarkMode,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: isDarkMode ? darkTheme : lightTheme,
+      routes: {
+        '/': (context) => const SplashScreen(),
+        HomeScreen.routeName: (context) => const HomeScreen(),
+        FiltersScreen.routeName: (context) => const FiltersScreen(),
+        AddSightScreen.routeName: (context) => const AddSightScreen(
+              widgetModelBuilder: createAddSightScreenWM,
+            ),
+        SelectCategoryScreen.routeName: (context) =>
+            const SelectCategoryScreen(),
+        SightSearchScreen.routeName: (context) =>
+            const SightSearchScreen(),
+        OnboardingScreen.routeName: (context) =>
+            const OnboardingScreen(),
+      },
+      initialRoute: '/',
     );
   }
 }

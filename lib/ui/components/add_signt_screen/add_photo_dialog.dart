@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:places/res/colors.dart';
 import 'package:places/res/icons.dart';
 import 'package:places/res/text_style.dart';
@@ -31,56 +32,78 @@ class _AddPhotoDialogState extends State<AddPhotoDialog> {
             ),
             child: Column(
               children: [
-                Container(
-                  height: 48,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        iconCamera,
-                        color: lmSecondary2Color,
-                      ),
-                      const SizedBox(width: 16),
-                      Text(
-                        'Камера',
-                        style: matSubtitle1.copyWith(color: lmSecondary2Color),
-                      ),
-                    ],
+                InkWell(
+                  onTap: () {
+                    ImagePicker()
+                        .pickImage(source: ImageSource.camera)
+                        .then((value) => Navigator.pop<XFile?>(context, value));
+                  },
+                  child: Container(
+                    height: 48,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          iconCamera,
+                          color: lmSecondary2Color,
+                        ),
+                        const SizedBox(width: 16),
+                        Text(
+                          'Камера',
+                          style: matSubtitle1.copyWith(color: lmSecondary2Color),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const Divider(height: 1, color: lmSecondary2Color),
-                Container(
-                  height: 48,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        iconPhoto,
-                        color: lmSecondary2Color,
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      Text(
-                        'Фотография',
-                        style: matSubtitle1.copyWith(color: lmSecondary2Color),
-                      ),
-                    ],
+                InkWell(
+                  onTap: () {
+                    ImagePicker()
+                        .pickImage(source: ImageSource.gallery)
+                        .then((value) => Navigator.pop<XFile?>(context, value));
+                  },
+                  child: Container(
+                    height: 48,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          iconPhoto,
+                          color: lmSecondary2Color,
+                        ),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        Text(
+                          'Фотография',
+                          style:
+                              matSubtitle1.copyWith(color: lmSecondary2Color),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const Divider(height: 1, color: lmSecondary2Color),
-                Container(
-                  height: 48,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(iconFail, color: lmSecondary2Color),
-                      const SizedBox(width: 16),
-                      Text(
-                        'Файл',
-                        style: matSubtitle1.copyWith(color: lmSecondary2Color),
-                      ),
-                    ],
+                InkWell(
+                  onTap: () {
+                    ImagePicker()
+                        .pickImage(source: ImageSource.gallery)
+                        .then((value) => Navigator.pop<XFile?>(context, value));
+                  },
+                  child: Container(
+                    height: 48,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(iconFail, color: lmSecondary2Color),
+                        const SizedBox(width: 16),
+                        Text(
+                          'Файл',
+                          style: matSubtitle1.copyWith(color: lmSecondary2Color),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:places/redux/app_state.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/screen/favorites_screen/visiting_screen.dart';
 import 'package:places/ui/screen/settings_screen.dart';
 import 'package:places/ui/screen/sight_list_screen/sight_list_screen.dart';
+
+import 'map_screen/map_screen.dart';
+import 'map_screen/map_screen_wm.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/home_screen';
@@ -20,9 +25,10 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
-    _tabController = TabController(length: 3, vsync: this);
-    _tabController.addListener(_listener);
     super.initState();
+
+    _tabController = TabController(length: 4, vsync: this);
+    _tabController.addListener(_listener);
   }
 
   @override
@@ -34,15 +40,20 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: TabBarView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: _tabController,
-        children: const [
-          SightListScreen(),
-          VisitingScreen(),
-          SettingsScreen(),
-        ],
-      ),
+      body: Builder(builder: (context) {
+        return TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: _tabController,
+          children: [
+            SightListScreen(),
+            MapScreen(
+                widgetModelBuilder: (_) => createMapScreenWM(
+                    context, StoreProvider.of<AppState>(context))),
+            VisitingScreen(),
+            SettingsScreen(),
+          ],
+        );
+      }),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (value) => _tabController.animateTo(value),
         currentIndex: _tabController.index,
@@ -56,20 +67,30 @@ class _HomeScreenState extends State<HomeScreen>
             label: 'List sight',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              _tabController.index == 1 ? iconHeartFull : iconHeart,
+            icon: Icon(
+              _tabController.index == 1
+                  ? Icons.map_rounded
+                  : Icons.map_outlined,
               color:
                   Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
             ),
-            label: '2',
+            label: 'Map',
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
-              _tabController.index == 2 ? iconSettingsFull : iconSettings,
+              _tabController.index == 2 ? iconHeartFull : iconHeart,
               color:
                   Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
             ),
-            label: '2',
+            label: 'Favorites',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              _tabController.index == 3 ? iconSettingsFull : iconSettings,
+              color:
+                  Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+            ),
+            label: 'Settings',
           ),
         ],
       ),

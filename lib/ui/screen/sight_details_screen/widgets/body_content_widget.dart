@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/res/res.dart';
 import 'package:places/ui/screen/sight_details_screen/widgets/bottom_control_panel.dart';
@@ -54,8 +55,13 @@ class BodyContentWidget extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           ElevatedButton(
-            onPressed: () {
-              return;
+            onPressed: () async {
+              final availableMaps = await MapLauncher.installedMaps;
+
+              await availableMaps.first.showMarker(
+                coords: Coords(sight.lat, sight.lng),
+                title: sight.name,
+              );
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

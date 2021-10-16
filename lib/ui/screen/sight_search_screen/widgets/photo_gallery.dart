@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:places/ui/components/add_signt_screen/add_photo_dialog.dart';
 import 'package:places/ui/components/add_signt_screen/components.dart';
 
@@ -23,7 +24,13 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           children: [
             BtnAddPhoto(
               context: context,
-              onAddClick: () => _dialogCall(context),
+              onAddClick: () => _dialogCall(context).then((value) {
+                setState(() {
+                  if (value != null) {
+                    widget.images.add(value.path);
+                  }
+                });
+              }),
             ),
             ...widget.images
                 .map((e) => ImagePreview(
@@ -41,8 +48,8 @@ class _PhotoGalleryState extends State<PhotoGallery> {
     );
   }
 
-  Future<void> _dialogCall(BuildContext context) {
-    return showDialog(
+  Future<XFile?> _dialogCall(BuildContext context) {
+    return showDialog<XFile>(
       context: context,
       barrierDismissible: true,
       builder: (context) {
