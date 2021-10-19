@@ -8,10 +8,17 @@ import 'package:redux/redux.dart';
 import 'app/app.dart';
 import 'data/interactor/place_interactor.dart';
 import 'data/interactor/search_interactor.dart';
+import 'environment/config.dart';
+import 'environment/environment.dart';
+import 'environment/environment_type.dart';
 import 'redux/app_state.dart';
 import 'redux/visited/visited_middleware.dart';
 
 void main() {
+  Environment.init(
+    buildType: EnvironmentType.debug,
+    config: Config(),
+  );
   runApp(App(_createStore()));
 }
 

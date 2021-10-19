@@ -56,6 +56,17 @@ android {
         }
     }
 
+    flavorDimensions "release-type"
+    productFlavors {
+        dev {
+            dimension "release-type"
+            applicationIdSuffix ".dev"
+        }
+        prod {
+            dimension "release-type"
+        }
+    }
+
 
 }
 
